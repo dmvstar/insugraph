@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,8 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 import sf.net.dvstar.insugraph.R;
@@ -46,13 +49,21 @@ public class MainActivity extends AppCompatActivity {
 
         mTf = Typeface.createFromAsset(getAssets(), "OpenSans-Bold.ttf");
 
-        LineData data = getData(36, 100);
-        data.setValueTypeface(mTf);
+        LineData data;
 
-        for (int i = 0; i < mCharts.length; i++)
+
+        for (int i = 0; i < mCharts.length; i++) {
             // add some transparency to the color with "& 0x90FFFFFF"
-            setupChart(mCharts[i], data, mColors[i % mColors.length]);
-
+            if(i<2){
+                data = getDataInsulin(i);
+                data.setValueTypeface(mTf);
+                setupChart(mCharts[i], data, mColors[i % mColors.length]);
+            } else {
+                data = getData(36, 100);
+                data.setValueTypeface(mTf);
+                setupChart(mCharts[i], data, mColors[i % mColors.length]);
+            }
+        }
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -96,7 +107,8 @@ public class MainActivity extends AppCompatActivity {
             Color.rgb(137, 230, 81),
             Color.rgb(240, 240, 30),
             Color.rgb(89, 199, 250),
-            Color.rgb(250, 104, 104)
+            Color.rgb(250, 104, 104
+            )
     };
 
     private void setupChart(LineChart chart, LineData data, int color) {
@@ -145,6 +157,93 @@ public class MainActivity extends AppCompatActivity {
     protected String[] mMonths = new String[] {
             "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"
     };
+
+    protected double[] actrapid = new double[]{20.0/60.0,   1.00,   6.0};
+    protected double[] protafan = new double[]{1.0,         4.00,   18.0};
+
+    protected double[][] insulins = new double[][]{actrapid, protafan};
+
+    // hours
+    private double[] merge(double[] a, double[] b) {
+        int N = a.length;
+        int M = b.length;
+        int size = M+N;
+        for (double elementB : b){
+            if (Arrays.binarySearch(a, elementB)>=0){
+                size--;
+            }
+        }
+        double[] c = new double[size];
+        for (int i=0; i<a.length; i++){
+            c[i]=a[i];
+        }
+        for (int i=a.length, j=0; j<b.length; j++){
+            if (Arrays.binarySearch(c,b[j])<0){
+                c[i]=b[j];
+                i++;
+            }
+        }
+        Arrays.sort(c);
+        return c;
+    }
+
+
+    private ArrayList<Double> getXVals(int pos){
+        ArrayList<Double> xVals = new ArrayList<Double>();
+        double[] a = new double[24];
+        for (int i = 0; i < 24; i++) a[i]=i;
+        double[] b = insulins[pos];
+        double[] c = merge(a,b);
+
+
+        for (int i = 0; i < c.length; i++) xVals.add(c[i]);
+
+        Log.v("TAG","getXVals [" + pos + "]" + xVals.toString());
+        return xVals;
+    }
+
+    private  LineData getDataInsulin(int pos) {
+        ArrayList<Double> xVals = getXVals(pos);
+        ArrayList<String> xValsS = new ArrayList<String>();
+        for (int v = 0;v<xVals.size();v++)
+            xValsS.add(""+xVals.get(v));
+
+        ArrayList<Entry> yVals = new ArrayList<Entry>();
+
+        if(pos<2){
+            for (int v = 0;v<xVals.size();v++) {
+                for (int i = 0; i < insulins[pos].length; i++) {
+                    double val = (double) insulins[pos][i];
+                    boolean store = false;
+                    if(i==0 && xVals.get(v).doubleValue()==val) {yVals.add(new Entry(0,  v));store=true;}
+                    if(i==1 && xVals.get(v).doubleValue()==val) {yVals.add(new Entry(10, v));store=true;}
+                    if(i==2 && xVals.get(v).doubleValue()==val) {yVals.add(new Entry(0,  v));store=true;}
+                    if(!store) yVals.add(new Entry(0,  v));
+                }
+            }
+        }
+        // create a dataset and give it a type
+        LineDataSet set1 = new LineDataSet(yVals, "DataSet 1");
+        // set1.setFillAlpha(110);
+        // set1.setFillColor(Color.RED);
+
+        set1.setLineWidth(1.75f);
+        set1.setCircleSize(3f);
+        set1.setColor(Color.WHITE);
+        set1.setCircleColor(Color.WHITE);
+        set1.setHighLightColor(Color.WHITE);
+        set1.setDrawValues(false);
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(set1); // add the datasets
+
+        // create a data object with the datasets
+        LineData data = new LineData(xValsS, dataSets);
+
+        return data;
+
+    }
+
 
     private LineData getData(int count, float range) {
 
