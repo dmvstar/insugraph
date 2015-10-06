@@ -195,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
         double[] b = insulins[pos];
         double[] c = merge(a,b);
 
-
         for (int i = 0; i < c.length; i++) xVals.add(c[i]);
 
         Log.v("TAG","getXVals [" + pos + "]" + xVals.toString());
@@ -203,25 +202,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private  LineData getDataInsulin(int pos) {
-        ArrayList<Double> xVals = getXVals(pos);
+        ArrayList<Double> xValsD = getXVals(pos);
         ArrayList<String> xValsS = new ArrayList<String>();
-        for (int v = 0;v<xVals.size();v++)
-            xValsS.add(""+xVals.get(v));
+        for (int v = 0;v<xValsD.size();v++)
+            xValsS.add(""+xValsD.get(v));
 
         ArrayList<Entry> yVals = new ArrayList<Entry>();
 
         if(pos<2){
-            for (int v = 0;v<xVals.size();v++) {
+            for (int v = 0;v<xValsD.size();v++) {
+
+                int e=0;
+
                 for (int i = 0; i < insulins[pos].length; i++) {
                     double val = (double) insulins[pos][i];
-                    boolean store = false;
-                    if(i==0 && xVals.get(v).doubleValue()==val) {yVals.add(new Entry(0,  v));store=true;}
-                    if(i==1 && xVals.get(v).doubleValue()==val) {yVals.add(new Entry(10, v));store=true;}
-                    if(i==2 && xVals.get(v).doubleValue()==val) {yVals.add(new Entry(0,  v));store=true;}
-                    if(!store) yVals.add(new Entry(0,  v));
+
+                    if(xValsD.get(v).doubleValue() == val) {
+                        if (i == 0) {
+                            e=5;
+                        }
+                        if (i == 1) {
+                            e=15;
+                        }
+                        if (i == 2) {
+                            e=5;
+                        }
+                    } else {
+                        e=0;
+                    }
                 }
+
+                yVals.add(new Entry(e, v));
+
             }
         }
+
+        Log.v("!!!!", xValsS.size()+"-"+yVals.size());
+
         // create a dataset and give it a type
         LineDataSet set1 = new LineDataSet(yVals, "DataSet 1");
         // set1.setFillAlpha(110);
@@ -241,7 +258,6 @@ public class MainActivity extends AppCompatActivity {
         LineData data = new LineData(xValsS, dataSets);
 
         return data;
-
     }
 
 
