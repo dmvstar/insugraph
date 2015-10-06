@@ -28,6 +28,7 @@ import sf.net.dvstar.insugraph.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     private LineChart[] mCharts = new LineChart[4];
     private Typeface mTf;
 
@@ -195,9 +196,11 @@ public class MainActivity extends AppCompatActivity {
         double[] b = insulins[pos];
         double[] c = merge(a,b);
 
+        double[] cc = calculateIntervals(c);
+
         for (int i = 0; i < c.length; i++) xVals.add(c[i]);
 
-        Log.v("TAG","getXVals [" + pos + "]" + xVals.toString());
+        Log.v(TAG, "getXVals [" + pos + "]" + xVals.toString());
         return xVals;
     }
 
@@ -213,31 +216,14 @@ public class MainActivity extends AppCompatActivity {
             for (int v = 0;v<xValsD.size();v++) {
 
                 int e=0;
+                e = getExistValue(insulins[pos], xValsD.get(v).doubleValue());
 
-                for (int i = 0; i < insulins[pos].length; i++) {
-                    double val = (double) insulins[pos][i];
-
-                    if(xValsD.get(v).doubleValue() == val) {
-                        if (i == 0) {
-                            e=5;
-                        }
-                        if (i == 1) {
-                            e=15;
-                        }
-                        if (i == 2) {
-                            e=5;
-                        }
-                    } else {
-                        e=0;
-                    }
-                }
-
+                Log.v(TAG,"yVals["+v+"]["+xValsD.get(v).doubleValue()+"]["+e+"]");
                 yVals.add(new Entry(e, v));
-
             }
         }
 
-        Log.v("!!!!", xValsS.size()+"-"+yVals.size());
+        Log.v(TAG, xValsS.size()+"-"+yVals.size());
 
         // create a dataset and give it a type
         LineDataSet set1 = new LineDataSet(yVals, "DataSet 1");
@@ -258,6 +244,33 @@ public class MainActivity extends AppCompatActivity {
         LineData data = new LineData(xValsS, dataSets);
 
         return data;
+    }
+
+    private double[] calculateIntervals(double[] aSource){
+        double[] ret = null;
+
+        return ret;
+    }
+
+    private int getExistValue(double[] insulin, double aValue) {
+        int ret = 0;
+
+        for (int i = 0; i < insulin.length; i++) {
+            double val = insulin[i];
+
+            if(aValue == val) {
+                if (i == 0) {
+                    ret=1;
+                }
+                if (i == 1) {
+                    ret=15;
+                }
+                if (i == 2) {
+                    ret=1;
+                }
+            }
+        }
+        return ret;
     }
 
 
