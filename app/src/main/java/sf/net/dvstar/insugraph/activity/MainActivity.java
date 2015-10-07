@@ -8,10 +8,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -21,8 +21,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
+import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
 
@@ -189,44 +188,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private ArrayList<Double> getXVals(int pos){
-        ArrayList<Double> xVals = new ArrayList<Double>();
+    private InsuGraphContent getVals(int pos){
+        //ArrayList<Double> xVals = new ArrayList<Double>();
         double[] a = new double[24];
         for (int i = 0; i < 24; i++) a[i]=i;
         double[] b = insulins[pos];
-        double[] c = merge(a,b);
+        double[] c = merge(a, b);
 
-        double[] cc = calculateIntervals(c);
+        InsuGraphContent insuGraphContent = new InsuGraphContent();
+        insuGraphContent.calculateInsuGraphItems(c, insulins[pos]);
 
-        for (int i = 0; i < c.length; i++) xVals.add(c[i]);
+        Log.v(TAG,insuGraphContent.toString());
 
-        Log.v(TAG, "getXVals [" + pos + "]" + xVals.toString());
-        return xVals;
+        return insuGraphContent;
     }
 
     private  LineData getDataInsulin(int pos) {
-        ArrayList<Double> xValsD = getXVals(pos);
-        ArrayList<String> xValsS = new ArrayList<String>();
-        for (int v = 0;v<xValsD.size();v++)
-            xValsS.add(""+xValsD.get(v));
 
-        ArrayList<Entry> yVals = new ArrayList<Entry>();
+        InsuGraphContent insuGraphContent = getVals(pos);
 
-        if(pos<2){
-            for (int v = 0;v<xValsD.size();v++) {
+        ArrayList<Double> xValsD = insuGraphContent.getXValsD();
+        ArrayList<String> xValsS = insuGraphContent.getXValsS();
+        ArrayList<Double> yValsD = insuGraphContent.getYValsD();
 
-                int e=0;
-                e = getExistValue(insulins[pos], xValsD.get(v).doubleValue());
+        ArrayList<Entry> yValsE = new ArrayList<Entry>();
 
-                Log.v(TAG,"yVals["+v+"]["+xValsD.get(v).doubleValue()+"]["+e+"]");
-                yVals.add(new Entry(e, v));
-            }
+        for (int i=0; i<yValsD.size(); i++){
+            double val = yValsD.get(i);
+            yValsE.add(new Entry((float)val, i));
         }
 
-        Log.v(TAG, xValsS.size()+"-"+yVals.size());
+        Log.v(TAG, "!!!!"+xValsD.size()+"-"+xValsS.size()+"-"+yValsE.size());
 
         // create a dataset and give it a type
-        LineDataSet set1 = new LineDataSet(yVals, "DataSet 1");
+        LineDataSet set1 = new LineDataSet(yValsE, "DataSet 1");
         // set1.setFillAlpha(110);
         // set1.setFillColor(Color.RED);
 
@@ -236,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
         set1.setCircleColor(Color.WHITE);
         set1.setHighLightColor(Color.WHITE);
         set1.setDrawValues(false);
+        set1.setDrawCubic(true);
 
         ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
         dataSets.add(set1); // add the datasets
@@ -244,33 +240,6 @@ public class MainActivity extends AppCompatActivity {
         LineData data = new LineData(xValsS, dataSets);
 
         return data;
-    }
-
-    private double[] calculateIntervals(double[] aSource){
-        double[] ret = null;
-
-        return ret;
-    }
-
-    private int getExistValue(double[] insulin, double aValue) {
-        int ret = 0;
-
-        for (int i = 0; i < insulin.length; i++) {
-            double val = insulin[i];
-
-            if(aValue == val) {
-                if (i == 0) {
-                    ret=1;
-                }
-                if (i == 1) {
-                    ret=15;
-                }
-                if (i == 2) {
-                    ret=1;
-                }
-            }
-        }
-        return ret;
     }
 
 
@@ -300,6 +269,9 @@ public class MainActivity extends AppCompatActivity {
         set1.setHighLightColor(Color.WHITE);
         set1.setDrawValues(false);
 
+        set1.setDrawCubic(true);
+
+
         ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
         dataSets.add(set1); // add the datasets
 
@@ -307,6 +279,169 @@ public class MainActivity extends AppCompatActivity {
         LineData data = new LineData(xVals, dataSets);
 
         return data;
+    }
+
+
+    public static class GraphCoord {
+        public double mX;
+        public double mY;
+        public double mV;
+
+        public GraphCoord(double aX,double aY,double aV){
+            mX=aX;
+            mY=aY;
+            mV=aV;
+        }
+    }
+
+    public static class InsuGraphContent {
+        public List<InsuGraphItem> mInsuGraphItemList;
+
+        private GraphCoord mStartGC;
+        private GraphCoord mMaximGC;
+        private GraphCoord mStopsGC;
+
+        private GraphCoordPair plotLineUp;
+        private GraphCoordPair plotLineDn;
+        /*
+        private public double mStart;
+        private public double mMaxim;
+        private public double mStops;
+        */
+        private ArrayList<Double> mXValsD;
+        private ArrayList<String> mXValsS;
+        private ArrayList<Double> mYValsD;
+
+        public InsuGraphContent(){
+        }
+
+        public void calculateInsuGraphItems(double[] aXValues, double[] aInsulin){
+            mInsuGraphItemList = null;
+            if (aXValues != null && aInsulin != null && aXValues.length>0){
+                mInsuGraphItemList = new ArrayList<InsuGraphItem>();
+                int working = 0;
+                for (int i = 0; i < aXValues.length; i++) {
+                    InsuGraphItem item = new InsuGraphItem();
+                    item.xValue = aXValues[i];
+                    item.yValue = 0;
+                    if(working>0) item.wMode = working;
+
+                    for (int j = 0; j < aInsulin.length; j++) {
+                        double val = aInsulin[j];
+
+                        if(aXValues[i] == val) {
+                            if (j == InsuGraphItem.WMODE_STT-1) {
+                                item.wMode = InsuGraphItem.WMODE_STT;
+                                working = InsuGraphItem.WMODE_STW;
+
+                                mStartGC = new GraphCoord( aXValues[i], 0.0, 0.0 );
+                            }
+                            if (j == InsuGraphItem.WMODE_MAX-1) {
+                                item.wMode = InsuGraphItem.WMODE_MAX;
+                                item.yValue = 1;
+                                mMaximGC = new GraphCoord( aXValues[i], 1.0, 1.0);
+
+                                working = InsuGraphItem.WMODE_MAW;
+                            }
+                            if (j == InsuGraphItem.WMODE_END-1) {
+                                item.wMode = InsuGraphItem.WMODE_END;
+                                working = InsuGraphItem.WMODE_NON;
+                                mStopsGC = new GraphCoord( aXValues[i], 0.0, 0.0 );
+
+                            }
+                        }
+                    }
+                    mInsuGraphItemList.add(item);
+                }
+
+                plotLineUp = new GraphCoordPair(mStartGC, mMaximGC);
+                plotLineDn = new GraphCoordPair(mMaximGC, mStopsGC);
+
+                calculateInsuGraphPerid(plotLineUp);
+                calculateInsuGraphPerid(plotLineDn);
+
+                mXValsD = new ArrayList<>();
+                mXValsS = new ArrayList<>();
+                mYValsD = new ArrayList<>();
+
+                for( InsuGraphItem item : mInsuGraphItemList ) {
+                    mXValsD.add(item.xValue);
+                    mXValsS.add(""+item.xValue);
+                    mYValsD.add(item.yValue);
+                }
+            }
+        }
+
+        private void calculateInsuGraphPerid(GraphCoordPair plotLine) {
+            double x,y,x_1,y_1,x_2,y_2;
+
+            x_1 = plotLine.first.mX;
+            x_2 = plotLine.second.mX;
+
+            y_1 = plotLine.first.mY;
+            y_2 = plotLine.second.mY;
+
+            for ( int i=0; i<mInsuGraphItemList.size();i++) {
+                InsuGraphItem item = mInsuGraphItemList.get(i);
+                if (item.xValue > x_1 && item.xValue <x_2){
+                    x=item.xValue;
+                    y = (y_1*(x_2-x_1) + (x-x_1)*(y_2-y_1))
+                            /
+                            (x_2-x_1);
+                    item.yValue = y;
+                    mInsuGraphItemList.set(i,item);
+                }
+            }
+        }
+
+        public String toString(){
+            return "Start=["+ mStartGC.mX +"] Max=["+ mMaximGC.mX +"] End=["+ mStopsGC.mX +"] Values="+mInsuGraphItemList;
+        }
+
+        public ArrayList<Double> getXValsD() {
+            return mXValsD;
+        }
+
+        public ArrayList<String> getXValsS() {
+            return mXValsS;
+        }
+
+        public ArrayList<Double> getYValsD() {
+            return mYValsD;
+        }
+    }
+
+    public static class GraphCoordPair {
+
+        public final GraphCoord first;
+        public final GraphCoord second;
+
+        public GraphCoordPair(GraphCoord first, GraphCoord second){
+            this.first = first;
+            this.second = second;
+        }
+    }
+
+    public static class InsuGraphItem implements InsuGraphItemConstant{
+        public int wMode;
+        public double xValue;
+        public double yValue;
+
+        public String toString(){
+            return "["+wMode+"]["+xValue+"]["+yValue+"]";
+        }
+    }
+
+    public interface InsuGraphItemConstant {
+
+        // 1-start 2-max 3-max
+        public static int WMODE_NON = 0;
+        public static int WMODE_STT = 1;
+        public static int WMODE_STW = 10;
+        public static int WMODE_MAX = 2;
+        public static int WMODE_MAW = 20;
+        public static int WMODE_END = 3;
+
     }
 
 
