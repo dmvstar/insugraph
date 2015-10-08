@@ -20,7 +20,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.insulin.InsuGraphContent;
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < mCharts.length; i++) {
             // add some transparency to the color with "& 0x90FFFFFF"
             if(i<2){
-                data = getDataInsulin( insulins[i]);
+                data = getLineDataInsulin(insulins[i]);
                 data.setValueTypeface(mTf);
                 setupChart(mCharts[i], data, mColors[i % mColors.length]);
             } else {
@@ -187,22 +186,49 @@ public class MainActivity extends AppCompatActivity {
         return c;
     }
 
-    private InsuGraphContent getInsuGraphContent(double[] aInsulin){
-        //ArrayList<Double> xVals = new ArrayList<Double>();
+    private double[] getXAsis (double[] aInsulin){
         double[] a = new double[24];
         for (int i = 0; i < 24; i++) a[i]=i;
         double[] b = aInsulin;
         double[] c = merge(a, b);
+        return c;
+    }
+
+    private double[] getXAsisTwo (double[] aAInsulin, double[] aBInsulin){
+        double[] a = new double[24];
+        for (int i = 0; i < 24; i++) a[i]=i;
+        double[] b = aAInsulin;
+        double[] c = merge(a, b);
+        double[] r = merge(c,aBInsulin);
+        return r;
+    }
+
+
+    private InsuGraphContent getInsuGraphContent(double[] aInsulin){
+
+        double[] xAsis = getXAsis(aInsulin);
 
         InsuGraphContent insuGraphContent = new InsuGraphContent(1,0);
-        insuGraphContent.calculateInsuGraphItems(c, aInsulin);
+        insuGraphContent.calculateInsuGraphItems(xAsis, aInsulin);
 
-        Log.v(TAG,insuGraphContent.toString());
+        Log.v(TAG, insuGraphContent.toString());
 
         return insuGraphContent;
     }
 
-    private  LineData getDataInsulin(double[] aInsulin) {
+    private  LineData getCombinedLineDataInsulin(double[] aAInsulin, double[] aBInsulin) {
+
+        double[] xAsis = getXAsisTwo(aAInsulin, aBInsulin);
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+
+
+
+        return null;
+
+    }
+
+    private LineDataSet getDataSetInsulin(double[] aInsulin) {
 
         InsuGraphContent insuGraphContent = getInsuGraphContent(aInsulin);
 
@@ -232,6 +258,16 @@ public class MainActivity extends AppCompatActivity {
         set1.setDrawValues(false);
         set1.setDrawCubic(true);
         set1.setDrawFilled(true);
+
+        return set1;
+    }
+
+    private  LineData getLineDataInsulin(double[] aInsulin) {
+        InsuGraphContent insuGraphContent = getInsuGraphContent(aInsulin);
+
+        ArrayList<String> xValsS = insuGraphContent.getXValsS();
+
+        LineDataSet set1 = getDataSetInsulin(aInsulin);
 
         ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
         dataSets.add(set1); // add the datasets
@@ -271,7 +307,6 @@ public class MainActivity extends AppCompatActivity {
         set1.setDrawFilled(true);
 
         set1.setDrawCubic(true);
-
 
         ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
         dataSets.add(set1); // add the datasets

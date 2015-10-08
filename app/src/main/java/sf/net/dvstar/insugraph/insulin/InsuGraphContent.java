@@ -154,9 +154,6 @@ public class InsuGraphContent {
         }
     }
 
-
-
-
     public static class GraphCoordPair {
 
         public final GraphCoord first;
