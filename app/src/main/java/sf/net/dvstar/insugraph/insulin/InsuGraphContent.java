@@ -165,7 +165,7 @@ public class InsuGraphContent {
         }
     }
 
-    public static class InsuGraphItem implements InsuGraphItemConstant{
+    public static class InsuGraphItem implements InsulinConstants {
         public int wMode;
         public double xValue;
         public double yValue;
@@ -174,20 +174,6 @@ public class InsuGraphContent {
             return "["+wMode+"]["+xValue+"]["+yValue+"]";
         }
     }
-
-    public interface InsuGraphItemConstant {
-
-        // 1-start 2-max 3-end
-        public static int WMODE_NON = 0;
-        public static int WMODE_STT = 1;
-        public static int WMODE_STW = 10;
-        public static int WMODE_MAX = 2;
-        public static int WMODE_MAW = 20;
-        public static int WMODE_END = 3;
-
-    }
-
-
 
 
 }
