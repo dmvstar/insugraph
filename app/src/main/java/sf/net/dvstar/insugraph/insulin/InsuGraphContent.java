@@ -1,5 +1,12 @@
 package sf.net.dvstar.insugraph.insulin;
 
+import android.graphics.Color;
+import android.util.Log;
+
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +16,9 @@ import java.util.List;
 public class InsuGraphContent {
 
 
+    private static final String TAG = "InsuGraphContent";
+    private final double[] mInsulin;
+    private final String mInsulinName;
     private double mTimeInjection;
     private int mInsulinDose;
 
@@ -29,11 +39,21 @@ public class InsuGraphContent {
     private ArrayList<String> mXValsS;
     private ArrayList<Double> mYValsD;
 
-    public InsuGraphContent(int aInsulinDose, double aTimeInjection){
+
+    public InsuGraphContent(String aName, double[] aInsulin, int aInsulinDose, double aTimeInjection){
+        mInsulinName = aName;
         mInsulinDose = aInsulinDose;
         mTimeInjection = aTimeInjection;
-    }
+        mInsulin = aInsulin;
 
+        double[] xAsis = getXAsis( aInsulin );
+        calculateInsuGraphItems(xAsis, mInsulin);
+    }
+/*
+    public InsuGraphContent(double[] aInsulin, int aInsulinDose, double aTimeInjection){
+        this("", aInsulin, aInsulinDose, aTimeInjection);
+    }
+*/
     public void calculateInsuGraphItems(double[] aXValues, double[] aInsulin){
         mInsuGraphItemList = null;
         if (aXValues != null && aInsulin != null && aXValues.length>0){
@@ -142,6 +162,49 @@ public class InsuGraphContent {
         return mYValsD;
     }
 
+
+    private LineDataSet getDataSetInsulin() {
+        ArrayList<Double> xValsD = getXValsD();
+        ArrayList<String> xValsS = getXValsS();
+        ArrayList<Double> yValsD = getYValsD();
+        ArrayList<Entry> yValsE = new ArrayList<Entry>();
+        for (int i=0; i<yValsD.size(); i++){
+            double val = yValsD.get(i);
+            yValsE.add(new Entry((float)val, i));
+        }
+        Log.v(TAG, "!!!!" + xValsD.size() + "-" + xValsS.size() + "-" + yValsE.size());
+        // create a dataset and give it a type
+        LineDataSet set1 = new LineDataSet(yValsE, "Insulin "+mInsulinName);
+        // set1.setFillAlpha(110);
+        // set1.setFillColor(Color.RED);
+        set1.setLineWidth(1.75f);
+        set1.setCircleSize(3f);
+        set1.setColor(Color.WHITE);
+        set1.setCircleColor(Color.WHITE);
+        set1.setHighLightColor(Color.WHITE);
+        set1.setDrawValues(false);
+        set1.setDrawCubic(true);
+        set1.setDrawFilled(true);
+        return set1;
+    }
+
+
+
+    public LineData getLineDataInsulin() {
+        LineData data = null;
+        ArrayList<String> xValsS = getXValsS();
+        LineDataSet set1 = getDataSetInsulin();
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(set1); // add the datasets
+        // create a data object with the datasets
+        data = new LineData(xValsS, dataSets);
+        return data;
+    }
+
+    public String getInsulinName() {
+        return mInsulinName;
+    }
+
     public static class GraphCoord {
         public double mX;
         public double mY;
@@ -173,6 +236,14 @@ public class InsuGraphContent {
         public String toString(){
             return "["+wMode+"]["+xValue+"]["+yValue+"]";
         }
+    }
+
+    private double[] getXAsis (double[] aInsulin){
+        double[] a = new double[24];
+        for (int i = 0; i < 24; i++) a[i]=i;
+        double[] b = aInsulin;
+        double[] c = InsulinUtils.merge(a, b);
+        return c;
     }
 
 

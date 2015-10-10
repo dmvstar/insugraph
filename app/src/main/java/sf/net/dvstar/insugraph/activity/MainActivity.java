@@ -23,6 +23,8 @@ import java.util.Arrays;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.insulin.InsuGraphContent;
+import sf.net.dvstar.insugraph.insulin.InsuGraphProvider;
+import sf.net.dvstar.insugraph.insulin.InsulinUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,17 +52,23 @@ public class MainActivity extends AppCompatActivity {
 
         LineData data;
 
+        prepareDadaInsulin();
 
         for (int i = 0; i < mCharts.length; i++) {
             // add some transparency to the color with "& 0x90FFFFFF"
             if(i<2){
-                data = getLineDataInsulin(insulins[i]);
+
+                InsuGraphContent insulinGraphContent = vInsuGraphProvider.getInsulinGraphContent(i);
+                data = insulinGraphContent.getLineDataInsulin();
+                //data = getLineDataInsulin(insulins[i]);
                 data.setValueTypeface(mTf);
-                setupChart(mCharts[i], data, mColors[i % mColors.length]);
+                setupChart(insulinGraphContent.getInsulinName(), mCharts[i], data, mColors[i % mColors.length]);
+
+
             } else {
                 data = getData(36, 100);
                 data.setValueTypeface(mTf);
-                setupChart(mCharts[i], data, mColors[i % mColors.length]);
+                setupChart("Number "+i,mCharts[i], data, mColors[i % mColors.length]);
             }
         }
 
@@ -110,10 +118,13 @@ public class MainActivity extends AppCompatActivity {
             )
     };
 
-    private void setupChart(LineChart chart, LineData data, int color) {
+    private void setupChart(String title, LineChart chart, LineData data, int color) {
 
         // no description text
-        chart.setDescription("");
+        chart.setDescription(title);
+        chart.setDescriptionColor(Color.RED);
+        chart.setDescriptionTextSize(24f);
+
         chart.setNoDataTextDescription("You need to provide data for the chart.");
 
         // mChart.setDrawHorizontalGrid(false);
@@ -160,125 +171,21 @@ public class MainActivity extends AppCompatActivity {
     protected double[] actrapid = new double[]{20.0/60.0,   1.00,   6.0};
     protected double[] protafan = new double[]{1.0,         4.00,   18.0};
 
-    protected double[][] insulins = new double[][]{actrapid, protafan};
+    InsuGraphProvider vInsuGraphProvider = new InsuGraphProvider();
 
-    // hours
-    private double[] merge(double[] a, double[] b) {
-        int N = a.length;
-        int M = b.length;
-        int size = M+N;
-        for (double elementB : b){
-            if (Arrays.binarySearch(a, elementB)>=0){
-                size--;
-            }
-        }
-        double[] c = new double[size];
-        for (int i=0; i<a.length; i++){
-            c[i]=a[i];
-        }
-        for (int i=a.length, j=0; j<b.length; j++){
-            if (Arrays.binarySearch(c,b[j])<0){
-                c[i]=b[j];
-                i++;
-            }
-        }
-        Arrays.sort(c);
-        return c;
+    private void prepareDadaInsulin() {
+        vInsuGraphProvider.addInsulin("actrapid", actrapid, 1, 0 );
+        vInsuGraphProvider.addInsulin("protafan", protafan, 1, 0 );
     }
 
-    private double[] getXAsis (double[] aInsulin){
-        double[] a = new double[24];
-        for (int i = 0; i < 24; i++) a[i]=i;
-        double[] b = aInsulin;
-        double[] c = merge(a, b);
-        return c;
-    }
+    //----------------------------------------------------------------------------------------------
 
-    private double[] getXAsisTwo (double[] aAInsulin, double[] aBInsulin){
-        double[] a = new double[24];
-        for (int i = 0; i < 24; i++) a[i]=i;
-        double[] b = aAInsulin;
-        double[] c = merge(a, b);
-        double[] r = merge(c,aBInsulin);
-        return r;
-    }
-
-
-    private InsuGraphContent getInsuGraphContent(double[] aInsulin){
-
-        double[] xAsis = getXAsis(aInsulin);
-
-        InsuGraphContent insuGraphContent = new InsuGraphContent(1,0);
-        insuGraphContent.calculateInsuGraphItems(xAsis, aInsulin);
-
-        Log.v(TAG, insuGraphContent.toString());
-
-        return insuGraphContent;
-    }
-
-    private  LineData getCombinedLineDataInsulin(double[] aAInsulin, double[] aBInsulin) {
-
-        double[] xAsis = getXAsisTwo(aAInsulin, aBInsulin);
-
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-
-
-
-        return null;
-
-    }
-
-    private LineDataSet getDataSetInsulin(double[] aInsulin) {
-
-        InsuGraphContent insuGraphContent = getInsuGraphContent(aInsulin);
-
-        ArrayList<Double> xValsD = insuGraphContent.getXValsD();
-        ArrayList<String> xValsS = insuGraphContent.getXValsS();
-        ArrayList<Double> yValsD = insuGraphContent.getYValsD();
-
-        ArrayList<Entry> yValsE = new ArrayList<Entry>();
-
-        for (int i=0; i<yValsD.size(); i++){
-            double val = yValsD.get(i);
-            yValsE.add(new Entry((float)val, i));
-        }
-
-        Log.v(TAG, "!!!!"+xValsD.size()+"-"+xValsS.size()+"-"+yValsE.size());
-
-        // create a dataset and give it a type
-        LineDataSet set1 = new LineDataSet(yValsE, "DataSet 1");
-        // set1.setFillAlpha(110);
-        // set1.setFillColor(Color.RED);
-
-        set1.setLineWidth(1.75f);
-        set1.setCircleSize(3f);
-        set1.setColor(Color.WHITE);
-        set1.setCircleColor(Color.WHITE);
-        set1.setHighLightColor(Color.WHITE);
-        set1.setDrawValues(false);
-        set1.setDrawCubic(true);
-        set1.setDrawFilled(true);
-
-        return set1;
-    }
-
-    private  LineData getLineDataInsulin(double[] aInsulin) {
-        InsuGraphContent insuGraphContent = getInsuGraphContent(aInsulin);
-
-        ArrayList<String> xValsS = insuGraphContent.getXValsS();
-
-        LineDataSet set1 = getDataSetInsulin(aInsulin);
-
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-        dataSets.add(set1); // add the datasets
-
-        // create a data object with the datasets
-        LineData data = new LineData(xValsS, dataSets);
-
-        return data;
-    }
-
-
+    /**
+     * get random data for graph
+     * @param count
+     * @param range
+     * @return
+     */
     private LineData getData(int count, float range) {
 
         ArrayList<String> xVals = new ArrayList<String>();
@@ -315,6 +222,31 @@ public class MainActivity extends AppCompatActivity {
         LineData data = new LineData(xVals, dataSets);
 
         return data;
+    }
+
+
+    //----------------------------------------------------------------------------------------------
+
+    protected double[][] insulins = new double[][]{actrapid, protafan};
+
+    private double[] getXAsisTwo (double[] aAInsulin, double[] aBInsulin){
+        double[] a = new double[24];
+        for (int i = 0; i < 24; i++) a[i]=i;
+        double[] b = aAInsulin;
+        double[] c = InsulinUtils.merge(a, b);
+        double[] r = InsulinUtils.merge(c, aBInsulin);
+        return r;
+    }
+
+
+    private  LineData getCombinedLineDataInsulin(double[] aAInsulin, double[] aBInsulin) {
+
+        double[] xAsis = getXAsisTwo(aAInsulin, aBInsulin);
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+
+        return null;
+
     }
 
 
