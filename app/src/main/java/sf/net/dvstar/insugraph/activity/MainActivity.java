@@ -194,9 +194,8 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        vInsuGraphProvider.addInsulin("actrapid", actrapid, 1, 0 );
-        vInsuGraphProvider.addInsulin("protafan", protafan, 1, 0 );
-
+        vInsuGraphProvider.addInsulin(insulinWork1,1,0);
+        vInsuGraphProvider.addInsulin(insulinWork2,1,0);
 
     }
 

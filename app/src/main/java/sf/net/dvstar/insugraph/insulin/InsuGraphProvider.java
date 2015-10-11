@@ -29,38 +29,22 @@ public class InsuGraphProvider {
     private double[] mXAxisValues;
 
     /**
-     * noralise the x data for time for all insugraph
+     * normalise the x data for time for all insugraph
       */
-    public void noralizeXAxisValues(){
-    }
-
-    /**
-     * Add
-     * @param aInsulin
-     * @param aInsulinDose
-     * @param aTimeInjection
-     */
-    public void addInsulin(String aInsulinName, double[] aInsulin, int aInsulinDose, double aTimeInjection){
-
-        InsuGraphContent insuGraphContent = new InsuGraphContent(aInsulinName, aInsulin, aInsulinDose, aTimeInjection);
-        mInsuGraphContent.add(insuGraphContent);
+    public void normalizeXAxisValues(){
 
     }
+
 
     public void addInsulin(InsulinWork aInsulin, int aInsulinDose, double aTimeInjection){
-
         InsuGraphContent insuGraphContent = new InsuGraphContent(aInsulin, aInsulinDose, aTimeInjection);
         mInsuGraphContent.add(insuGraphContent);
-
     }
 
 
 
     public InsuGraphContent getInsulinGraphContent( int index ){
-
         return mInsuGraphContent.get( index );
-
     }
-
 
 }

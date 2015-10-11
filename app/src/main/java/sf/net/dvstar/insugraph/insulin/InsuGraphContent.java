@@ -18,7 +18,7 @@ public class InsuGraphContent {
 
     private static final String TAG = "InsuGraphContent";
 
-    private double[] mInsulin;
+    //private double[] mInsulin;
     private String mInsulinName;
     private InsulinWork mInsulinWork;
     private double mTimeInjection;
@@ -32,39 +32,17 @@ public class InsuGraphContent {
 
     private GraphCoordPair plotLineUp;
     private GraphCoordPair plotLineDn;
-    /*
-    private public double mStart;
-    private public double mMaxim;
-    private public double mStops;
-    */
+
     private ArrayList<Double> mXValsD;
     private ArrayList<String> mXValsS;
     private ArrayList<Double> mYValsD;
 
 
-    public InsuGraphContent(String aName, double[] aInsulin, int aInsulinDose, double aTimeInjection){
-        mInsulinName = aName;
+    public InsuGraphContent(InsulinWork aInsulinWork, int aInsulinDose, double aTimeInjection) {
         mInsulinDose = aInsulinDose;
         mTimeInjection = aTimeInjection;
-        mInsulin = aInsulin;
-
-        InsulinWork insulinWork = new InsulinWork(
-                aName,
-                new InsulinWork.InsulinTime[]{
-                        new InsulinWork.InsulinTime(aInsulin[0],"h"),
-                        new InsulinWork.InsulinTime(aInsulin[1], "h"),
-                        new InsulinWork.InsulinTime(aInsulin[2], "h")
-                }
-        );
-        this.mInsulinWork = insulinWork;
-        double[] xAsis = getXAsis( aInsulin );
-        calculateInsuGraphItems(xAsis, mInsulin);
-    }
-
-    public InsuGraphContent(InsulinWork aInsulin, int aInsulinDose, double aTimeInjection) {
-        mInsulinDose = aInsulinDose;
-        mTimeInjection = aTimeInjection;
-        mInsulinWork = aInsulin;
+        mInsulinWork = aInsulinWork;
+        calculateInsuGraphItems(getXAsis());
     }
 
     /*
@@ -72,8 +50,10 @@ public class InsuGraphContent {
             this("", aInsulin, aInsulinDose, aTimeInjection);
         }
     */
-    public void calculateInsuGraphItems(double[] aXValues, double[] aInsulin){
+    public void calculateInsuGraphItems(double[] aXValues){
         mInsuGraphItemList = null;
+        double[] aInsulin = mInsulinWork.getDoubleArray();
+
         if (aXValues != null && aInsulin != null && aXValues.length>0){
             mInsuGraphItemList = new ArrayList<InsuGraphItem>();
             int working = 0;
@@ -258,12 +238,14 @@ public class InsuGraphContent {
         }
     }
 
-    private double[] getXAsis (double[] aInsulin){
-        double[] a = new double[24];
-        for (int i = 0; i < 24; i++) a[i]=i;
-        double[] b = aInsulin;
-        double[] c = InsulinUtils.merge(a, b);
-        return c;
+    private double[] getXAsis (){
+        double[] xAxisHours = new double[24];
+        for (int i = 0; i < 24; i++) xAxisHours[i]=i;
+
+        double[] bInsulin = mInsulinWork.getDoubleArray();
+
+        double[] ret = InsulinUtils.merge(xAxisHours, bInsulin);
+        return ret;
     }
 
 

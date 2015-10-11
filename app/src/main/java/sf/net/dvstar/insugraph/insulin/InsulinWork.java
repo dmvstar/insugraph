@@ -10,11 +10,36 @@ public class InsulinWork implements InsulinConstants{
     private String mName;
     private String mFirm;
     private int    mWorkKind;
+    private double[] mDubleArray;
 
     public InsulinWork(String aName, InsulinTime[] aInsulinTimes){
         this.setName(aName);
         this.setInsulinTime(aInsulinTimes);
+        this.mDubleArray = new double[aInsulinTimes.length];
+        for (int i=0;i<aInsulinTimes.length;i++) {mDubleArray[i]=aInsulinTimes[i].mWorkTime;}
         this.mWorkKind = I_WORK_MODE_HOURS;
+        recalculateTo(mWorkKind);
+    }
+
+    private void recalculateTo(int mWorkKind) {
+        for( InsulinTime i : mInsulinTimes ) {
+
+            if(i.mWorkKind!=mWorkKind) {
+
+                if(i.mWorkKind == I_WORK_MODE_MINUTES) {
+                    i.mWorkTime = i.mWorkTime/60;
+                } else {
+                    i.mWorkTime = i.mWorkTime*60;
+                }
+
+            }
+        }
+    }
+
+    public double[] getDoubleArray(){
+
+        return mDubleArray;
+
     }
 
     public InsulinTime[] getInsulinTime() {
