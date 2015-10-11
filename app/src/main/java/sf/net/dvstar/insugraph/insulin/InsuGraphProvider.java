@@ -2,6 +2,7 @@ package sf.net.dvstar.insugraph.insulin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by dstarzhynskyi on 09.10.2015.
@@ -25,22 +26,22 @@ public class InsuGraphProvider {
      */
     private InsuGraphContent mInsuGraphSummary;
 
-
     private double[] mXAxisValues;
 
     /**
      * normalise the x data for time for all insugraph
       */
     public void normalizeXAxisValues(){
+        for (ListIterator<InsuGraphContent> it = mInsuGraphContent.listIterator(); it.hasNext(); ) {
+            InsuGraphContent t = it.next();
 
+        }
     }
-
 
     public void addInsulin(InsulinWork aInsulin, int aInsulinDose, double aTimeInjection){
         InsuGraphContent insuGraphContent = new InsuGraphContent(aInsulin, aInsulinDose, aTimeInjection);
         mInsuGraphContent.add(insuGraphContent);
     }
-
 
 
     public InsuGraphContent getInsulinGraphContent( int index ){
