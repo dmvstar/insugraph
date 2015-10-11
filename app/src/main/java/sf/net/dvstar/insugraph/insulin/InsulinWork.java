@@ -28,8 +28,10 @@ public class InsulinWork implements InsulinConstants{
 
                 if(i.mWorkKind == I_WORK_MODE_MINUTES) {
                     i.mWorkTime = i.mWorkTime/60;
+                    i.mWorkKind = mWorkKind;
                 } else {
                     i.mWorkTime = i.mWorkTime*60;
+                    i.mWorkKind = mWorkKind;
                 }
 
             }

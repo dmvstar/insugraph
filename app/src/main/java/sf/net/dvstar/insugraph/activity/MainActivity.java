@@ -57,20 +57,35 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < mCharts.length; i++) {
             // add some transparency to the color with "& 0x90FFFFFF"
-            if(i<2){
 
-                InsuGraphContent insulinGraphContent = vInsuGraphProvider.getInsulinGraphContent(i);
-                data = insulinGraphContent.getLineDataInsulin();
-                //data = getLineDataInsulin(insulins[i]);
-                data.setValueTypeface(mTf);
-                setupChart(insulinGraphContent.getInsulinName(), mCharts[i], data, mColors[i % mColors.length]);
+            switch(i) {
 
+                case 0:
+                case 1: {
+                    InsuGraphContent insulinGraphContent = vInsuGraphProvider.getInsulinGraphContent(i);
+                    data = insulinGraphContent.getLineDataInsulin();
+                    //data = getLineDataInsulin(insulins[i]);
+                    data.setValueTypeface(mTf);
+                    setupChart(insulinGraphContent.getInsulinName(), mCharts[i], data, mColors[i % mColors.length]);
+                } break;
 
-            } else {
-                data = getData(36, 100);
-                data.setValueTypeface(mTf);
-                setupChart("Number "+i,mCharts[i], data, mColors[i % mColors.length]);
+                case 2: {
+                    data = vInsuGraphProvider.getLineDataCombineInsulin();
+                    data.setValueTypeface(mTf);
+                    setupChart(vInsuGraphProvider.getLineDataCombineInsulinNames(), mCharts[i], data, mColors[i % mColors.length]);
+                } break;
+
+                case 3: {
+                    data = getData(36, 100);
+                    data.setValueTypeface(mTf);
+                    setupChart("Number "+i,mCharts[i], data, mColors[i % mColors.length]);
+                } break;
+
+                default: break;
+
             }
+
+
         }
 
 
@@ -176,7 +191,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void prepareDadaInsulin() {
 
-        InsulinWork insulinWork1 = new InsulinWork(
+        InsulinWork insulinWork;
+
+        insulinWork = new InsulinWork(
                 "actrapid",
                 new InsulinWork.InsulinTime[]{
                         new InsulinWork.InsulinTime(20,"m"),
@@ -184,8 +201,9 @@ public class MainActivity extends AppCompatActivity {
                         new InsulinWork.InsulinTime(6, "h")
                 }
         );
+        vInsuGraphProvider.addInsulin(insulinWork,1,0);
 
-        InsulinWork insulinWork2 = new InsulinWork(
+        insulinWork = new InsulinWork(
                 "protafan",
                 new InsulinWork.InsulinTime[]{
                         new InsulinWork.InsulinTime(1, "h"),
@@ -193,9 +211,9 @@ public class MainActivity extends AppCompatActivity {
                         new InsulinWork.InsulinTime(18,"h")
                 }
         );
-
-        vInsuGraphProvider.addInsulin(insulinWork1,1,0);
-        vInsuGraphProvider.addInsulin(insulinWork2,1,0);
+        vInsuGraphProvider.addInsulin(insulinWork,1,0);
+        vInsuGraphProvider.normalizeXAxisValues();
+        vInsuGraphProvider.createSummaryInsulin();
 
     }
 

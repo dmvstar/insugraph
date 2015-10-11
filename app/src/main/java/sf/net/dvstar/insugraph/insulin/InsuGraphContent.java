@@ -18,8 +18,6 @@ public class InsuGraphContent {
 
     private static final String TAG = "InsuGraphContent";
 
-    //private double[] mInsulin;
-    private String mInsulinName;
     private InsulinWork mInsulinWork;
     private double mTimeInjection;
     private int mInsulinDose;
@@ -36,54 +34,61 @@ public class InsuGraphContent {
     private ArrayList<Double> mXValsD;
     private ArrayList<String> mXValsS;
     private ArrayList<Double> mYValsD;
+    private double[] mXAsisValues;
 
 
     public InsuGraphContent(InsulinWork aInsulinWork, int aInsulinDose, double aTimeInjection) {
         mInsulinDose = aInsulinDose;
         mTimeInjection = aTimeInjection;
         mInsulinWork = aInsulinWork;
-        calculateInsuGraphItems(getXAsis());
+        calculateXAsisValues();
+        calculateInsuGraphItems();
     }
 
-    /*
-        public InsuGraphContent(double[] aInsulin, int aInsulinDose, double aTimeInjection){
-            this("", aInsulin, aInsulinDose, aTimeInjection);
-        }
-    */
-    public void calculateInsuGraphItems(double[] aXValues){
+    private void calculateXAsisValues() {
+        double[] xAxisHours = new double[24];
+        for (int i = 0; i < 24; i++) xAxisHours[i]=i;
+
+        double[] bInsulin = mInsulinWork.getDoubleArray();
+
+        mXAsisValues = InsulinUtils.merge(xAxisHours, bInsulin);
+    }
+
+    public void calculateInsuGraphItems(){
         mInsuGraphItemList = null;
+
         double[] aInsulin = mInsulinWork.getDoubleArray();
 
-        if (aXValues != null && aInsulin != null && aXValues.length>0){
+        if (mXAsisValues != null && aInsulin != null && mXAsisValues.length>0){
             mInsuGraphItemList = new ArrayList<InsuGraphItem>();
             int working = 0;
-            for (int i = 0; i < aXValues.length; i++) {
+            for (int i = 0; i < mXAsisValues.length; i++) {
                 InsuGraphItem item = new InsuGraphItem();
-                item.xValue = aXValues[i];
+                item.xValue = mXAsisValues[i];
                 item.yValue = 0;
                 if(working>0) item.wMode = working;
 
                 for (int j = 0; j < aInsulin.length; j++) {
                     double val = aInsulin[j];
 
-                    if(aXValues[i] == val) {
+                    if(mXAsisValues[i] == val) {
                         if (j == InsuGraphItem.WMODE_STT-1) {
                             item.wMode = InsuGraphItem.WMODE_STT;
                             working = InsuGraphItem.WMODE_STW;
 
-                            mStartGC = new GraphCoord( aXValues[i], 0.0, 0.0 );
+                            mStartGC = new GraphCoord( mXAsisValues[i], 0.0, 0.0 );
                         }
                         if (j == InsuGraphItem.WMODE_MAX-1) {
                             item.wMode = InsuGraphItem.WMODE_MAX;
                             item.yValue = 1;
-                            mMaximGC = new GraphCoord( aXValues[i], 1.0, 1.0);
+                            mMaximGC = new GraphCoord( mXAsisValues[i], 1.0, 1.0);
 
                             working = InsuGraphItem.WMODE_MAW;
                         }
                         if (j == InsuGraphItem.WMODE_END-1) {
                             item.wMode = InsuGraphItem.WMODE_END;
                             working = InsuGraphItem.WMODE_NON;
-                            mStopsGC = new GraphCoord( aXValues[i], 0.0, 0.0 );
+                            mStopsGC = new GraphCoord( mXAsisValues[i], 0.0, 0.0 );
 
                         }
                     }
@@ -150,9 +155,7 @@ public class InsuGraphContent {
         return "Start=["+ mStartGC.mX +"] Max=["+ mMaximGC.mX +"] End=["+ mStopsGC.mX +"] Values="+mInsuGraphItemList;
     }
 
-    public ArrayList<Double> getXValsD() {
-        return mXValsD;
-    }
+    public ArrayList<Double> getXValsD() { return mXValsD; }
 
     public ArrayList<String> getXValsS() {
         return mXValsS;
@@ -163,7 +166,7 @@ public class InsuGraphContent {
     }
 
 
-    private LineDataSet getDataSetInsulin() {
+    public LineDataSet getDataSetInsulin() {
         ArrayList<Double> xValsD = getXValsD();
         ArrayList<String> xValsS = getXValsS();
         ArrayList<Double> yValsD = getYValsD();
@@ -174,7 +177,7 @@ public class InsuGraphContent {
         }
         Log.v(TAG, "!!!!" + xValsD.size() + "-" + xValsS.size() + "-" + yValsE.size());
         // create a dataset and give it a type
-        LineDataSet set1 = new LineDataSet(yValsE, "Insulin "+mInsulinName);
+        LineDataSet set1 = new LineDataSet(yValsE, "Insulin "+ mInsulinWork.getName());
         // set1.setFillAlpha(110);
         // set1.setFillColor(Color.RED);
         set1.setLineWidth(1.75f);
@@ -188,8 +191,6 @@ public class InsuGraphContent {
         return set1;
     }
 
-
-
     public LineData getLineDataInsulin() {
         LineData data = null;
         ArrayList<String> xValsS = getXValsS();
@@ -202,7 +203,7 @@ public class InsuGraphContent {
     }
 
     public String getInsulinName() {
-        return mInsulinName;
+        return mInsulinWork.getName();
     }
 
     public static class GraphCoord {
@@ -238,15 +239,14 @@ public class InsuGraphContent {
         }
     }
 
-    private double[] getXAsis (){
-        double[] xAxisHours = new double[24];
-        for (int i = 0; i < 24; i++) xAxisHours[i]=i;
+    //----------------------------------------------------------------------------------------------
 
-        double[] bInsulin = mInsulinWork.getDoubleArray();
-
-        double[] ret = InsulinUtils.merge(xAxisHours, bInsulin);
-        return ret;
+    public double[] getXAsisValues (){
+        return mXAsisValues;
     }
 
+    public void setXAsisValues (double[] aXAsisValues){
+        mXAsisValues = aXAsisValues;
+    }
 
 }

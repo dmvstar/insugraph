@@ -1,5 +1,8 @@
 package sf.net.dvstar.insugraph.insulin;
 
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -32,10 +35,27 @@ public class InsuGraphProvider {
      * normalise the x data for time for all insugraph
       */
     public void normalizeXAxisValues(){
-        for (ListIterator<InsuGraphContent> it = mInsuGraphContent.listIterator(); it.hasNext(); ) {
-            InsuGraphContent t = it.next();
 
+        double[] normalizedXAxisValues = new double[0];
+        int counter=0;
+        // calculate
+        for (ListIterator<InsuGraphContent> it = mInsuGraphContent.listIterator(); it.hasNext(); ) {
+            InsuGraphContent insuGraphContent = it.next();
+            double[] current  = insuGraphContent.getXAsisValues();
+            if(counter==0) {
+                normalizedXAxisValues = current;
+            } else {
+                InsulinUtils.merge(current, normalizedXAxisValues);
+            }
+            counter++;
         }
+        // store to
+        for (ListIterator<InsuGraphContent> it = mInsuGraphContent.listIterator(); it.hasNext(); ) {
+            InsuGraphContent insuGraphContent = it.next();
+            insuGraphContent.setXAsisValues(normalizedXAxisValues);
+            insuGraphContent.calculateInsuGraphItems();
+        }
+
     }
 
     public void addInsulin(InsulinWork aInsulin, int aInsulinDose, double aTimeInjection){
@@ -43,6 +63,32 @@ public class InsuGraphProvider {
         mInsuGraphContent.add(insuGraphContent);
     }
 
+    public void createSummaryInsulin(){
+
+    }
+
+    public LineData getLineDataCombineInsulin() {
+        LineData data = null;
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        ArrayList<String> xValsS = null;
+        for (ListIterator<InsuGraphContent> it = mInsuGraphContent.listIterator(); it.hasNext(); ) {
+            InsuGraphContent insuGraphContent = it.next();
+            xValsS = insuGraphContent.getXValsS();
+            LineDataSet lineDataSet = insuGraphContent.getDataSetInsulin();
+            dataSets.add(lineDataSet); // add the datasets
+        }
+        // create a data object with the datasets
+        data = new LineData(xValsS, dataSets);
+        return data;
+    }
+
+    public String getLineDataCombineInsulinNames() {
+        String data = "";
+        for (ListIterator<InsuGraphContent> it = mInsuGraphContent.listIterator(); it.hasNext(); ) {
+            data += it.next().getInsulinName()+" ";
+        }
+        return data;
+    }
 
     public InsuGraphContent getInsulinGraphContent( int index ){
         return mInsuGraphContent.get( index );
