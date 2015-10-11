@@ -13,5 +13,10 @@ public interface InsulinConstants {
     public static int WMODE_MAW = 20;
     public static int WMODE_END = 3;
 
+    public static int I_WORK_MODE_MINUTES = 1;
+    public static int I_WORK_MODE_HOURS = 2;
+    public static String S_WORK_MODE_MINUTES = "m";
+    public static String S_WORK_MODE_HOURS = "h";
+
 
 }

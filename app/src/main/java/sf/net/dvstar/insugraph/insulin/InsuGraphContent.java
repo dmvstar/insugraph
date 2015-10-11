@@ -17,8 +17,10 @@ public class InsuGraphContent {
 
 
     private static final String TAG = "InsuGraphContent";
-    private final double[] mInsulin;
-    private final String mInsulinName;
+
+    private double[] mInsulin;
+    private String mInsulinName;
+    private InsulinWork mInsulinWork;
     private double mTimeInjection;
     private int mInsulinDose;
 
@@ -46,14 +48,30 @@ public class InsuGraphContent {
         mTimeInjection = aTimeInjection;
         mInsulin = aInsulin;
 
+        InsulinWork insulinWork = new InsulinWork(
+                aName,
+                new InsulinWork.InsulinTime[]{
+                        new InsulinWork.InsulinTime(aInsulin[0],"h"),
+                        new InsulinWork.InsulinTime(aInsulin[1], "h"),
+                        new InsulinWork.InsulinTime(aInsulin[2], "h")
+                }
+        );
+        this.mInsulinWork = insulinWork;
         double[] xAsis = getXAsis( aInsulin );
         calculateInsuGraphItems(xAsis, mInsulin);
     }
-/*
-    public InsuGraphContent(double[] aInsulin, int aInsulinDose, double aTimeInjection){
-        this("", aInsulin, aInsulinDose, aTimeInjection);
+
+    public InsuGraphContent(InsulinWork aInsulin, int aInsulinDose, double aTimeInjection) {
+        mInsulinDose = aInsulinDose;
+        mTimeInjection = aTimeInjection;
+        mInsulinWork = aInsulin;
     }
-*/
+
+    /*
+        public InsuGraphContent(double[] aInsulin, int aInsulinDose, double aTimeInjection){
+            this("", aInsulin, aInsulinDose, aTimeInjection);
+        }
+    */
     public void calculateInsuGraphItems(double[] aXValues, double[] aInsulin){
         mInsuGraphItemList = null;
         if (aXValues != null && aInsulin != null && aXValues.length>0){
@@ -143,7 +161,9 @@ public class InsuGraphContent {
      * @return
      */
     private double addDistortion(double y, GraphCoordPair plotLine) {
+
         return y;
+
     }
 
     public String toString(){

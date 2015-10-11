@@ -25,6 +25,7 @@ import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.insulin.InsuGraphContent;
 import sf.net.dvstar.insugraph.insulin.InsuGraphProvider;
 import sf.net.dvstar.insugraph.insulin.InsulinUtils;
+import sf.net.dvstar.insugraph.insulin.InsulinWork;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -174,8 +175,29 @@ public class MainActivity extends AppCompatActivity {
     InsuGraphProvider vInsuGraphProvider = new InsuGraphProvider();
 
     private void prepareDadaInsulin() {
+
+        InsulinWork insulinWork1 = new InsulinWork(
+                "actrapid",
+                new InsulinWork.InsulinTime[]{
+                        new InsulinWork.InsulinTime(20,"m"),
+                        new InsulinWork.InsulinTime(1, "h"),
+                        new InsulinWork.InsulinTime(6, "h")
+                }
+        );
+
+        InsulinWork insulinWork2 = new InsulinWork(
+                "protafan",
+                new InsulinWork.InsulinTime[]{
+                        new InsulinWork.InsulinTime(1, "h"),
+                        new InsulinWork.InsulinTime(4, "h"),
+                        new InsulinWork.InsulinTime(18,"h")
+                }
+        );
+
         vInsuGraphProvider.addInsulin("actrapid", actrapid, 1, 0 );
         vInsuGraphProvider.addInsulin("protafan", protafan, 1, 0 );
+
+
     }
 
     //----------------------------------------------------------------------------------------------

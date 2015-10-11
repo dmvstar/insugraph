@@ -47,6 +47,15 @@ public class InsuGraphProvider {
 
     }
 
+    public void addInsulin(InsulinWork aInsulin, int aInsulinDose, double aTimeInjection){
+
+        InsuGraphContent insuGraphContent = new InsuGraphContent(aInsulin, aInsulinDose, aTimeInjection);
+        mInsuGraphContent.add(insuGraphContent);
+
+    }
+
+
+
     public InsuGraphContent getInsulinGraphContent( int index ){
 
         return mInsuGraphContent.get( index );
