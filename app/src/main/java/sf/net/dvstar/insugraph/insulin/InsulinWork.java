@@ -22,6 +22,7 @@ public class InsulinWork implements InsulinConstants{
     }
 
     private void recalculateTo(int mWorkKind) {
+        int pos = 0;
         for( InsulinTime i : mInsulinTimes ) {
 
             if(i.mWorkKind!=mWorkKind) {
@@ -34,14 +35,17 @@ public class InsulinWork implements InsulinConstants{
                     i.mWorkKind = mWorkKind;
                 }
 
+                mInsulinTimes[pos] = i;
+
             }
+            pos++;
         }
+        for (int i=0;i<mInsulinTimes.length;i++) {mDubleArray[i]=mInsulinTimes[i].mWorkTime;}
+
     }
 
     public double[] getDoubleArray(){
-
         return mDubleArray;
-
     }
 
     public InsulinTime[] getInsulinTime() {

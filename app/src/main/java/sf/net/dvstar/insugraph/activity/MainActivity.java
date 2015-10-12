@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
                         new InsulinWork.InsulinTime(6, "h")
                 }
         );
-        vInsuGraphProvider.addInsulin(insulinWork,1,0);
+        vInsuGraphProvider.addInsulin(insulinWork,8,0);
 
         insulinWork = new InsulinWork(
                 "protafan",
@@ -211,8 +211,10 @@ public class MainActivity extends AppCompatActivity {
                         new InsulinWork.InsulinTime(18,"h")
                 }
         );
-        vInsuGraphProvider.addInsulin(insulinWork,1,0);
+        vInsuGraphProvider.addInsulin(insulinWork,16,0);
+
         vInsuGraphProvider.normalizeXAxisValues();
+
         vInsuGraphProvider.createSummaryInsulin();
 
     }

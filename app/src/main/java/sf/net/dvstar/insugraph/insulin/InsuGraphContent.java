@@ -38,9 +38,9 @@ public class InsuGraphContent {
 
 
     public InsuGraphContent(InsulinWork aInsulinWork, int aInsulinDose, double aTimeInjection) {
-        mInsulinDose = aInsulinDose;
-        mTimeInjection = aTimeInjection;
-        mInsulinWork = aInsulinWork;
+        mInsulinDose    = aInsulinDose;
+        mTimeInjection  = aTimeInjection;
+        mInsulinWork    = aInsulinWork;
         calculateXAsisValues();
         calculateInsuGraphItems();
     }
@@ -76,19 +76,19 @@ public class InsuGraphContent {
                             item.wMode = InsuGraphItem.WMODE_STT;
                             working = InsuGraphItem.WMODE_STW;
 
-                            mStartGC = new GraphCoord( mXAsisValues[i], 0.0, 0.0 );
+                            mStartGC = new GraphCoord( mXAsisValues[i], 0.0*mInsulinDose);
                         }
                         if (j == InsuGraphItem.WMODE_MAX-1) {
                             item.wMode = InsuGraphItem.WMODE_MAX;
                             item.yValue = 1;
-                            mMaximGC = new GraphCoord( mXAsisValues[i], 1.0, 1.0);
+                            mMaximGC = new GraphCoord( mXAsisValues[i], 1.0*mInsulinDose);
 
                             working = InsuGraphItem.WMODE_MAW;
                         }
                         if (j == InsuGraphItem.WMODE_END-1) {
                             item.wMode = InsuGraphItem.WMODE_END;
                             working = InsuGraphItem.WMODE_NON;
-                            mStopsGC = new GraphCoord( mXAsisValues[i], 0.0, 0.0 );
+                            mStopsGC = new GraphCoord( mXAsisValues[i], 0.0*mInsulinDose);
 
                         }
                     }
@@ -114,13 +114,14 @@ public class InsuGraphContent {
         }
     }
 
+
     private void calculateInsuGraphAdditons(GraphCoordPair plotLine) {
         double x,y,x_1,y_1,x_2,y_2;
 
         x_1 = plotLine.first.mX;
-        x_2 = plotLine.second.mX;
-
         y_1 = plotLine.first.mY;
+
+        x_2 = plotLine.second.mX;
         y_2 = plotLine.second.mY;
 
         for ( int i=0; i<mInsuGraphItemList.size();i++) {
@@ -152,7 +153,7 @@ public class InsuGraphContent {
     }
 
     public String toString(){
-        return "Start=["+ mStartGC.mX +"] Max=["+ mMaximGC.mX +"] End=["+ mStopsGC.mX +"] Values="+mInsuGraphItemList;
+        return "Start=["+ mStartGC.mX +"] Max=["+ mMaximGC.mX +"] End=["+ mStopsGC.mX +"] Values("+mInsuGraphItemList.size()+")="+mInsuGraphItemList;
     }
 
     public ArrayList<Double> getXValsD() { return mXValsD; }
@@ -209,12 +210,14 @@ public class InsuGraphContent {
     public static class GraphCoord {
         public double mX;
         public double mY;
-        public double mV;
 
-        public GraphCoord(double aX,double aY,double aV){
+        public GraphCoord(double aX,double aY){
             mX=aX;
             mY=aY;
-            mV=aV;
+        }
+
+        public String toString(){
+            return "["+mX+"]["+mY+"]";
         }
     }
 
@@ -226,6 +229,10 @@ public class InsuGraphContent {
         public GraphCoordPair(GraphCoord first, GraphCoord second){
             this.first = first;
             this.second = second;
+        }
+
+        public String toString(){
+            return "("+first+")("+second+")";
         }
     }
 

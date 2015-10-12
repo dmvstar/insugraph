@@ -1,5 +1,7 @@
 package sf.net.dvstar.insugraph.insulin;
 
+import android.util.Log;
+
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
@@ -11,6 +13,8 @@ import java.util.ListIterator;
  * Created by dstarzhynskyi on 09.10.2015.
  */
 public class InsuGraphProvider {
+
+    private static final String TAG = "InsuGraphProvider";
 
     public InsuGraphProvider(){
         mInsuGraphContent = new ArrayList<InsuGraphContent>();
@@ -54,6 +58,9 @@ public class InsuGraphProvider {
             InsuGraphContent insuGraphContent = it.next();
             insuGraphContent.setXAsisValues(normalizedXAxisValues);
             insuGraphContent.calculateInsuGraphItems();
+
+            Log.v(TAG, "+++" + insuGraphContent);
+
         }
 
     }
@@ -61,6 +68,7 @@ public class InsuGraphProvider {
     public void addInsulin(InsulinWork aInsulin, int aInsulinDose, double aTimeInjection){
         InsuGraphContent insuGraphContent = new InsuGraphContent(aInsulin, aInsulinDose, aTimeInjection);
         mInsuGraphContent.add(insuGraphContent);
+        Log.v(TAG, "---"+insuGraphContent);
     }
 
     public void createSummaryInsulin(){
