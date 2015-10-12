@@ -80,7 +80,7 @@ public class InsuGraphContent {
                         }
                         if (j == InsuGraphItem.WMODE_MAX-1) {
                             item.wMode = InsuGraphItem.WMODE_MAX;
-                            item.yValue = 1;
+                            item.yValue = 1*mInsulinDose;
                             mMaximGC = new GraphCoord( mXAsisValues[i], 1.0*mInsulinDose);
 
                             working = InsuGraphItem.WMODE_MAW;
