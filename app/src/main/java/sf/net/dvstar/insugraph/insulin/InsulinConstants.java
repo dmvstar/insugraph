@@ -15,8 +15,11 @@ public interface InsulinConstants {
 
     public static int I_WORK_MODE_MINUTES = 1;
     public static int I_WORK_MODE_HOURS = 2;
+
     public static String S_WORK_MODE_MINUTES = "m";
     public static String S_WORK_MODE_HOURS = "h";
 
+    public static int L_DIRECTION_UP = 1;
+    public static int L_DIRECTION_DN = 2;
 
 }

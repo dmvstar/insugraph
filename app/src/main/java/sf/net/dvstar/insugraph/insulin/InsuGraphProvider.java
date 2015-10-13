@@ -1,7 +1,9 @@
 package sf.net.dvstar.insugraph.insulin;
 
+import android.graphics.Color;
 import android.util.Log;
 
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
@@ -71,8 +73,53 @@ public class InsuGraphProvider {
         Log.v(TAG, "---"+insuGraphContent);
     }
 
-    public void createSummaryInsulin(){
+    public LineData getLineDataSummaryInsulin(){
+        LineData data = null;
 
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        ArrayList<String> xValsS = null;
+        ArrayList<Double> yValsDSum = null;
+        boolean first = true;
+        for (ListIterator<InsuGraphContent> it = mInsuGraphContent.listIterator(); it.hasNext(); ) {
+            InsuGraphContent insuGraphContent = it.next();
+            if (xValsS == null)     xValsS= insuGraphContent.getXValsS();
+            if (yValsDSum == null)  yValsDSum = new ArrayList<Double>();
+            ArrayList<Double> yValsD = insuGraphContent.getYValsD();
+            if(first) {
+                for ( int i=0; i<yValsD.size();i++ ){
+                    yValsDSum.add(yValsD.get(i));
+                }
+                first = false;
+            } else {
+                for ( int i=0; i<yValsD.size();i++ ){
+                    Double d = yValsDSum.get(i);
+                    d+=yValsD.get(i);
+                    yValsDSum.set(i, d);
+                }
+            }
+            //LineDataSet lineDataSet = insuGraphContent.getDataSetInsulin();
+            //dataSets.add(lineDataSet); // add the datasets
+        }
+        ArrayList<Entry> yValsE = new ArrayList<Entry>();
+        for (int i=0; i<yValsDSum.size(); i++){
+            double val = yValsDSum.get(i);
+            yValsE.add(new Entry((float)val, i));
+        }
+        // create a dataset and give it a type
+        LineDataSet dataSetsLineDataSet = new LineDataSet(yValsE, "Insulin Summary");
+        // set1.setFillAlpha(110);
+        // set1.setFillColor(Color.RED);
+        dataSetsLineDataSet.setLineWidth(1.75f);
+        dataSetsLineDataSet.setCircleSize(3f);
+        dataSetsLineDataSet.setColor(Color.WHITE);
+        dataSetsLineDataSet.setCircleColor(Color.WHITE);
+        dataSetsLineDataSet.setHighLightColor(Color.WHITE);
+        dataSetsLineDataSet.setDrawValues(false);
+        dataSetsLineDataSet.setDrawCubic(true);
+        dataSetsLineDataSet.setDrawFilled(true);
+        // create a data object with the datasets
+        data = new LineData(xValsS, dataSetsLineDataSet);
+        return data;
     }
 
     public LineData getLineDataCombineInsulin() {
@@ -102,4 +149,7 @@ public class InsuGraphProvider {
         return mInsuGraphContent.get( index );
     }
 
+    public void createSummaryInsulin() {
+
+    }
 }

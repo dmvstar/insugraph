@@ -76,9 +76,15 @@ public class MainActivity extends AppCompatActivity {
                 } break;
 
                 case 3: {
+                    /*
                     data = getData(36, 100);
                     data.setValueTypeface(mTf);
-                    setupChart("Number "+i,mCharts[i], data, mColors[i % mColors.length]);
+                    setupChart("Number " + i, mCharts[i], data, mColors[i % mColors.length]);
+                    */
+                    data = vInsuGraphProvider.getLineDataSummaryInsulin();
+                    data.setValueTypeface(mTf);
+                    setupChart("Summary" + i, mCharts[i], data, mColors[i % mColors.length]);
+
                 } break;
 
                 default: break;

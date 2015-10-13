@@ -96,8 +96,8 @@ public class InsuGraphContent {
                 mInsuGraphItemList.add(item);
             }
 
-            plotLineUp = new GraphCoordPair(mStartGC, mMaximGC);
-            plotLineDn = new GraphCoordPair(mMaximGC, mStopsGC);
+            plotLineUp = new GraphCoordPair(InsulinConstants.L_DIRECTION_UP, mStartGC, mMaximGC);
+            plotLineDn = new GraphCoordPair(InsulinConstants.L_DIRECTION_DN, mMaximGC, mStopsGC);
 
             calculateInsuGraphAdditons(plotLineUp);
             calculateInsuGraphAdditons(plotLineDn);
@@ -131,7 +131,7 @@ public class InsuGraphContent {
                 y = (y_1*(x_2-x_1) + (x-x_1)*(y_2-y_1))
                         /
                         (x_2-x_1);
-                y = addDistortion(y,plotLine);
+                y = addDistortion(item.xValue, y, plotLine);
                 item.yValue = y;
 
                 mInsuGraphItemList.set(i,item);
@@ -146,9 +146,11 @@ public class InsuGraphContent {
      * @param plotLine
      * @return
      */
-    private double addDistortion(double y, GraphCoordPair plotLine) {
+    private double addDistortion(double x, double y, GraphCoordPair plotLine) {
 
-        return y;
+        double distortion = (plotLine.second.mY+plotLine.first.mY)/(plotLine.second.mX-plotLine.first.mX);
+
+        return y+distortion;
 
     }
 
@@ -223,10 +225,12 @@ public class InsuGraphContent {
 
     public static class GraphCoordPair {
 
+        public final int direction;
         public final GraphCoord first;
         public final GraphCoord second;
 
-        public GraphCoordPair(GraphCoord first, GraphCoord second){
+        public GraphCoordPair(int direction, GraphCoord first, GraphCoord second){
+            this.direction = direction;
             this.first = first;
             this.second = second;
         }
