@@ -1,5 +1,6 @@
 package sf.net.dvstar.insugraph.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -129,7 +130,19 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_insulin) {
+            showInsulinActivity();
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showInsulinActivity() {
+
+        Intent intent = new Intent(this, InsulinActivity.class);
+        //myIntent.putExtra("key", value); //Optional parameters
+        this.startActivity(intent);
+
     }
 
     private int[] mColors = new int[] {
