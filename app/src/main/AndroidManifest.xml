@@ -20,11 +20,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.InsulinActivity">
+        <activity android:name=".activity.InsulinActivity" />
+        <activity android:name=".activity.InsulinAddActivity" />
 
-
-
-        </activity>
 
         <meta-data android:name="AA_DB_NAME" android:value="insugraph.db" />
         <meta-data android:name="AA_DB_VERSION" android:value="1" />

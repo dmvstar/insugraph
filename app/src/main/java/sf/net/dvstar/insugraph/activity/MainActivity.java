@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         LineData data;
 
-        prepareDadaInsulin();
+        prepareDataInsulin();
 
         for (int i = 0; i < mCharts.length; i++) {
             // add some transparency to the color with "& 0x90FFFFFF"
@@ -103,8 +103,12 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                showInsulinActivity();
+                /*
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                */
             }
         });
 
@@ -208,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
     InsuGraphProvider vInsuGraphProvider = new InsuGraphProvider();
 
-    private void prepareDadaInsulin() {
+    private void prepareDataInsulin() {
 
         InsulinWork insulinWork;
 
