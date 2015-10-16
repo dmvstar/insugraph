@@ -5,14 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import sf.net.dvstar.insugraph.R;
+import sf.net.dvstar.insugraph.insulin.SetTime;
 
-/**
- * Created by sdv on 16.10.15.
- */
 public class InsulinAddActivity extends AppCompatActivity {
 
     @Override
@@ -20,10 +19,13 @@ public class InsulinAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.insulin_add);
 
+        EditText editTextFromTime = (EditText) findViewById(R.id.et_inject_time);
+        SetTime fromTime = new SetTime(editTextFromTime, this);
+
         String[] data = {"actrapid", "protafan", "novorapid", "levemir"};
 
         // адаптер
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         Spinner spinner = (Spinner) findViewById(R.id.sp_inject_insulin);
