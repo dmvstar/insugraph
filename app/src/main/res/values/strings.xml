@@ -2,4 +2,11 @@
     <string name="app_name">insugraph</string>
     <string name="action_settings">Settings</string>
     <string name="action_insulin">Insulins</string>
+    <string name="butoon_insulin_add">Add</string>
+    <string name="butoon_insulin_cancel">Cancel</string>
+    <string name="butoon_insulin_color">Select color</string>
+    <string name="insulin_label_insulin">Insulin</string>
+    <string name="insulin_label_dose">Dose injection</string>
+    <string name="insulin_label_time">Time injection</string>
+    <string name="insulin_label_comment">Comment</string>
 </resources>

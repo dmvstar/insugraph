@@ -22,4 +22,6 @@ public interface InsulinConstants {
     public static int L_DIRECTION_UP = 1;
     public static int L_DIRECTION_DN = 2;
 
+    public static String KEY_INTENT_EXTRA_INSULINS = "insulins";
+
 }

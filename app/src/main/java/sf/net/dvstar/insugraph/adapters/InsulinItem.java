@@ -2,7 +2,9 @@ package sf.net.dvstar.insugraph.adapters;
 
 import android.graphics.Color;
 
-public class InsulinItem {
+import java.io.Serializable;
+
+public class InsulinItem implements Serializable {
     public String insulin;
     public String dose;
     public String time;

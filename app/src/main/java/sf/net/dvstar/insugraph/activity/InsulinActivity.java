@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.adapters.InsulinItem;
 import sf.net.dvstar.insugraph.adapters.InsulinAdapter;
+import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 
 /**
  * Created by sdv on 15.10.15.
@@ -58,7 +59,7 @@ public class InsulinActivity extends AppCompatActivity {
     private void showAddInsulin(View view) {
 
         Intent intent = new Intent(this, InsulinAddActivity.class);
-        //myIntent.putExtra("key", value); //Optional parameters
+        intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INSULINS, mInsulins);
         this.startActivity(intent);
 
     }
