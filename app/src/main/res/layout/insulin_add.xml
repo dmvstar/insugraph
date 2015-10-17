@@ -8,7 +8,8 @@
         android:layout_height="wrap_content"
         android:text="Insulin"
         android:id="@+id/Insulin"
-        style="@android:style/TextAppearance.Medium" />
+        style="@android:style/TextAppearance.Medium"
+        android:textStyle="bold" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -20,31 +21,36 @@
         android:layout_height="wrap_content"
         android:text="Dose injection"
         android:id="@+id/textView4"
-        style="@android:style/TextAppearance.Medium" />
+        style="@android:style/TextAppearance.Medium"
+        android:textStyle="bold" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et_inject_dose" />
+        android:id="@+id/et_inject_dose"
+        android:inputType="number" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Time injection"
         android:id="@+id/textView5"
-        style="@android:style/TextAppearance.Medium" />
+        style="@android:style/TextAppearance.Medium"
+        android:textStyle="bold" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et_inject_time" />
+        android:id="@+id/et_inject_time"
+        android:inputType="time" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Comment"
         android:id="@+id/textView6"
-        style="@android:style/TextAppearance.Medium" />
+        style="@android:style/TextAppearance.Medium"
+        android:textStyle="bold" />
 
     <EditText
         android:layout_width="match_parent"

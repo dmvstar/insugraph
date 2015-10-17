@@ -1,6 +1,7 @@
 package sf.net.dvstar.insugraph.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import sf.net.dvstar.insugraph.R;
-import sf.net.dvstar.insugraph.activity.adapters.InsulinItem;
+import sf.net.dvstar.insugraph.adapters.InsulinItem;
 import sf.net.dvstar.insugraph.adapters.InsulinAdapter;
 
 /**
@@ -46,8 +47,10 @@ public class InsulinActivity extends AppCompatActivity {
     private ArrayList<InsulinItem> getInsulins() {
         ArrayList<InsulinItem> ret = new ArrayList<>();
 
-        ret.add( new InsulinItem("actrapid", "8", "8:00", "Morning") );
-        ret.add( new InsulinItem("protafan", "16", "8:00", "Morning") );
+        ret.add( new InsulinItem("actrapid", "8", "8:00", "Morning", Color.YELLOW) );
+        ret.add( new InsulinItem("protafan", "16", "8:00", "Morning", Color.GREEN) );
+        ret.add( new InsulinItem("novorapid", "8", "14:00", "Dinner", Color.parseColor("#FF9000")) );
+        ret.add( new InsulinItem("levemir",  "10", "18:00", "Mid", Color.parseColor("#33CCCC")) );
 
         return ret;
     }

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/insulin_item">
+    android:id="@+id/insulin_item"
+    android:padding="5dp">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -15,7 +16,8 @@
             android:text="Insulin:"
             android:id="@+id/textView"
             android:layout_weight="2"
-            style="@android:style/TextAppearance.Medium" />
+            style="@android:style/TextAppearance.Medium"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
@@ -36,7 +38,8 @@
             android:text="Dose:"
             android:id="@+id/textView2"
             android:layout_weight="1"
-            style="@android:style/TextAppearance.Medium" />
+            style="@android:style/TextAppearance.Medium"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
@@ -53,7 +56,8 @@
             android:text="Time:"
             android:id="@+id/textView3"
             android:layout_weight="1"
-            style="@android:style/TextAppearance.Medium" />
+            style="@android:style/TextAppearance.Medium"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
@@ -71,7 +75,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_comment"
         android:hint="comment"
-        android:text="start"
+        android:text="..."
         style="@android:style/TextAppearance.Medium" />
 
 </LinearLayout>

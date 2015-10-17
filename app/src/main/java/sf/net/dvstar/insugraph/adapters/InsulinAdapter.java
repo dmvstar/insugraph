@@ -1,21 +1,15 @@
 package sf.net.dvstar.insugraph.adapters;
 
-import android.app.ListFragment;
-import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.activity.InsulinActivity;
-import sf.net.dvstar.insugraph.activity.adapters.InsulinItem;
 
 
 /**
@@ -31,8 +25,6 @@ public class InsulinAdapter extends ArrayAdapter<InsulinItem> {
         public TextView tv_dose;
         public TextView tv_time;
         public TextView tv_comment;
-
-
     }
 
     public InsulinAdapter(InsulinActivity insulinActivity, ArrayList<InsulinItem> insulins) {
@@ -67,6 +59,7 @@ public class InsulinAdapter extends ArrayAdapter<InsulinItem> {
         holder.tv_dose.setText(item.dose);
         holder.tv_time.setText(item.time);
         holder.tv_comment.setText(item.comment);
+        rowView.setBackgroundColor(item.color);
 
         return rowView;
     }
