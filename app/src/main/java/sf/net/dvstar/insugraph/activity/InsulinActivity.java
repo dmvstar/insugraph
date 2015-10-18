@@ -5,15 +5,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 import sf.net.dvstar.insugraph.R;
-import sf.net.dvstar.insugraph.adapters.InsulinItem;
+import sf.net.dvstar.insugraph.database.InsulinInjection;
 import sf.net.dvstar.insugraph.adapters.InsulinAdapter;
+import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 
 /**
@@ -22,14 +22,14 @@ import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 public class InsulinActivity extends AppCompatActivity {
 
 
-    private ArrayList<InsulinItem> mInsulins;
+    private ArrayList<InsulinInjection> mInsulins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insulin);
 
-        ListView listView = (ListView)findViewById(R.id.insulin_list);
+        ListView listView = (ListView) findViewById(R.id.insulin_list);
 
         mInsulins = getInsulins();
 
@@ -45,13 +45,13 @@ public class InsulinActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<InsulinItem> getInsulins() {
-        ArrayList<InsulinItem> ret = new ArrayList<>();
+    private ArrayList<InsulinInjection> getInsulins() {
+        ArrayList<InsulinInjection> ret = new ArrayList<>();
 
-        ret.add( new InsulinItem("actrapid", "8", "8:00", "Morning", Color.YELLOW) );
-        ret.add( new InsulinItem("protafan", "16", "8:00", "Morning", Color.GREEN) );
-        ret.add( new InsulinItem("novorapid", "8", "14:00", "Dinner", Color.parseColor("#FF9000")) );
-        ret.add( new InsulinItem("levemir",  "10", "18:00", "Mid", Color.parseColor("#33CCCC")) );
+        ret.add(new InsulinInjection(new InsulinItem("actrapid", Color.YELLOW), "8", "8:00", "Morning", InsulinInjection.INJECTION_PLAN_REGULAR, Color.YELLOW));
+        ret.add(new InsulinInjection(new InsulinItem("protafan", Color.GREEN), "16", "8:00", "Morning", InsulinInjection.INJECTION_PLAN_REGULAR, Color.GREEN));
+        ret.add(new InsulinInjection(new InsulinItem("novorapid", Color.parseColor("#FF9000")), "8", "14:00", "Dinner", InsulinInjection.INJECTION_PLAN_ADDITIONAL, Color.parseColor("#FF9000")));
+        ret.add(new InsulinInjection(new InsulinItem("levemir", Color.parseColor("#33CCCC")), "10", "18:00", "Mid", InsulinInjection.INJECTION_PLAN_REGULAR, Color.parseColor("#33CCCC")));
 
         return ret;
     }

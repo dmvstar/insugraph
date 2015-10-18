@@ -9,4 +9,8 @@
     <string name="insulin_label_dose">Dose injection</string>
     <string name="insulin_label_time">Time injection</string>
     <string name="insulin_label_comment">Comment</string>
+    <string name="injection_date_label">For date:</string>
+    <string name="injection_date_text">dd.mm.yyyy</string>
+    <string name="planned_regular">Regular</string>
+    <string name="planned_additionals">Additional</string>
 </resources>

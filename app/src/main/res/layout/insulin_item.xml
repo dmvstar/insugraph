@@ -70,12 +70,27 @@
             style="@android:style/TextAppearance.Medium" />
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/tv_comment"
         android:hint="comment"
         android:text="..."
-        style="@android:style/TextAppearance.Medium" />
+        style="@android:style/TextAppearance.Medium"
+            android:layout_weight="1" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_planned"
+            android:hint="comment"
+            android:text="..."
+            style="@android:style/TextAppearance.Medium"
+            android:layout_weight="2" />
+    </LinearLayout>
 
 </LinearLayout>

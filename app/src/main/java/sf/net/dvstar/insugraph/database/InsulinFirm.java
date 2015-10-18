@@ -7,13 +7,17 @@ import com.activeandroid.annotation.Table;
 /**
  * Created by sdv on 04.10.15.
  */
-@Table(name = "InsulinDurations")
-public class InsulinDurations extends Model {
+@Table(name = "InsulinFirm")
+public class InsulinFirm extends Model {
 
+    /*
+    id	code	name
+1	NOVO	Novo Nordisk
+    */
     @Column(name = "code", index = true, unique = true)
     public String code;
 
-    @Column(name = "description", notNull = true)
-    public String description;
+    @Column(name = "name", notNull = true)
+    public String name;
 
 }

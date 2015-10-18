@@ -16,7 +16,7 @@ import com.buzzingandroid.ui.HSVColorPickerDialog;
 import java.util.ArrayList;
 
 import sf.net.dvstar.insugraph.R;
-import sf.net.dvstar.insugraph.adapters.InsulinItem;
+import sf.net.dvstar.insugraph.database.InsulinInjection;
 import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 import sf.net.dvstar.insugraph.insulin.SetTime;
 
@@ -33,7 +33,7 @@ public class InsulinAddActivity extends AppCompatActivity {
         btColor = (Button) findViewById(R.id.bt_color);
         llColor = (LinearLayout) findViewById(R.id.ll_color);
 
-        ArrayList<InsulinItem> insulins = (ArrayList<InsulinItem>) getIntent().getSerializableExtra(InsulinConstants.KEY_INTENT_EXTRA_INSULINS);
+        ArrayList<InsulinInjection> insulins = (ArrayList<InsulinInjection>) getIntent().getSerializableExtra(InsulinConstants.KEY_INTENT_EXTRA_INSULINS);
 
         EditText editTextFromTime = (EditText) findViewById(R.id.et_inject_time);
         SetTime fromTime = new SetTime(editTextFromTime, this);
