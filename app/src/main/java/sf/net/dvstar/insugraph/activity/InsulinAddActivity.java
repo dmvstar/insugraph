@@ -65,10 +65,13 @@ public class InsulinAddActivity extends AppCompatActivity {
 
     }
 
+    private  int mStoredColor = 0xFF4488CC;
+
     public void selectColor(View view){
-        HSVColorPickerDialog cpd = new HSVColorPickerDialog( this, 0xFF4488CC, new HSVColorPickerDialog.OnColorSelectedListener() {
+        HSVColorPickerDialog cpd = new HSVColorPickerDialog( this, mStoredColor, new HSVColorPickerDialog.OnColorSelectedListener() {
             @Override
             public void colorSelected(Integer color) {
+                mStoredColor = color;
                 llColor.setBackgroundColor( color );
             }
         });

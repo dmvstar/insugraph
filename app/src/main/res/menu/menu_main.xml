@@ -8,4 +8,10 @@
     <item android:id="@+id/action_insulin" android:title="@string/action_insulin"
         android:orderInCategory="100" app:showAsAction="never" />
 
+    <item android:id="@+id/action_initdb" android:title="@string/action_initdb"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_cleardb" android:title="@string/action_cleardb"
+        android:orderInCategory="100" app:showAsAction="never" />
+
 </menu>

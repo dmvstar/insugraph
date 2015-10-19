@@ -1,5 +1,6 @@
 package sf.net.dvstar.insugraph.database;
 
+import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
@@ -7,7 +8,7 @@ import com.activeandroid.annotation.Table;
  * Created by sdv on 18.10.15.
  */
 @Table(name = "InsulinOrigin")
-public class InsulinOrigin {
+public class InsulinOrigin extends Model {
     /*
     id	code	name	name_ru
     1	HBIOS	human biosynthetic	человеческий биосинтетический
@@ -16,9 +17,29 @@ public class InsulinOrigin {
     4	BEEF	beef	говяжий
     5	BEPO	beef-pork	говяже-свиной
      */
+
+    public InsulinOrigin(){
+        super();
+    }
+
+    public InsulinOrigin(String code, String name){
+        super();
+        this.code = code;
+        this.name = name;
+    }
+
+
     @Column(name = "code", index = true, unique = true)
     public String code;
 
     @Column(name = "name", notNull = true )
     public String name;
+
+    @Override
+    public String toString() {
+        return "InsulinOrigin{" +
+                "code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

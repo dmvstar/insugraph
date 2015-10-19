@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import sf.net.dvstar.insugraph.R;
+import sf.net.dvstar.insugraph.database.IsulinInitDatabase;
 import sf.net.dvstar.insugraph.insulin.InsuGraphContent;
 import sf.net.dvstar.insugraph.insulin.InsuGraphProvider;
 import sf.net.dvstar.insugraph.insulin.InsulinUtils;
@@ -138,7 +139,27 @@ public class MainActivity extends AppCompatActivity {
             showInsulinActivity();
         }
 
+        if (id == R.id.action_initdb) {
+            initDB();
+        }
+
+        if (id == R.id.action_cleardb) {
+            clearDB();
+        }
+
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void clearDB() {
+        IsulinInitDatabase iIsulinInitDatabase = new IsulinInitDatabase();
+        iIsulinInitDatabase.isCreated();
+        iIsulinInitDatabase.dropTables();
+    }
+
+    private void initDB() {
+        IsulinInitDatabase iIsulinInitDatabase = new IsulinInitDatabase();
+        iIsulinInitDatabase.initCreate();
     }
 
     private void showInsulinActivity() {
@@ -206,9 +227,6 @@ public class MainActivity extends AppCompatActivity {
     protected String[] mMonths = new String[] {
             "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"
     };
-
-    protected double[] actrapid = new double[]{20.0/60.0,   1.00,   6.0};
-    protected double[] protafan = new double[]{1.0,         4.00,   18.0};
 
     InsuGraphProvider vInsuGraphProvider = new InsuGraphProvider();
 
@@ -287,32 +305,6 @@ public class MainActivity extends AppCompatActivity {
 
         return data;
     }
-
-
     //----------------------------------------------------------------------------------------------
-
-    protected double[][] insulins = new double[][]{actrapid, protafan};
-
-    private double[] getXAsisTwo (double[] aAInsulin, double[] aBInsulin){
-        double[] a = new double[24];
-        for (int i = 0; i < 24; i++) a[i]=i;
-        double[] b = aAInsulin;
-        double[] c = InsulinUtils.merge(a, b);
-        double[] r = InsulinUtils.merge(c, aBInsulin);
-        return r;
-    }
-
-
-    private  LineData getCombinedLineDataInsulin(double[] aAInsulin, double[] aBInsulin) {
-
-        double[] xAsis = getXAsisTwo(aAInsulin, aBInsulin);
-
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-
-        return null;
-
-    }
-
-
 
 }

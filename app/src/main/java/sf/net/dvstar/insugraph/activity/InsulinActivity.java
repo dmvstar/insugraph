@@ -5,10 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import com.activeandroid.query.Select;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
@@ -22,6 +26,7 @@ import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 public class InsulinActivity extends AppCompatActivity {
 
 
+    private static final String TAG = "InsulinActivity";
     private ArrayList<InsulinInjection> mInsulins;
 
     @Override
@@ -47,6 +52,10 @@ public class InsulinActivity extends AppCompatActivity {
 
     private ArrayList<InsulinInjection> getInsulins() {
         ArrayList<InsulinInjection> ret = new ArrayList<>();
+
+        List<InsulinItem> insulins = new Select().from(InsulinItem.class).execute();
+
+        Log.v(TAG, "!!!!!!!!"+insulins.toString() );
 
         ret.add(new InsulinInjection(new InsulinItem("actrapid", Color.YELLOW), "8", "8:00", "Morning", InsulinInjection.INJECTION_PLAN_REGULAR, Color.YELLOW));
         ret.add(new InsulinInjection(new InsulinItem("protafan", Color.GREEN), "16", "8:00", "Morning", InsulinInjection.INJECTION_PLAN_REGULAR, Color.GREEN));

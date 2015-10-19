@@ -1,5 +1,7 @@
 package sf.net.dvstar.insugraph.insulin;
 
+import android.graphics.Color;
+
 /**
  * Created by dstarzhynskyi on 09.10.2015.
  */
@@ -23,5 +25,12 @@ public interface InsulinConstants {
     int L_DIRECTION_DN = 2;
 
     String KEY_INTENT_EXTRA_INSULINS = "insulins";
+
+    int COLOR_NOVORAPID = Color.parseColor("#FF9900");
+    int COLOR_LEVEMIR = Color.parseColor("#00AF8E");
+    int COLOR_ACTRAPID = Color.parseColor("#E2CD36");
+    int COLOR_PROTAFAN = Color.parseColor("#67B943");
+    int COLOR_LANTUS = Color.parseColor("#9C80CC");
+    int COLOR_APIDRA = Color.parseColor("#15479C");
 
 }

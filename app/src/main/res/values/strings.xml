@@ -13,4 +13,6 @@
     <string name="injection_date_text">dd.mm.yyyy</string>
     <string name="planned_regular">Regular</string>
     <string name="planned_additionals">Additional</string>
+    <string name="action_initdb">Init DB</string>
+    <string name="action_cleardb">Clear DB</string>
 </resources>

@@ -2,6 +2,7 @@ package sf.net.dvstar.insugraph.database;
 
 import android.graphics.Color;
 
+import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * Created by sdv on 18.10.15.
  */
 @Table(name = "InsulinItem")
-public class InsulinItem  implements Serializable {
+public class InsulinItem  extends Model implements Serializable {
 
     /*
     name	    type	firm	origin	start_min	start_max	start_measure	work_min	work_max	work_measure	ends_min	ends_max	ends_measure
@@ -68,6 +69,7 @@ public class InsulinItem  implements Serializable {
     }
 
     public InsulinItem(String name,int color){
+        super();
         this.name = name;
         this.color = color;
     }
@@ -92,5 +94,25 @@ public class InsulinItem  implements Serializable {
 
     public InsulinItem(String name, InsulinType type, InsulinFirm firm, InsulinOrigin origin, int start_min, String start_measure, int work_min, String work_measure, int ends_min, String ends_measure, int color) {
         this(name, type, firm, origin, start_min, start_min, start_measure, work_min, work_min, work_measure, ends_min, ends_min, ends_measure, color);
+    }
+
+    @Override
+    public String toString() {
+        return "InsulinItem{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", firm=" + firm +
+                ", origin=" + origin +
+                ", start_min=" + start_min +
+                ", start_max=" + start_max +
+                ", start_measure='" + start_measure + '\'' +
+                ", work_min=" + work_min +
+                ", work_max=" + work_max +
+                ", work_measure='" + work_measure + '\'' +
+                ", ends_min=" + ends_min +
+                ", ends_max=" + ends_max +
+                ", ends_measure='" + ends_measure + '\'' +
+                ", color=" + color +
+                '}';
     }
 }
