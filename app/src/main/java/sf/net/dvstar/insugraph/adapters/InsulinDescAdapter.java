@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
-import sf.net.dvstar.insugraph.activity.InsulinDescActivity;
-import sf.net.dvstar.insugraph.database.InsulinInjection;
 import sf.net.dvstar.insugraph.database.InsulinItem;
 
 
@@ -27,6 +25,7 @@ public class InsulinDescAdapter  extends ArrayAdapter<InsulinItem> {
         public TextView tv_insulin;
         public TextView tv_firm;
         public TextView tv_type;
+        public TextView tv_work;
         public ListView lv_item;
     }
 
@@ -59,6 +58,7 @@ public class InsulinDescAdapter  extends ArrayAdapter<InsulinItem> {
             viewHolder.tv_insulin = (TextView) rowView.findViewById(R.id.tv_insulin);
             viewHolder.tv_firm = (TextView) rowView.findViewById(R.id.tv_firm);
             viewHolder.tv_type = (TextView) rowView.findViewById(R.id.tv_type);
+            viewHolder.tv_work = (TextView) rowView.findViewById(R.id.tv_work);
             rowView.setTag(viewHolder);
         }
 
@@ -70,6 +70,7 @@ public class InsulinDescAdapter  extends ArrayAdapter<InsulinItem> {
         holder.tv_insulin.setText(item.name);
         holder.tv_firm.setText(item.firm.name);
         holder.tv_type.setText(item.type.description);
+        holder.tv_work.setText(item.getWork());
         rowView.setBackgroundColor(item.color);
 
         return rowView;

@@ -24,7 +24,8 @@
             android:layout_height="match_parent"
             android:id="@+id/tv_insulin"
             android:layout_weight="1"
-            style="@android:style/TextAppearance.Medium" />
+            style="@android:style/TextAppearance.Medium"
+            android:textStyle="bold|italic" />
     </LinearLayout>
 
     <LinearLayout
@@ -71,5 +72,26 @@
             style="@android:style/TextAppearance.Medium" />
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/insulin_desc_work"
+            android:id="@+id/tv_insulin_desc_work"
+            android:layout_weight="2"
+            style="@android:style/TextAppearance.Medium"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_work"
+            android:layout_weight="1"
+            style="@android:style/TextAppearance.Medium" />
+    </LinearLayout>
 
 </LinearLayout>

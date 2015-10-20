@@ -63,7 +63,6 @@ public class InsulinItem  extends Model implements Serializable {
     @Column(name = "color", notNull = true)
     public int color;
 
-
     public InsulinItem() {
         super();
     }
@@ -114,5 +113,9 @@ public class InsulinItem  extends Model implements Serializable {
                 ", ends_measure='" + ends_measure + '\'' +
                 ", color=" + color +
                 '}';
+    }
+
+    public String getWork() {
+        return ""+start_min+"-"+work_min+"-"+ends_min;
     }
 }

@@ -100,11 +100,19 @@ public class InsulinDatabaseInit {
             iInsulinItem.save();
 
             iInsulinType   = new Select().from(InsulinType.class).where("code = 'MHM'").executeSingle();
-            iInsulinItem = new InsulinItem("Protaphane HM",   iInsulinType, iInsulinFirm, iInsulinOrigin, 5, "m", 1, "h", 4, "h", InsulinConstants.COLOR_PROTAFAN);
+            iInsulinItem = new InsulinItem("Protaphane HM",   iInsulinType, iInsulinFirm, iInsulinOrigin, 1, "h", 4, "h", 20, "h", InsulinConstants.COLOR_PROTAFAN);
+            iInsulinItem.save();
+
+            iInsulinType   = new Select().from(InsulinType.class).where("code = 'MHM'").executeSingle();
+            iInsulinItem = new InsulinItem("Mixtard 30",   iInsulinType, iInsulinFirm, iInsulinOrigin, 5, "m", 1, "h", 4, "h", InsulinConstants.COLOR_PROTAFAN);
             iInsulinItem.save();
 
             iInsulinType   = new Select().from(InsulinType.class).where("code = 'MHS'").executeSingle();
             iInsulinItem = new InsulinItem("Levemir",   iInsulinType, iInsulinFirm, iInsulinOrigin, 5, "m", 1, "h", 4, "h", InsulinConstants.COLOR_LEVEMIR);
+            iInsulinItem.save();
+
+            iInsulinFirm   = new Select().from(InsulinFirm.class).where("code = 'LILLY'").executeSingle();
+            iInsulinItem = new InsulinItem("Lantus",   iInsulinType, iInsulinFirm, iInsulinOrigin, 5, "m", 1, "h", 4, "h", InsulinConstants.COLOR_LANTUS);
             iInsulinItem.save();
 
         }

@@ -1,5 +1,6 @@
 package sf.net.dvstar.insugraph.adapters;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ import sf.net.dvstar.insugraph.database.InsulinInjection;
  */
 public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
 
-    private final InsulinInjectActivity mContext;
+    private final Activity mContext;
     private final ArrayList<InsulinInjection> mInsulins;
 
     static class ViewHolder {
@@ -29,7 +30,7 @@ public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
         public TextView tv_planned;
     }
 
-    public InsulinInjectAdapter(InsulinInjectActivity insulinActivity, ArrayList<InsulinInjection> insulins) {
+    public InsulinInjectAdapter(Activity insulinActivity, ArrayList<InsulinInjection> insulins) {
         super(insulinActivity, R.layout.insulin_inject_item, insulins);
         this.mContext = insulinActivity;
         this.mInsulins = insulins;

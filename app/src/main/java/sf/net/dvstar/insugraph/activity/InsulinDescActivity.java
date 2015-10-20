@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -25,25 +24,22 @@ public class InsulinDescActivity extends AppCompatActivity {
     Button btColor;
     LinearLayout llColor;
     ListView insulinListView;
+    private List<InsulinItem> mInsulins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insulin_desc);
 
-
         btColor = (Button) findViewById(R.id.bt_color);
         llColor = (LinearLayout) findViewById(R.id.ll_color);
-        insulinListView = (ListView) findViewById(R.id.lv_insulin_items);
 
-        List<InsulinItem> insulinList = new Select().from(InsulinItem.class).execute();
-        InsulinDescAdapter iInsulinDescAdapter = new InsulinDescAdapter(this, insulinList);
-        insulinListView.setAdapter(iInsulinDescAdapter);
+        ListView listView = (ListView) findViewById(R.id.insulin_desc_list);
 
-        /*
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        */
+        mInsulins = getInsulins();
+
+        InsulinDescAdapter iInsulinDescAdapter = new InsulinDescAdapter(this, mInsulins);
+        listView.setAdapter(iInsulinDescAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +63,7 @@ public class InsulinDescActivity extends AppCompatActivity {
                 llColor.setBackgroundColor( color );
             }
         });
-        cpd.setTitle( "Pick a color" );
+        cpd.setTitle("Pick a color");
         cpd.show();
     }
 
@@ -75,4 +71,10 @@ public class InsulinDescActivity extends AppCompatActivity {
         finish();
     }
 
+    public List<InsulinItem> getInsulins() {
+
+        List<InsulinItem> insulinList = new Select().from(InsulinItem.class).execute();
+
+        return insulinList;
+    }
 }

@@ -29,11 +29,8 @@
             android:name="AA_DB_VERSION"
             android:value="1" />
 
-        <activity
-            android:name=".activity.InsulinDescActivity"
-            android:label="@string/title_activity_insulin_desc"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+        <activity android:name=".activity.InsulinDescActivity" />
+
     </application>
 
 </manifest>

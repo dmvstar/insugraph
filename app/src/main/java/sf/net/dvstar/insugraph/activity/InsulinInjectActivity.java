@@ -34,7 +34,7 @@ public class InsulinInjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insulin_inject);
 
-        ListView listView = (ListView) findViewById(R.id.insulin_list);
+        ListView listView = (ListView) findViewById(R.id.insulin_inject_list);
 
         mInsulins = getInsulins();
 
