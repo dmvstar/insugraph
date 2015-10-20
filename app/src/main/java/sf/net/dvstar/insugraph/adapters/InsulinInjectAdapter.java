@@ -16,7 +16,7 @@ import sf.net.dvstar.insugraph.database.InsulinInjection;
 /**
  * Created by sdv on 15.10.15.
  */
-public class InsulinAdapter extends ArrayAdapter<InsulinInjection> {
+public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
 
     private final InsulinInjectActivity mContext;
     private final ArrayList<InsulinInjection> mInsulins;
@@ -29,8 +29,8 @@ public class InsulinAdapter extends ArrayAdapter<InsulinInjection> {
         public TextView tv_planned;
     }
 
-    public InsulinAdapter(InsulinInjectActivity insulinActivity, ArrayList<InsulinInjection> insulins) {
-        super(insulinActivity, R.layout.insulin_item, insulins);
+    public InsulinInjectAdapter(InsulinInjectActivity insulinActivity, ArrayList<InsulinInjection> insulins) {
+        super(insulinActivity, R.layout.insulin_inject_item, insulins);
         this.mContext = insulinActivity;
         this.mInsulins = insulins;
     }
@@ -42,7 +42,7 @@ public class InsulinAdapter extends ArrayAdapter<InsulinInjection> {
         // reuse views
         if (rowView == null) {
             LayoutInflater inflater = mContext.getLayoutInflater();
-            rowView = inflater.inflate(R.layout.insulin_item, null);
+            rowView = inflater.inflate(R.layout.insulin_inject_item, null);
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.tv_insulin = (TextView) rowView.findViewById(R.id.tv_insulin);

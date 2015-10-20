@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
+import sf.net.dvstar.insugraph.adapters.InsulinDescAdapter;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
 import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.insulin.InsulinConstants;
@@ -31,7 +32,7 @@ public class InsulinAddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.insulin_add);
+        setContentView(R.layout.insulin_inject_add);
 
         btColor = (Button) findViewById(R.id.bt_color);
         llColor = (LinearLayout) findViewById(R.id.ll_color);
@@ -47,8 +48,9 @@ public class InsulinAddActivity extends AppCompatActivity {
         List<InsulinItem> insulinList = new Select().from(InsulinItem.class).execute();
 
 
-        ArrayAdapter<InsulinItem> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, insulinList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        InsulinDescAdapter adapter = new InsulinDescAdapter(this, insulinList);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.insulin_desc_item);
 
         Spinner spinner = (Spinner) findViewById(R.id.sp_inject_insulin);
         spinner.setAdapter(adapter);

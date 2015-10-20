@@ -16,7 +16,7 @@ import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
-import sf.net.dvstar.insugraph.adapters.InsulinAdapter;
+import sf.net.dvstar.insugraph.adapters.InsulinInjectAdapter;
 import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 
@@ -32,13 +32,13 @@ public class InsulinInjectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insulin);
+        setContentView(R.layout.activity_insulin_inject);
 
         ListView listView = (ListView) findViewById(R.id.insulin_list);
 
         mInsulins = getInsulins();
 
-        listView.setAdapter(new InsulinAdapter(this, mInsulins));
+        listView.setAdapter(new InsulinInjectAdapter(this, mInsulins));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
