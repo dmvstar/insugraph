@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import sf.net.dvstar.insugraph.R;
-import sf.net.dvstar.insugraph.activity.InsulinActivity;
+import sf.net.dvstar.insugraph.activity.InsulinInjectActivity;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
 
 
@@ -18,7 +18,7 @@ import sf.net.dvstar.insugraph.database.InsulinInjection;
  */
 public class InsulinAdapter extends ArrayAdapter<InsulinInjection> {
 
-    private final InsulinActivity mContext;
+    private final InsulinInjectActivity mContext;
     private final ArrayList<InsulinInjection> mInsulins;
 
     static class ViewHolder {
@@ -29,7 +29,7 @@ public class InsulinAdapter extends ArrayAdapter<InsulinInjection> {
         public TextView tv_planned;
     }
 
-    public InsulinAdapter(InsulinActivity insulinActivity, ArrayList<InsulinInjection> insulins) {
+    public InsulinAdapter(InsulinInjectActivity insulinActivity, ArrayList<InsulinInjection> insulins) {
         super(insulinActivity, R.layout.insulin_item, insulins);
         this.mContext = insulinActivity;
         this.mInsulins = insulins;

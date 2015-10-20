@@ -13,29 +13,26 @@ public class InsulinType extends Model {
     /*
     id	code	duration	mtype	stype	description
     1	UHN	1	H	H	Human
+    1	UHS	1	H	S	Syntetic
      */
 
     public InsulinType(){
         super();
     }
 
-    public InsulinType(String code, InsulinDuration iInsulinDuration, String mtype, String stype, String desc) {
+    public InsulinType(String code, InsulinDuration iInsulinDuration, String itype, String desc) {
         super();
         this.code = code;
         this.durations = iInsulinDuration;
-        this.mtype = mtype;
-        this.stype = stype;
+        this.itype = itype;
         this.description = desc;
     }
 
     @Column(name = "code", index = true, unique = true)
     public String code;
 
-    @Column(name = "mtype", notNull = true )
-    public String mtype;
-
-    @Column(name = "stype", notNull = true)
-    public String stype;
+    @Column(name = "itype", notNull = true )
+    public String itype;
 
     @Column(name = "description", notNull = true)
     public String description;
@@ -43,4 +40,13 @@ public class InsulinType extends Model {
     @Column(name = "durations", notNull = true)
     public InsulinDuration durations;
 
+    @Override
+    public String toString() {
+        return "InsulinType{" +
+                "code='" + code + '\'' +
+                ", itype='" + itype + '\'' +
+                ", descr='" + description + '\'' +
+                ", durations=" + durations +
+                '}';
+    }
 }

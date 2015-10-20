@@ -11,12 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
 import com.buzzingandroid.ui.HSVColorPickerDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
+import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 import sf.net.dvstar.insugraph.insulin.SetTime;
 
@@ -41,7 +44,10 @@ public class InsulinAddActivity extends AppCompatActivity {
         String[] data = {"actrapid", "protafan", "novorapid", "levemir"};
 
         // адаптер
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
+        List<InsulinItem> insulinList = new Select().from(InsulinItem.class).execute();
+
+
+        ArrayAdapter<InsulinItem> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, insulinList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         Spinner spinner = (Spinner) findViewById(R.id.sp_inject_insulin);

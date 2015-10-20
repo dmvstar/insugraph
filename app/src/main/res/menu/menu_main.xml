@@ -5,7 +5,10 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 
-    <item android:id="@+id/action_insulin" android:title="@string/action_insulin"
+    <item android:id="@+id/action_insulins" android:title="@string/action_insulins"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_injections" android:title="@string/action_injections"
         android:orderInCategory="100" app:showAsAction="never" />
 
     <item android:id="@+id/action_initdb" android:title="@string/action_initdb"

@@ -23,10 +23,10 @@ import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 /**
  * Created by sdv on 15.10.15.
  */
-public class InsulinActivity extends AppCompatActivity {
+public class InsulinInjectActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "InsulinActivity";
+    private static final String TAG = "InsulinInjectActivity";
     private ArrayList<InsulinInjection> mInsulins;
 
     @Override

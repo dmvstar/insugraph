@@ -19,18 +19,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.InsulinActivity" />
+        <activity android:name=".activity.InsulinInjectActivity" />
         <activity android:name=".activity.InsulinAddActivity" />
 
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="insugraph.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
 
-        <meta-data android:name="AA_DB_NAME" android:value="insugraph.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="1" />
-
-
+        <activity
+            android:name=".activity.InsulinDescActivity"
+            android:label="@string/title_activity_insulin_desc"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
-
-
-
 
 </manifest>

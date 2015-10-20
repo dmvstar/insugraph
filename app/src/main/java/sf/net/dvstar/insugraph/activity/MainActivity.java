@@ -5,10 +5,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,13 +18,11 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import sf.net.dvstar.insugraph.R;
-import sf.net.dvstar.insugraph.database.IsulinInitDatabase;
+import sf.net.dvstar.insugraph.database.InsulinDatabaseInit;
 import sf.net.dvstar.insugraph.insulin.InsuGraphContent;
 import sf.net.dvstar.insugraph.insulin.InsuGraphProvider;
-import sf.net.dvstar.insugraph.insulin.InsulinUtils;
 import sf.net.dvstar.insugraph.insulin.InsulinWork;
 
 public class MainActivity extends AppCompatActivity {
@@ -104,12 +100,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                showInsulinActivity();
-                /*
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                */
+                showInjectionsActivity();
             }
         });
 
@@ -135,8 +126,12 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        if (id == R.id.action_insulin) {
-            showInsulinActivity();
+        if (id == R.id.action_injections) {
+            showInjectionsActivity();
+        }
+
+        if (id == R.id.action_insulins) {
+            showInsulinDescActivity();
         }
 
         if (id == R.id.action_initdb) {
@@ -152,23 +147,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearDB() {
-        IsulinInitDatabase iIsulinInitDatabase = new IsulinInitDatabase();
+        InsulinDatabaseInit iIsulinInitDatabase = new InsulinDatabaseInit();
         iIsulinInitDatabase.isCreated();
         iIsulinInitDatabase.dropTables();
     }
 
     private void initDB() {
-        IsulinInitDatabase iIsulinInitDatabase = new IsulinInitDatabase();
+        InsulinDatabaseInit iIsulinInitDatabase = new InsulinDatabaseInit();
         iIsulinInitDatabase.initCreate();
     }
 
-    private void showInsulinActivity() {
+    private void showInjectionsActivity() {
 
-        Intent intent = new Intent(this, InsulinActivity.class);
-        //myIntent.putExtra("key", value); //Optional parameters
+        Intent intent = new Intent(this, InsulinInjectActivity.class);
+        //intent.putExtra("key", value); //Optional parameters
         this.startActivity(intent);
 
     }
+
+    private void showInsulinDescActivity() {
+
+        Intent intent = new Intent(this, InsulinDescActivity.class);
+        //intent.putExtra("key", value); //Optional parameters
+        this.startActivity(intent);
+
+    }
+
 
     private int[] mColors = new int[] {
             Color.rgb(137, 230, 81),

@@ -13,11 +13,11 @@ import java.util.List;
 
 import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 
-public class IsulinInitDatabase {
+public class InsulinDatabaseInit {
 
-    private static final String TAG = "IsulinInitDatabase";
+    private static final String TAG = "InsulinDatabaseInit";
 
-    public IsulinInitDatabase(){
+    public InsulinDatabaseInit(){
 
     }
 
@@ -39,27 +39,27 @@ public class IsulinInitDatabase {
             iInsulinDuration = new InsulinDuration("LONG", "The Long-acting insulin preparations");            iInsulinDuration.save();
 
             //--------------------------------------------------------------------------------------
-            iInsulinDuration = new Select().from(InsulinDuration.class).where("code = 'USHORT'").executeSingle();
             InsulinType iInsulinType;
-            iInsulinType = new InsulinType("UHN", iInsulinDuration,	"H",	"H",	"Human");            iInsulinType.save();
-            iInsulinType = new InsulinType("UHS", iInsulinDuration,	"H",	"S",	"Synthetics");            iInsulinType.save();
+            iInsulinDuration = new Select().from(InsulinDuration.class).where("code = 'USHORT'").executeSingle();
+            iInsulinType = new InsulinType("UHM", iInsulinDuration,	"HM",	"Human");            iInsulinType.save();
+            iInsulinType = new InsulinType("UHS", iInsulinDuration,	"HS",	"Synthetics");            iInsulinType.save();
 
             iInsulinDuration = new Select().from(InsulinDuration.class).where("code = 'SHORT'").executeSingle();
-            iInsulinType = new InsulinType("SHN", iInsulinDuration,	"H",	"H",	"Human");            iInsulinType.save();
-            iInsulinType = new InsulinType("SHS", iInsulinDuration,	"H",	"S",	"Synthetics");            iInsulinType.save();
-            iInsulinType = new InsulinType("SMP", iInsulinDuration,	"A",	"P",	"Mono-peak");            iInsulinType.save();
+            iInsulinType = new InsulinType("SHM", iInsulinDuration,	"HM",	"Human");            iInsulinType.save();
+            iInsulinType = new InsulinType("SHS", iInsulinDuration,	"HS",	"Synthetics");            iInsulinType.save();
+            iInsulinType = new InsulinType("SMP", iInsulinDuration,	"AP",	"Mono-peak");            iInsulinType.save();
 
             iInsulinDuration = new Select().from(InsulinDuration.class).where("code = 'MEDIUM'").executeSingle();
-            iInsulinType = new InsulinType("MHN", iInsulinDuration,	"H",	"H",	"Human");            iInsulinType.save();
-            iInsulinType = new InsulinType("MHS", iInsulinDuration,	"H",	"S",	"Synthetics");            iInsulinType.save();
-            iInsulinType = new InsulinType("MMC", iInsulinDuration,	"A",	"C",	"Mono-compound");            iInsulinType.save();
-            iInsulinType = new InsulinType("MMP", iInsulinDuration,	"A",	"P",	"Mono-peak");            iInsulinType.save();
+            iInsulinType = new InsulinType("MHM", iInsulinDuration,	"HM",	"Human");            iInsulinType.save();
+            iInsulinType = new InsulinType("MHS", iInsulinDuration,	"HS",	"Synthetics");            iInsulinType.save();
+            iInsulinType = new InsulinType("MMC", iInsulinDuration,	"AC",	"Mono-compound");            iInsulinType.save();
+            iInsulinType = new InsulinType("MMP", iInsulinDuration,	"AP",	"Mono-peak");            iInsulinType.save();
 
             iInsulinDuration = new Select().from(InsulinDuration.class).where("code = 'LONG'").executeSingle();
-            iInsulinType = new InsulinType("LHN", iInsulinDuration,	"H",	"H",	"Human");            iInsulinType.save();
-            iInsulinType = new InsulinType("LHS", iInsulinDuration,	"H",	"S",	"Synthetics");            iInsulinType.save();
-            iInsulinType = new InsulinType("LMC", iInsulinDuration,	"A",	"C",	"Mono-compound");            iInsulinType.save();
-            iInsulinType = new InsulinType("LMP", iInsulinDuration,	"A",	"P",	"Mono-peak");            iInsulinType.save();
+            iInsulinType = new InsulinType("LHM", iInsulinDuration,	"HM",	"Human");            iInsulinType.save();
+            iInsulinType = new InsulinType("LHS", iInsulinDuration,	"HS",	"Synthetics");            iInsulinType.save();
+            iInsulinType = new InsulinType("LMC", iInsulinDuration,	"AC",	"Mono-compound");            iInsulinType.save();
+            iInsulinType = new InsulinType("LMP", iInsulinDuration,	"AP",	"Mono-peak");            iInsulinType.save();
 
             //--------------------------------------------------------------------------------------
             InsulinFirm iInsulinFirm;
@@ -82,12 +82,11 @@ public class IsulinInitDatabase {
             iInsulinOrigin = new InsulinOrigin("BEEF", "beef");iInsulinOrigin.save();
             iInsulinOrigin = new InsulinOrigin("BEPO", "beef-pork");iInsulinOrigin.save();
 
-
+            //--------------------------------------------------------------------------------------
             InsulinItem iInsulinItem;
-
             iInsulinFirm   = new Select().from(InsulinFirm.class).where("code = 'NOVO'").executeSingle();
+            iInsulinType   = new Select().from(InsulinType.class).where("code = 'UHS'").executeSingle();
             iInsulinOrigin = new Select().from(InsulinOrigin.class).where("code = 'HBIOS'").executeSingle();
-            iInsulinType   = new Select().from(InsulinType.class).where("code = 'UHN'").executeSingle();
             iInsulinItem   = new InsulinItem("Novorapid", iInsulinType, iInsulinFirm, iInsulinOrigin, 5, "m", 1, "h", 4, "h", InsulinConstants.COLOR_NOVORAPID);
             iInsulinItem.save();
 
@@ -96,20 +95,17 @@ public class IsulinInitDatabase {
             iInsulinItem.save();
 
             iInsulinFirm   = new Select().from(InsulinFirm.class).where("code = 'NOVO'").executeSingle();
-
-            //iInsulinOrigin = new Select().from(InsulinOrigin.class).where("code = 'HBIOS'").executeSingle();
-            iInsulinType   = new Select().from(InsulinType.class).where("code = 'SHN'").executeSingle();
+            iInsulinType   = new Select().from(InsulinType.class).where("code = 'SHM'").executeSingle();
             iInsulinItem = new InsulinItem("Actrapid HM",   iInsulinType, iInsulinFirm, iInsulinOrigin, 20, "m", 1, "h", 6, "h", InsulinConstants.COLOR_ACTRAPID);
+            iInsulinItem.save();
+
+            iInsulinType   = new Select().from(InsulinType.class).where("code = 'MHM'").executeSingle();
+            iInsulinItem = new InsulinItem("Protaphane HM",   iInsulinType, iInsulinFirm, iInsulinOrigin, 5, "m", 1, "h", 4, "h", InsulinConstants.COLOR_PROTAFAN);
             iInsulinItem.save();
 
             iInsulinType   = new Select().from(InsulinType.class).where("code = 'MHS'").executeSingle();
             iInsulinItem = new InsulinItem("Levemir",   iInsulinType, iInsulinFirm, iInsulinOrigin, 5, "m", 1, "h", 4, "h", InsulinConstants.COLOR_LEVEMIR);
             iInsulinItem.save();
-
-            iInsulinType   = new Select().from(InsulinType.class).where("code = 'MHN'").executeSingle();
-            iInsulinItem = new InsulinItem("Protaphane HM",   iInsulinType, iInsulinFirm, iInsulinOrigin, 5, "m", 1, "h", 4, "h", InsulinConstants.COLOR_PROTAFAN);
-            iInsulinItem.save();
-
 
         }
     }
