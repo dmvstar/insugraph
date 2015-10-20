@@ -8,27 +8,42 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
+import com.activeandroid.query.Select;
 import com.buzzingandroid.ui.HSVColorPickerDialog;
 
+import java.util.List;
+
 import sf.net.dvstar.insugraph.R;
+import sf.net.dvstar.insugraph.adapters.InsulinDescAdapter;
+import sf.net.dvstar.insugraph.database.InsulinItem;
 
 public class InsulinDescActivity extends AppCompatActivity {
 
 
     Button btColor;
     LinearLayout llColor;
+    ListView insulinListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insulin_desc);
 
+
         btColor = (Button) findViewById(R.id.bt_color);
         llColor = (LinearLayout) findViewById(R.id.ll_color);
+        insulinListView = (ListView) findViewById(R.id.lv_insulin_items);
 
+        List<InsulinItem> insulinList = new Select().from(InsulinItem.class).execute();
+        InsulinDescAdapter iInsulinDescAdapter = new InsulinDescAdapter(this, insulinList);
+        insulinListView.setAdapter(iInsulinDescAdapter);
+
+        /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        */
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
