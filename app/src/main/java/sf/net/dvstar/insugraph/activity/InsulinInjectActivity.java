@@ -8,10 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.activeandroid.query.Select;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
@@ -27,7 +31,9 @@ public class InsulinInjectActivity extends AppCompatActivity {
 
 
     private static final String TAG = "InsulinInjectActivity";
-    private ArrayList<InsulinInjection> mInsulins;
+    private ArrayList<InsulinInjection> mInsulinsInjections;
+
+    private TextView currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +41,27 @@ public class InsulinInjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_insulin_inject);
 
         ListView listView = (ListView) findViewById(R.id.insulin_inject_list);
+        currentDate = (TextView) findViewById(R.id.tv_injection_date_text);
 
-        mInsulins = getInsulins();
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        currentDate.setText( sdf.format(today));
 
-        listView.setAdapter(new InsulinInjectAdapter(this, mInsulins));
+        mInsulinsInjections = getInsulinsInjections();
+
+        listView.setAdapter(new InsulinInjectAdapter(this, mInsulinsInjections));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAddInsulin(view);
+                showAddInsulinsInjection(view);
             }
         });
 
     }
 
-    private ArrayList<InsulinInjection> getInsulins() {
+    private ArrayList<InsulinInjection> getInsulinsInjections() {
         ArrayList<InsulinInjection> ret = new ArrayList<>();
 
         List<InsulinItem> insulins = new Select().from(InsulinItem.class).execute();
@@ -65,10 +76,10 @@ public class InsulinInjectActivity extends AppCompatActivity {
         return ret;
     }
 
-    private void showAddInsulin(View view) {
+    private void showAddInsulinsInjection(View view) {
 
         Intent intent = new Intent(this, InsulinAddActivity.class);
-        intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INSULINS, mInsulins);
+        intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INSULINS, mInsulinsInjections);
         this.startActivity(intent);
 
     }

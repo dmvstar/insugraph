@@ -33,5 +33,6 @@
     <string name="title_activity_insulin_desc">InsulinDescActivity</string>
     <string name="action_insulins">Insulins</string>
     <string name="action_injections">Injections</string>
+    <string name="injection_label">Injections</string>
 
 </resources>
