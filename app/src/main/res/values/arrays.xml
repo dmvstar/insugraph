@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="insulin_inject_type">
+        <item>@string/insulin_inject_type_reg</item>
+        <item>@string/insulin_inject_type_add</item>
+    </string-array>
+
+    <string-array name="insulin_works_measure">
+        <item>min</item>
+        <item>hour</item>
+    </string-array>
+
+    <string name="insulin_inject_type_reg">Regular inject</string>
+    <string name="insulin_inject_type_add">Additional inject</string>
+
+</resources>

@@ -24,7 +24,7 @@ import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 import sf.net.dvstar.insugraph.insulin.SetTime;
 
-public class InsulinAddActivity extends AppCompatActivity {
+public class InsulinInjectAddActivity extends AppCompatActivity {
 
     Button btColor;
     LinearLayout llColor;
@@ -46,7 +46,6 @@ public class InsulinAddActivity extends AppCompatActivity {
 
         // адаптер
         List<InsulinItem> insulinList = new Select().from(InsulinItem.class).execute();
-
 
         InsulinDescAdapter adapter = new InsulinDescAdapter(this, insulinList);
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

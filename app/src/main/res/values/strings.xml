@@ -26,13 +26,11 @@
     <string name="insulin_desc_label_max">max:</string>
     <string name="button_insulin_update">Update</string>
 
-    <string-array  name="insulin_works_measure">
-        <item>m</item>
-        <item>h</item>
-    </string-array>
+
     <string name="title_activity_insulin_desc">InsulinDescActivity</string>
     <string name="action_insulins">Insulins</string>
     <string name="action_injections">Injections</string>
     <string name="injection_label">Injections</string>
+    <string name="insulin_desc_max">Maximum:</string>
 
 </resources>

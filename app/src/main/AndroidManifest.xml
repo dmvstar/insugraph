@@ -20,7 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.InsulinInjectActivity" />
-        <activity android:name=".activity.InsulinAddActivity" />
+        <activity android:name=".activity.InsulinInjectAddActivity" />
+        <activity android:name=".activity.InsulinDescActivity" />
+        <activity android:name=".activity.InsulinDescAddActivity" />
 
         <meta-data
             android:name="AA_DB_NAME"
@@ -29,7 +31,7 @@
             android:name="AA_DB_VERSION"
             android:value="1" />
 
-        <activity android:name=".activity.InsulinDescActivity" />
+
 
     </application>
 

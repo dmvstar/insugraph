@@ -1,5 +1,6 @@
 package sf.net.dvstar.insugraph.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,7 @@ import java.util.List;
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.adapters.InsulinDescAdapter;
 import sf.net.dvstar.insugraph.database.InsulinItem;
+import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 
 public class InsulinDescActivity extends AppCompatActivity {
 
@@ -45,8 +47,11 @@ public class InsulinDescActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                */
+                showAddInsulinsDesc(view);
             }
         });
     }
@@ -77,4 +82,13 @@ public class InsulinDescActivity extends AppCompatActivity {
 
         return insulinList;
     }
+
+    private void showAddInsulinsDesc(View view) {
+
+        Intent intent = new Intent(this, InsulinDescAddActivity.class);
+        this.startActivity(intent);
+
+    }
+
+
 }

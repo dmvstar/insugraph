@@ -78,7 +78,7 @@ public class InsulinInjectActivity extends AppCompatActivity {
 
     private void showAddInsulinsInjection(View view) {
 
-        Intent intent = new Intent(this, InsulinAddActivity.class);
+        Intent intent = new Intent(this, InsulinInjectAddActivity.class);
         intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INSULINS, mInsulinsInjections);
         this.startActivity(intent);
 
