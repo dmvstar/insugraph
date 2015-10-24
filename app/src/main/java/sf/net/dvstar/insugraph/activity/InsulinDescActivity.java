@@ -48,33 +48,24 @@ public class InsulinDescActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
-                        + id, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
+//                        + id+", "+parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
+                showAddInsulinsDesc(InsulinConstants.MODE_INSULIN_EDIT_ITEM, view, (InsulinItem) parent.getAdapter().getItem(position));
             }
         });
 
         listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
-                        + id, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
+//                        + id+" "+parent.getSelectedItem(), Toast.LENGTH_SHORT).show();
+
+
+
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(getBaseContext(), "itemSelect: nothing", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                // показываем позиция нажатого элемента
-                Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
 
@@ -89,7 +80,7 @@ public class InsulinDescActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 */
-                showAddInsulinsDesc(view);
+                showAddInsulinsDesc(InsulinConstants.MODE_INSULIN_EDIT_ADD, view, null);
             }
         });
     }
@@ -121,9 +112,14 @@ public class InsulinDescActivity extends AppCompatActivity {
         return insulinList;
     }
 
-    private void showAddInsulinsDesc(View view) {
+    private void showAddInsulinsDesc(int mode, View view, InsulinItem item) {
 
         Intent intent = new Intent(this, InsulinDescAddActivity.class);
+
+        intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INSULIN_EDIT_MODE,mode);
+        if(item != null)
+            intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INSULIN_EDIT_ITEM, item);
+
         this.startActivity(intent);
 
     }

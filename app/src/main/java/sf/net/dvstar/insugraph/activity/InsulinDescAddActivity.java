@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -14,18 +15,34 @@ import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.buzzingandroid.ui.HSVColorPickerDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.adapters.InsulinCommonAdapter;
 import sf.net.dvstar.insugraph.database.InsulinFirm;
+import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.database.InsulinOrigin;
 import sf.net.dvstar.insugraph.database.InsulinType;
+import sf.net.dvstar.insugraph.insulin.InsulinConstants;
 
 public class InsulinDescAddActivity extends AppCompatActivity {
 
     Button btColor;
     LinearLayout llColor;
+    private int mMode;
+    private InsulinItem mInsulinItem;
+    private EditText mEtInsulinName;
+    private Spinner mSPFirmList;
+    private Spinner mSPInsulinOrigin;
+    private Spinner mSPInsulinType;
+    private Button btAdd;
+    private EditText mEtSttMin;
+    private EditText mEtSttMax;
+    private EditText mEtMaxMin;
+    private EditText mEtMaxMax;
+    private EditText mEtEndMin;
+    private EditText mEtEndMax;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +50,20 @@ public class InsulinDescAddActivity extends AppCompatActivity {
         setContentView(R.layout.insulin_desc_add);
 
         btColor = (Button) findViewById(R.id.bt_color);
+        btAdd = (Button) findViewById(R.id.bt_insulin_add);
+
+        mEtSttMin = (EditText) findViewById(R.id.et_insulin_desc_start_min);
+        mEtSttMax = (EditText) findViewById(R.id.et_insulin_desc_start_max);
+        mEtMaxMin = (EditText) findViewById(R.id.et_insulin_desc_max_min);
+        mEtMaxMax = (EditText) findViewById(R.id.et_insulin_desc_max_max);
+        mEtEndMin = (EditText) findViewById(R.id.et_insulin_desc_end_min);
+        mEtEndMax = (EditText) findViewById(R.id.et_insulin_desc_end_max);
+
+
         llColor = (LinearLayout) findViewById(R.id.ll_color);
+        mEtInsulinName = (EditText) findViewById(R.id.et_insulin_desc_name);
 
-
-        Spinner spinner;
         // адаптер
-
-        ArrayAdapter<String> adapter;
 
         List<Model> insulinFirmList = new Select().from(InsulinFirm.class).execute();
         InsulinCommonAdapter adapterInsulinFirmAdapter = new InsulinCommonAdapter(this, insulinFirmList);
@@ -47,36 +71,67 @@ public class InsulinDescAddActivity extends AppCompatActivity {
         //adapter.setDropDownViewResource(R.layout.insulin_desc_item);
 
 
-        spinner = (Spinner) findViewById(R.id.sp_insulin_desc_firm);
-        spinner.setAdapter(adapterInsulinFirmAdapter);
+        mSPFirmList = (Spinner) findViewById(R.id.sp_insulin_desc_firm);
+        mSPFirmList.setAdapter(adapterInsulinFirmAdapter);
         // заголовок
-        spinner.setPrompt("Title");
+        //spinner.setPrompt("Title");
         // выделяем элемент
         //spinner.setSelection(2);
         // устанавливаем обработчик нажатия
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSPFirmList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 // показываем позиция нажатого элемента
-                Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
 
-        spinner = (Spinner) findViewById(R.id.sp_insulin_desc_type);
+        mSPInsulinType = (Spinner) findViewById(R.id.sp_insulin_desc_type);
         List<Model> insulinTypeList = new Select().from(InsulinType.class).execute();
         InsulinCommonAdapter adapterInsulinTypeListAdapter = new InsulinCommonAdapter(this, insulinTypeList);
         adapterInsulinTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapterInsulinTypeListAdapter);
+        mSPInsulinType.setAdapter(adapterInsulinTypeListAdapter);
 
-        spinner = (Spinner) findViewById(R.id.sp_insulin_desc_origin);
+        mSPInsulinOrigin = (Spinner) findViewById(R.id.sp_insulin_desc_origin);
         List<Model> insulinOriginList = new Select().from(InsulinOrigin.class).execute();
         InsulinCommonAdapter adapterInsulinOriginListAdapter = new InsulinCommonAdapter(this, insulinOriginList);
         adapterInsulinOriginListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapterInsulinOriginListAdapter);
+        mSPInsulinOrigin.setAdapter(adapterInsulinOriginListAdapter);
+
+        mMode = getIntent().getExtras().getInt(InsulinConstants.KEY_INTENT_EXTRA_INSULIN_EDIT_MODE);
+        if (mMode == InsulinConstants.MODE_INSULIN_EDIT_ITEM) {
+            mInsulinItem = (InsulinItem) getIntent().getExtras().getSerializable(InsulinConstants.KEY_INTENT_EXTRA_INSULIN_EDIT_ITEM);
+            //mEtInsulinName.setEnabled(false);
+            mEtInsulinName.setFocusable(false);
+
+            mEtInsulinName.setText(mInsulinItem.name);
+            llColor.setBackgroundColor(mInsulinItem.color);
+
+            ArrayAdapter aadapter = ((ArrayAdapter)mSPFirmList.getAdapter());
+
+            //ArrayList a = new ArrayList();
+            //a.indexOf("2");
+
+            int index = aadapter.getPosition( mInsulinItem.firm );
+
+            //Toast.makeText(getBaseContext(), "mSPFirmList Position = " + index, Toast.LENGTH_SHORT).show();
+
+            if (index>=0) mSPFirmList.setSelection(index);
+
+            mEtSttMin.setText(""+mInsulinItem.start_min);
+            mEtSttMax.setText(""+mInsulinItem.start_max);
+            mEtMaxMin.setText(""+mInsulinItem.work_min);
+            mEtMaxMax.setText(""+mInsulinItem.work_max);
+            mEtEndMin.setText(""+mInsulinItem.ends_min);
+            mEtEndMax.setText(""+mInsulinItem.ends_max);
+
+
+        }
+
 
     }
 

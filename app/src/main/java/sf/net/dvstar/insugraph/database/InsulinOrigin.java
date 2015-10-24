@@ -4,11 +4,13 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.io.Serializable;
+
 /**
  * Created by sdv on 18.10.15.
  */
 @Table(name = "InsulinOrigin")
-public class InsulinOrigin extends Model implements InsulinCommonItem {
+public class InsulinOrigin extends Model implements Serializable, InsulinCommonItem {
     /*
     id	code	name	name_ru
     1	HBIOS	human biosynthetic	человеческий биосинтетический

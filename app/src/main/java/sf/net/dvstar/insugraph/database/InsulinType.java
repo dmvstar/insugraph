@@ -4,11 +4,11 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
-/**
- * Created by sdv on 04.10.15.
- */
+import java.io.Serializable;
+
+
 @Table(name = "InsulinType")
-public class InsulinType extends Model implements InsulinCommonItem {
+public class InsulinType extends Model implements Serializable, InsulinCommonItem {
 
     /*
     id	code	duration	mtype	stype	description

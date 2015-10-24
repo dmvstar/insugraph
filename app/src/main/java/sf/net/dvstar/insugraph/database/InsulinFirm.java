@@ -4,11 +4,13 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.io.Serializable;
+
 /**
  * Created by sdv on 04.10.15.
  */
 @Table(name = "InsulinFirm")
-public class InsulinFirm extends Model implements InsulinCommonItem {
+public class InsulinFirm extends Model implements Serializable, InsulinCommonItem {
 
     /*
     id	code	name
@@ -42,5 +44,12 @@ public class InsulinFirm extends Model implements InsulinCommonItem {
     @Override
     public String getListText() {
         return "["+code+"] "+name;
+    }
+
+    @Override
+    public boolean equals(Object m){
+        if(this.code.equals(((InsulinFirm)m).code))
+            return true;
+        return false;
     }
 }

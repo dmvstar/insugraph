@@ -4,11 +4,13 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.io.Serializable;
+
 /**
  * Created by sdv on 04.10.15.
  */
 @Table(name = "InsulinDuration")
-public class InsulinDuration extends Model implements InsulinCommonItem {
+public class InsulinDuration extends Model implements Serializable, InsulinCommonItem {
 
     /*
     id	code	descriptions
