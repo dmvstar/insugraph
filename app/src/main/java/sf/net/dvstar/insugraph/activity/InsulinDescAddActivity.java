@@ -6,26 +6,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.buzzingandroid.ui.HSVColorPickerDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
-import sf.net.dvstar.insugraph.adapters.InsulinDescAdapter;
+import sf.net.dvstar.insugraph.adapters.InsulinCommonAdapter;
 import sf.net.dvstar.insugraph.database.InsulinFirm;
-import sf.net.dvstar.insugraph.database.InsulinInjection;
-import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.database.InsulinOrigin;
 import sf.net.dvstar.insugraph.database.InsulinType;
-import sf.net.dvstar.insugraph.insulin.InsulinConstants;
-import sf.net.dvstar.insugraph.insulin.SetTime;
 
 public class InsulinDescAddActivity extends AppCompatActivity {
 
@@ -41,13 +36,17 @@ public class InsulinDescAddActivity extends AppCompatActivity {
         llColor = (LinearLayout) findViewById(R.id.ll_color);
 
 
+        Spinner spinner;
         // адаптер
-        List<InsulinFirm> insulinFirmList = new Select().from(InsulinFirm.class).execute();
-        ArrayAdapter<InsulinFirm> adapterInsulinFirmAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,insulinFirmList);
-        //adapterInsulinFirmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<String> adapter;
+
+        List<Model> insulinFirmList = new Select().from(InsulinFirm.class).execute();
+        InsulinCommonAdapter adapterInsulinFirmAdapter = new InsulinCommonAdapter(this, insulinFirmList);
+        adapterInsulinFirmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //adapter.setDropDownViewResource(R.layout.insulin_desc_item);
 
-        Spinner spinner;
+
         spinner = (Spinner) findViewById(R.id.sp_insulin_desc_firm);
         spinner.setAdapter(adapterInsulinFirmAdapter);
         // заголовок
@@ -68,13 +67,15 @@ public class InsulinDescAddActivity extends AppCompatActivity {
         });
 
         spinner = (Spinner) findViewById(R.id.sp_insulin_desc_type);
-        List<InsulinType> insulinTypeList = new Select().from(InsulinType.class).execute();
-        ArrayAdapter<InsulinFirm> adapterInsulinTypeListAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,insulinTypeList);
+        List<Model> insulinTypeList = new Select().from(InsulinType.class).execute();
+        InsulinCommonAdapter adapterInsulinTypeListAdapter = new InsulinCommonAdapter(this, insulinTypeList);
+        adapterInsulinTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterInsulinTypeListAdapter);
 
         spinner = (Spinner) findViewById(R.id.sp_insulin_desc_origin);
-        List<InsulinType> insulinOriginList = new Select().from(InsulinOrigin.class).execute();
-        ArrayAdapter<InsulinFirm> adapterInsulinOriginListAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,insulinOriginList);
+        List<Model> insulinOriginList = new Select().from(InsulinOrigin.class).execute();
+        InsulinCommonAdapter adapterInsulinOriginListAdapter = new InsulinCommonAdapter(this, insulinOriginList);
+        adapterInsulinOriginListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterInsulinOriginListAdapter);
 
     }

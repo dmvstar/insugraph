@@ -8,7 +8,7 @@ import com.activeandroid.annotation.Table;
  * Created by sdv on 04.10.15.
  */
 @Table(name = "InsulinFirm")
-public class InsulinFirm extends Model {
+public class InsulinFirm extends Model implements InsulinCommonItem {
 
     /*
     id	code	name
@@ -37,5 +37,10 @@ public class InsulinFirm extends Model {
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getListText() {
+        return "["+code+"] "+name;
     }
 }

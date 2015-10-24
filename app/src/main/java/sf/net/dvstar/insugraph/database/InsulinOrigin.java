@@ -8,7 +8,7 @@ import com.activeandroid.annotation.Table;
  * Created by sdv on 18.10.15.
  */
 @Table(name = "InsulinOrigin")
-public class InsulinOrigin extends Model {
+public class InsulinOrigin extends Model implements InsulinCommonItem {
     /*
     id	code	name	name_ru
     1	HBIOS	human biosynthetic	человеческий биосинтетический
@@ -41,5 +41,10 @@ public class InsulinOrigin extends Model {
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getListText() {
+        return "["+code+"] "+name;
     }
 }

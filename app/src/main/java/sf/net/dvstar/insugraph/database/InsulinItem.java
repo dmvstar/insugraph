@@ -12,7 +12,7 @@ import java.io.Serializable;
  * Created by sdv on 18.10.15.
  */
 @Table(name = "InsulinItem")
-public class InsulinItem  extends Model implements Serializable {
+public class InsulinItem  extends Model implements Serializable, InsulinCommonItem {
 
     /*
     name	    type	firm	origin	start_min	start_max	start_measure	work_min	work_max	work_measure	ends_min	ends_max	ends_measure
@@ -117,5 +117,10 @@ public class InsulinItem  extends Model implements Serializable {
 
     public String getWork() {
         return ""+start_min+"-"+work_min+"-"+ends_min;
+    }
+
+    @Override
+    public String getListText() {
+        return "["+name+"] "+name;
     }
 }
