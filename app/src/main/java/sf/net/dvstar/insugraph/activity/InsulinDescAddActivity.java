@@ -9,10 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.buzzingandroid.ui.HSVColorPickerDialog;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -48,6 +51,7 @@ public class InsulinDescAddActivity extends AppCompatActivity {
     private EditText mEtMaxMax;
     private EditText mEtEndMin;
     private EditText mEtEndMax;
+    private TextView mTvLabelModeAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,8 @@ public class InsulinDescAddActivity extends AppCompatActivity {
 
         btColor = (Button) findViewById(R.id.bt_color);
         btAdd = (Button) findViewById(R.id.bt_insulin_add);
+
+        mTvLabelModeAdd = (TextView) findViewById(R.id.tv_label_mode_add);
 
         mEtSttMin = (EditText) findViewById(R.id.et_insulin_desc_start_min);
         mEtSttMax = (EditText) findViewById(R.id.et_insulin_desc_start_max);
@@ -117,7 +123,7 @@ public class InsulinDescAddActivity extends AppCompatActivity {
             mInsulinItem = (InsulinItem) getIntent().getExtras().getSerializable(InsulinConstants.KEY_INTENT_EXTRA_INSULIN_EDIT_ITEM);
             //mEtInsulinName.setEnabled(false);
             mEtInsulinName.setFocusable(false);
-
+            mEtInsulinName.setBackgroundColor(mInsulinItem.color);
             mEtInsulinName.setText(mInsulinItem.name);
             llColor.setBackgroundColor(mInsulinItem.color);
 
@@ -146,6 +152,8 @@ public class InsulinDescAddActivity extends AppCompatActivity {
             mSPSttMeasure.setSelection(getMeasureIndex(mInsulinItem.start_measure));
             mSPMaxMeasure.setSelection(getMeasureIndex(mInsulinItem.work_measure));
             mSPEndMeasure.setSelection(getMeasureIndex(mInsulinItem.ends_measure));
+
+            mTvLabelModeAdd.setText( getResources().getString(R.string.label_mode_edit) );
 
         }
 

@@ -7,7 +7,7 @@
     <string name="button_insulin_color">Select color</string>
     <string name="insulin_label_insulin">Insulin</string>
     <string name="insulin_label_dose">Dose injection</string>
-    <string name="insulin_label_time">Time injection</string>
+    <string name="insulin_label_time">Time/Date injection</string>
     <string name="insulin_label_comment">Comment</string>
     <string name="injection_date_label">For date:</string>
     <string name="injection_date_text">dd.mm.yyyy</string>
@@ -32,5 +32,8 @@
     <string name="action_injections">Injections</string>
     <string name="injection_label">Injections</string>
     <string name="insulin_desc_max">Maximum:</string>
+    <string name="label_mode_add">Add</string>
+    <string name="label_mode_edit">Edit</string>
+    <string name="insulin_label">Insulins</string>
 
 </resources>

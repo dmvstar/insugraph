@@ -21,7 +21,8 @@ import sf.net.dvstar.insugraph.adapters.InsulinDescAdapter;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
 import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.insulins.InsulinConstants;
-import sf.net.dvstar.insugraph.insulins.SetTime;
+import sf.net.dvstar.insugraph.insulins.SetDateTime;
+
 
 public class InsulinInjectAddActivity extends AppCompatActivity {
 
@@ -39,9 +40,10 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
         ArrayList<InsulinInjection> insulins = (ArrayList<InsulinInjection>) getIntent().getSerializableExtra(InsulinConstants.KEY_INTENT_EXTRA_INSULINS);
 
         EditText editTextFromTime = (EditText) findViewById(R.id.et_inject_time);
-        SetTime fromTime = new SetTime(editTextFromTime, this);
+        EditText editTextFromDate = (EditText) findViewById(R.id.et_inject_date);
 
-        String[] data = {"actrapid", "protafan", "novorapid", "levemir"};
+        SetDateTime.SetTime fromTime = new SetDateTime.SetTime(editTextFromTime, this);
+        SetDateTime.SetDate fromDate = new SetDateTime.SetDate(editTextFromDate, this);
 
         // адаптер
         List<InsulinItem> insulinList = new Select().from(InsulinItem.class).execute();
