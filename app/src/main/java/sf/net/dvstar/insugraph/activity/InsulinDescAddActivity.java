@@ -9,13 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.buzzingandroid.ui.HSVColorPickerDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
@@ -24,7 +22,7 @@ import sf.net.dvstar.insugraph.database.InsulinFirm;
 import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.database.InsulinOrigin;
 import sf.net.dvstar.insugraph.database.InsulinType;
-import sf.net.dvstar.insugraph.insulin.InsulinConstants;
+import sf.net.dvstar.insugraph.insulins.InsulinConstants;
 
 public class InsulinDescAddActivity extends AppCompatActivity {
 
@@ -33,9 +31,16 @@ public class InsulinDescAddActivity extends AppCompatActivity {
     private int mMode;
     private InsulinItem mInsulinItem;
     private EditText mEtInsulinName;
+
+
     private Spinner mSPFirmList;
     private Spinner mSPInsulinOrigin;
     private Spinner mSPInsulinType;
+
+    private Spinner mSPSttMeasure;
+    private Spinner mSPMaxMeasure;
+    private Spinner mSPEndMeasure;
+
     private Button btAdd;
     private EditText mEtSttMin;
     private EditText mEtSttMax;
@@ -54,11 +59,16 @@ public class InsulinDescAddActivity extends AppCompatActivity {
 
         mEtSttMin = (EditText) findViewById(R.id.et_insulin_desc_start_min);
         mEtSttMax = (EditText) findViewById(R.id.et_insulin_desc_start_max);
+
         mEtMaxMin = (EditText) findViewById(R.id.et_insulin_desc_max_min);
         mEtMaxMax = (EditText) findViewById(R.id.et_insulin_desc_max_max);
+
         mEtEndMin = (EditText) findViewById(R.id.et_insulin_desc_end_min);
         mEtEndMax = (EditText) findViewById(R.id.et_insulin_desc_end_max);
 
+        mSPSttMeasure = (Spinner) findViewById(R.id.sp_insulin_desc_start_measure);
+        mSPMaxMeasure = (Spinner) findViewById(R.id.sp_insulin_desc_max_measure);
+        mSPEndMeasure = (Spinner) findViewById(R.id.sp_insulin_desc_end_measure);
 
         llColor = (LinearLayout) findViewById(R.id.ll_color);
         mEtInsulinName = (EditText) findViewById(R.id.et_insulin_desc_name);
@@ -124,15 +134,29 @@ public class InsulinDescAddActivity extends AppCompatActivity {
 
             mEtSttMin.setText(""+mInsulinItem.start_min);
             mEtSttMax.setText(""+mInsulinItem.start_max);
+
             mEtMaxMin.setText(""+mInsulinItem.work_min);
             mEtMaxMax.setText(""+mInsulinItem.work_max);
+
             mEtEndMin.setText(""+mInsulinItem.ends_min);
             mEtEndMax.setText(""+mInsulinItem.ends_max);
 
+            btAdd.setText( getResources().getString(R.string.button_insulin_update) );
+
+            mSPSttMeasure.setSelection(getMeasureIndex(mInsulinItem.start_measure));
+            mSPMaxMeasure.setSelection(getMeasureIndex(mInsulinItem.work_measure));
+            mSPEndMeasure.setSelection(getMeasureIndex(mInsulinItem.ends_measure));
 
         }
 
 
+    }
+
+    private int getMeasureIndex(String measure) {
+        int ret = 0;
+        // TODO use the resource for find index
+        if (measure.startsWith("h")) ret = 1;
+        return ret;
     }
 
     private  int mStoredColor = 0xFF4488CC;
@@ -150,6 +174,10 @@ public class InsulinDescAddActivity extends AppCompatActivity {
     }
 
     public void cancel(View view){
+        finish();
+    }
+
+    public void add_update(View view){
         finish();
     }
 }

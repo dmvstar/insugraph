@@ -84,10 +84,67 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/ll_start">
 
             <TextView
                 android:id="@+id/textView20"
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/insulin_desc_label_min"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_insulin_desc_start_min"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/textView21"
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/insulin_desc_label_max"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_insulin_desc_start_max"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number" />
+
+            <Spinner
+                android:id="@+id/sp_insulin_desc_start_measure"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:entries="@array/insulin_works_measure" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView28"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/insulin_desc_max"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:id="@+id/ll_max">
+
+            <TextView
+                android:id="@+id/textView30"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,7 +160,7 @@
                 android:inputType="number" />
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/textView31"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -128,21 +185,22 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView28"
+            android:id="@+id/textView38"
             style="@android:style/TextAppearance.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/insulin_desc_max"
+            android:text="@string/insulin_desc_ends"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/ll_end">
 
             <TextView
-                android:id="@+id/textView30"
+                android:id="@+id/textView10"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,7 +216,7 @@
                 android:inputType="number" />
 
             <TextView
-                android:id="@+id/textView31"
+                android:id="@+id/textView11"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -175,61 +233,6 @@
 
             <Spinner
                 android:id="@+id/sp_insulin_desc_end_measure"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:entries="@array/insulin_works_measure" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView38"
-            style="@android:style/TextAppearance.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/insulin_desc_ends"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView10"
-                style="@android:style/TextAppearance.Medium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/insulin_desc_label_min"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_insulin_desc_start_min"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="number" />
-
-            <TextView
-                android:id="@+id/textView11"
-                style="@android:style/TextAppearance.Medium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/insulin_desc_label_max"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_insulin_desc_start_max"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="number" />
-
-            <Spinner
-                android:id="@+id/sp_insulin_desc_start_measure"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -270,7 +273,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/button_insulin_add" />
+                    android:text="@string/button_insulin_add"
+                    android:onClick="add_update" />
 
                 <Button
                     android:id="@+id/bt_insulin_cancel"

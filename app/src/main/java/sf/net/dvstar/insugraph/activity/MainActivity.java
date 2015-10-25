@@ -21,9 +21,9 @@ import java.util.ArrayList;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.database.InsulinDatabaseInit;
-import sf.net.dvstar.insugraph.insulin.InsuGraphContent;
-import sf.net.dvstar.insugraph.insulin.InsuGraphProvider;
-import sf.net.dvstar.insugraph.insulin.InsulinWork;
+import sf.net.dvstar.insugraph.insulins.InsuGraphContent;
+import sf.net.dvstar.insugraph.insulins.InsuGraphProvider;
+import sf.net.dvstar.insugraph.insulins.InsulinWork;
 
 public class MainActivity extends AppCompatActivity {
 

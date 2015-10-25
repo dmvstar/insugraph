@@ -22,7 +22,7 @@ import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
 import sf.net.dvstar.insugraph.adapters.InsulinInjectAdapter;
 import sf.net.dvstar.insugraph.database.InsulinItem;
-import sf.net.dvstar.insugraph.insulin.InsulinConstants;
+import sf.net.dvstar.insugraph.insulins.InsulinConstants;
 
 /**
  * Created by sdv on 15.10.15.

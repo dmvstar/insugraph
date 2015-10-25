@@ -73,26 +73,42 @@ public class InsulinItem  extends Model implements Serializable, InsulinCommonIt
         this.color = color;
     }
 
-    public InsulinItem(String name, InsulinType type, InsulinFirm firm, InsulinOrigin origin, int start_min, int start_max, String start_measure, int work_min, int work_max, String work_measure, int ends_min, int ends_max, String ends_measure, int color) {
+    public InsulinItem(String name, InsulinType type, InsulinFirm firm, InsulinOrigin origin,
+                       int start_min, int start_max, String start_measure,
+                       int work_min, int work_max, String work_measure,
+                       int ends_min, int ends_max, String ends_measure,
+                       int color) {
         super();
         this.name = name;
         this.type = type;
         this.firm = firm;
         this.origin = origin;
+
         this.start_min = start_min;
         this.start_max = start_max;
         this.start_measure = start_measure;
+
         this.work_min = work_min;
         this.work_max = work_max;
         this.work_measure = work_measure;
+
         this.ends_min = ends_min;
         this.ends_max = ends_max;
         this.ends_measure = ends_measure;
+
         this.color = color;
     }
 
-    public InsulinItem(String name, InsulinType type, InsulinFirm firm, InsulinOrigin origin, int start_min, String start_measure, int work_min, String work_measure, int ends_min, String ends_measure, int color) {
-        this(name, type, firm, origin, start_min, start_min, start_measure, work_min, work_min, work_measure, ends_min, ends_min, ends_measure, color);
+    public InsulinItem(String name, InsulinType type, InsulinFirm firm, InsulinOrigin origin,
+                       int start_min, String start_measure,
+                       int work_min, String work_measure,
+                       int ends_min, String ends_measure,
+                       int color) {
+        this(name, type, firm, origin,
+                start_min, start_min, start_measure,
+                work_min, work_min, work_measure,
+                ends_min, ends_min, ends_measure,
+                color);
     }
 
     @Override

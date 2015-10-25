@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import sf.net.dvstar.insugraph.insulin.InsulinConstants;
+import sf.net.dvstar.insugraph.insulins.InsulinConstants;
 
 public class InsulinDatabaseInit {
 

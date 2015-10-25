@@ -3,7 +3,6 @@ package sf.net.dvstar.insugraph.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,7 +19,7 @@ import java.util.List;
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.adapters.InsulinDescAdapter;
 import sf.net.dvstar.insugraph.database.InsulinItem;
-import sf.net.dvstar.insugraph.insulin.InsulinConstants;
+import sf.net.dvstar.insugraph.insulins.InsulinConstants;
 
 public class InsulinDescActivity extends AppCompatActivity {
 

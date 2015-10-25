@@ -1,4 +1,4 @@
-package sf.net.dvstar.insugraph.insulin;
+package sf.net.dvstar.insugraph.insulins;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
