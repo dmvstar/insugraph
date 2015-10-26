@@ -18,6 +18,8 @@ import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.adapters.InsulinDescAdapter;
+import sf.net.dvstar.insugraph.adapters.InsulinInjectAdapter;
+import sf.net.dvstar.insugraph.database.InsulinInjection;
 import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.insulins.InsulinConstants;
 
@@ -28,6 +30,14 @@ public class InsulinDescActivity extends AppCompatActivity {
     LinearLayout llColor;
     ListView insulinListView;
     private List<InsulinItem> mInsulins;
+    private ListView mLvInsulins;
+    private List<InsulinItem> mInsulinsItems;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setListViewContent();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,39 +47,8 @@ public class InsulinDescActivity extends AppCompatActivity {
         btColor = (Button) findViewById(R.id.bt_color);
         llColor = (LinearLayout) findViewById(R.id.ll_color);
 
-        ListView listView = (ListView) findViewById(R.id.insulin_desc_list);
+        setListViewContent();
 
-        mInsulins = getInsulins();
-
-        InsulinDescAdapter iInsulinDescAdapter = new InsulinDescAdapter(this, mInsulins);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-//                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
-//                        + id+", "+parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
-                showAddInsulinsDesc(InsulinConstants.MODE_INSULIN_EDIT_ITEM, view, (InsulinItem) parent.getAdapter().getItem(position));
-            }
-        });
-
-        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-//                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
-//                        + id+" "+parent.getSelectedItem(), Toast.LENGTH_SHORT).show();
-
-
-
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(getBaseContext(), "itemSelect: nothing", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        listView.setAdapter(iInsulinDescAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +61,33 @@ public class InsulinDescActivity extends AppCompatActivity {
                 showAddInsulinsDesc(InsulinConstants.MODE_INSULIN_EDIT_ADD, view, null);
             }
         });
+    }
+
+    private void setListViewContent() {
+        mLvInsulins = (ListView) findViewById(R.id.insulin_desc_list);
+        mInsulins = getInsulins();
+        InsulinDescAdapter adapter = new InsulinDescAdapter(this, mInsulins);
+        mLvInsulins.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+//                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
+//                        + id+", "+parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
+                showAddInsulinsDesc(InsulinConstants.MODE_INSULIN_EDIT_ITEM, view, (InsulinItem) parent.getAdapter().getItem(position));
+            }
+        });
+        mLvInsulins.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+//                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
+//                        + id+" "+parent.getSelectedItem(), Toast.LENGTH_SHORT).show();
+
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getBaseContext(), "itemSelect: nothing", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mLvInsulins.setAdapter(adapter);
     }
 
 

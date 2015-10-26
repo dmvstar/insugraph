@@ -58,6 +58,8 @@ public class InsulinDescAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.insulin_desc_add);
 
+        mMode = getIntent().getExtras().getInt(InsulinConstants.KEY_INTENT_EXTRA_INSULIN_EDIT_MODE);
+
         btColor = (Button) findViewById(R.id.bt_color);
         btAdd = (Button) findViewById(R.id.bt_insulin_add);
 
@@ -118,7 +120,6 @@ public class InsulinDescAddActivity extends AppCompatActivity {
         adapterInsulinOriginListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSPInsulinOrigin.setAdapter(adapterInsulinOriginListAdapter);
 
-        mMode = getIntent().getExtras().getInt(InsulinConstants.KEY_INTENT_EXTRA_INSULIN_EDIT_MODE);
         if (mMode == InsulinConstants.MODE_INSULIN_EDIT_ITEM) {
             mInsulinItem = (InsulinItem) getIntent().getExtras().getSerializable(InsulinConstants.KEY_INTENT_EXTRA_INSULIN_EDIT_ITEM);
             //mEtInsulinName.setEnabled(false);

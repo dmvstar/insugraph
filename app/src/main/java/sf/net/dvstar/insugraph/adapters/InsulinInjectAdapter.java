@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.activity.InsulinInjectActivity;
@@ -20,7 +21,7 @@ import sf.net.dvstar.insugraph.database.InsulinInjection;
 public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
 
     private final Activity mContext;
-    private final ArrayList<InsulinInjection> mInsulins;
+    private final List<InsulinInjection> mInsulins;
 
     static class ViewHolder {
         public TextView tv_insulin;
@@ -30,15 +31,19 @@ public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
         public TextView tv_planned;
     }
 
-    public InsulinInjectAdapter(Activity insulinActivity, ArrayList<InsulinInjection> insulins) {
-        super(insulinActivity, R.layout.insulin_inject_item, insulins);
-        this.mContext = insulinActivity;
+    public InsulinInjectAdapter(Activity context, List<InsulinInjection> insulins) {
+        super(context, R.layout.insulin_inject_item, insulins);
+        this.mContext = context;
         this.mInsulins = insulins;
     }
 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        return getCustomView(position, convertView, parent);
+    }
+
+    private View getCustomView(int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
         // reuse views
         if (rowView == null) {
@@ -63,16 +68,17 @@ public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
         holder.tv_dose.setText(item.dose);
         holder.tv_time.setText(item.time);
         holder.tv_comment.setText(item.comment);
-        holder.tv_planned.setText(getPlannedDescription(item.planned));
+        holder.tv_planned.setText(getPlannedDescription(item.plan));
         rowView.setBackgroundColor(item.color);
 
         return rowView;
     }
 
+    // @TODO replace to resource
     private String getPlannedDescription(int planned) {
         String ret = "none";
-        if (planned == 1) ret = mContext.getResources().getString(R.string.planned_regular);
-        if (planned == 2) ret = mContext.getResources().getString(R.string.planned_additionals);
+        if (planned == 0) ret = mContext.getResources().getString(R.string.planned_regular);
+        if (planned == 1) ret = mContext.getResources().getString(R.string.planned_additionals);
         return ret;
     }
 

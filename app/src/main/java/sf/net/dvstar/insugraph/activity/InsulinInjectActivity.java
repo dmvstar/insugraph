@@ -7,9 +7,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 
 import java.text.SimpleDateFormat;
@@ -34,52 +37,99 @@ public class InsulinInjectActivity extends AppCompatActivity {
     private ArrayList<InsulinInjection> mInsulinsInjections;
 
     private TextView currentDate;
+    private ListView mLvInjects;
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setListViewContent();
+    }
+
+    private void setListViewContent() {
+        mLvInjects = (ListView) findViewById(R.id.insulin_inject_list);
+        mInsulinsInjections = getInsulinsInjections();
+        InsulinInjectAdapter adapter = new InsulinInjectAdapter(this, mInsulinsInjections);
+        mLvInjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getBaseContext(), "itemSelect: position = " + position + ", id = "
+                        + id + ", " + parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
+                showAddInsulinsInjection(InsulinConstants.MODE_INSULIN_EDIT_ITEM, view, (InsulinInjection) parent.getAdapter().getItem(position));
+            }
+        });
+        mLvInjects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
+                        + id+" "+parent.getSelectedItem(), Toast.LENGTH_SHORT).show();
+
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getBaseContext(), "itemSelect: nothing", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mLvInjects.setAdapter(adapter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insulin_inject);
 
-        ListView listView = (ListView) findViewById(R.id.insulin_inject_list);
         currentDate = (TextView) findViewById(R.id.tv_injection_date_text);
 
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         currentDate.setText( sdf.format(today));
 
-        mInsulinsInjections = getInsulinsInjections();
-
-        listView.setAdapter(new InsulinInjectAdapter(this, mInsulinsInjections));
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAddInsulinsInjection(view);
+                showAddInsulinsInjection(InsulinConstants.MODE_INSULIN_EDIT_ADD, view, null);
             }
         });
+
+        setListViewContent();
 
     }
 
     private ArrayList<InsulinInjection> getInsulinsInjections() {
-        ArrayList<InsulinInjection> ret = new ArrayList<>();
+        List<InsulinInjection> ret;// = new ArrayList<>();
 
         List<InsulinItem> insulins = new Select().from(InsulinItem.class).execute();
 
         Log.v(TAG, "!!!!!!!!"+insulins.toString() );
 
+        ret = new Select().from(InsulinInjection.class).execute();
+
+        /*
         ret.add(new InsulinInjection(new InsulinItem("actrapid", Color.YELLOW), "8", "8:00", "Morning", InsulinInjection.INJECTION_PLAN_REGULAR, Color.YELLOW));
         ret.add(new InsulinInjection(new InsulinItem("protafan", Color.GREEN), "16", "8:00", "Morning", InsulinInjection.INJECTION_PLAN_REGULAR, Color.GREEN));
         ret.add(new InsulinInjection(new InsulinItem("novorapid", Color.parseColor("#FF9000")), "8", "14:00", "Dinner", InsulinInjection.INJECTION_PLAN_ADDITIONAL, Color.parseColor("#FF9000")));
         ret.add(new InsulinInjection(new InsulinItem("levemir", Color.parseColor("#33CCCC")), "10", "18:00", "Mid", InsulinInjection.INJECTION_PLAN_REGULAR, Color.parseColor("#33CCCC")));
+        */
 
-        return ret;
+        return (ArrayList<InsulinInjection>) ret;
     }
 
-    private void showAddInsulinsInjection(View view) {
+    /**
+     * Show add or edit activity
+     * @param mode
+     * @param view
+     * @param item
+     */
+    private void showAddInsulinsInjection(int mode, View view, InsulinInjection item) {
 
         Intent intent = new Intent(this, InsulinInjectAddActivity.class);
-        intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INSULINS, mInsulinsInjections);
+        intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_MODE, mode);
+
+        if(item != null)
+            intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_ITEM, item);
+
         this.startActivity(intent);
 
     }
