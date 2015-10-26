@@ -70,7 +70,6 @@ public class InsulinInjectActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "itemSelect: nothing", Toast.LENGTH_SHORT).show();
             }
         });
-
         mLvInjects.setAdapter(adapter);
     }
 
