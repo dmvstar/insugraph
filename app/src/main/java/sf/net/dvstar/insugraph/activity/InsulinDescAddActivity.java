@@ -15,8 +15,6 @@ import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.buzzingandroid.ui.HSVColorPickerDialog;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import sf.net.dvstar.insugraph.R;

@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
-import sf.net.dvstar.insugraph.activity.InsulinInjectActivity;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
 
 
@@ -40,6 +38,11 @@ public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        return getCustomView(position, convertView, parent);
+    }
+
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
         return getCustomView(position, convertView, parent);
     }
 

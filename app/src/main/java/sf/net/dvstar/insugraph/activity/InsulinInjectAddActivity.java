@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.activeandroid.query.Select;
 import com.buzzingandroid.ui.HSVColorPickerDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sf.net.dvstar.insugraph.R;

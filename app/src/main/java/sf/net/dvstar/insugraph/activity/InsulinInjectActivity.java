@@ -1,7 +1,6 @@
 package sf.net.dvstar.insugraph.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 
 import java.text.SimpleDateFormat;
@@ -43,13 +41,19 @@ public class InsulinInjectActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setListViewContent();
+        //setListViewContent();
     }
 
+    /**
+     * Set content for injections
+     */
     private void setListViewContent() {
         mLvInjects = (ListView) findViewById(R.id.insulin_inject_list);
         mInsulinsInjections = getInsulinsInjections();
+
+        //ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,mInsulinsInjections);
         InsulinInjectAdapter adapter = new InsulinInjectAdapter(this, mInsulinsInjections);
+
         mLvInjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
