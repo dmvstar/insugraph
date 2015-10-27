@@ -31,6 +31,7 @@ public interface InsulinConstants {
     String KEY_INTENT_EXTRA_INSULIN_EDIT_ITEM = "insulin_item";
     String KEY_INTENT_EXTRA_INJECT_EDIT_MODE = "inject_edit";
     String KEY_INTENT_EXTRA_INJECT_EDIT_ITEM = "inject_item";
+    String  KEY_INTENT_EXTRA_ROW_ID = "row_id";
 
     int MODE_INSULIN_EDIT_ITEM = 1;
     int MODE_INSULIN_EDIT_ADD = 2;

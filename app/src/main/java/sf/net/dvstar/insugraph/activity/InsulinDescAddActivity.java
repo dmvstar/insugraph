@@ -27,8 +27,8 @@ import sf.net.dvstar.insugraph.insulins.InsulinConstants;
 
 public class InsulinDescAddActivity extends AppCompatActivity {
 
-    Button btColor;
-    LinearLayout llColor;
+    private Button btColor;
+    private LinearLayout llColor;
     private int mMode;
     private InsulinItem mInsulinItem;
     private EditText mEtInsulinName;

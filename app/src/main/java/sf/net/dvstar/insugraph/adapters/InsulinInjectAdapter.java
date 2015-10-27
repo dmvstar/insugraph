@@ -11,11 +11,9 @@ import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
+import sf.net.dvstar.insugraph.database.InsulinOrigin;
 
 
-/**
- * Created by sdv on 15.10.15.
- */
 public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
 
     private final Activity mContext;
@@ -30,6 +28,7 @@ public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
     }
 
     public InsulinInjectAdapter(Activity context, List<InsulinInjection> insulins) {
+        //super(context, android.R.layout.simple_list_item_1, insulins);
         super(context, R.layout.insulin_inject_item, insulins);
         this.mContext = context;
         this.mInsulins = insulins;
@@ -38,11 +37,13 @@ public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        //return super.getView(position, convertView, parent);
         return getCustomView(position, convertView, parent);
     }
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        //return super.getDropDownView(position, convertView, parent);
         return getCustomView(position, convertView, parent);
     }
 
@@ -53,6 +54,7 @@ public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
             LayoutInflater inflater = mContext.getLayoutInflater();
             rowView = inflater.inflate(R.layout.insulin_inject_item, null);
             // configure view holder
+
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.tv_insulin = (TextView) rowView.findViewById(R.id.tv_insulin);
             viewHolder.tv_dose = (TextView) rowView.findViewById(R.id.tv_dose);
@@ -60,6 +62,7 @@ public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
             viewHolder.tv_comment = (TextView) rowView.findViewById(R.id.tv_comment);
             viewHolder.tv_planned = (TextView) rowView.findViewById(R.id.tv_planned);
             rowView.setTag(viewHolder);
+
         }
 
         // fill data
@@ -79,9 +82,9 @@ public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
 
     // @TODO replace to resource
     private String getPlannedDescription(int planned) {
-        String ret = "none";
-        if (planned == 0) ret = mContext.getResources().getString(R.string.planned_regular);
-        if (planned == 1) ret = mContext.getResources().getString(R.string.planned_additionals);
+        String ret = mContext.getResources().getString(R.string.planned_none);
+        if (planned == InsulinInjection.INJECTION_PLAN_REGULAR) ret = mContext.getResources().getString(R.string.planned_regular);
+        if (planned == InsulinInjection.INJECTION_PLAN_ADDITIONAL) ret = mContext.getResources().getString(R.string.planned_additionals);
         return ret;
     }
 

@@ -8,7 +8,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class SetDateTime {
 
@@ -36,6 +39,23 @@ public class SetDateTime {
                 int year = myCalendar.get(Calendar.YEAR);
                 int month = myCalendar.get(Calendar.MONTH);
                 int day = myCalendar.get(Calendar.DAY_OF_MONTH);
+
+                String time = editText.getText().toString();
+                if(time.length()>0) {
+                    SimpleDateFormat sdf = new SimpleDateFormat( "dd.MM.yyyy" );
+                    Date dt = null;
+                    try {
+                        dt = sdf.parse(time);
+                        myCalendar.setTime(dt);
+                        year = myCalendar.get(Calendar.YEAR);
+                        month = myCalendar.get(Calendar.MONTH);
+                        day = myCalendar.get(Calendar.DAY_OF_MONTH);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
                 new DatePickerDialog(mContext, this, year, month, day).show();
             }
         }
@@ -56,9 +76,23 @@ public class SetDateTime {
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
             if(hasFocus){
-                int hour = myCalendar.get(Calendar.HOUR_OF_DAY);
-                int minute = myCalendar.get(Calendar.MINUTE);
+                int hour    = myCalendar.get(Calendar.HOUR_OF_DAY);
+                int minute  = myCalendar.get(Calendar.MINUTE);
+                String time = editText.getText().toString();
+                if(time.length()>0) {
+                    SimpleDateFormat sdf = new SimpleDateFormat( "HH:mm" );
+                    Date dt = null;
+                    try {
+                        dt = sdf.parse(time);
+                        myCalendar.setTime(dt);
+                        hour    = myCalendar.get(Calendar.HOUR_OF_DAY);
+                        minute  = myCalendar.get(Calendar.MINUTE);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
                 new TimePickerDialog(mContext, this, hour, minute, true).show();
+
             }
         }
 

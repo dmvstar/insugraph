@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
+import com.activeandroid.util.Log;
 import com.buzzingandroid.ui.HSVColorPickerDialog;
 
 import java.util.List;
@@ -26,8 +29,10 @@ import sf.net.dvstar.insugraph.insulins.SetDateTime;
 
 public class InsulinInjectAddActivity extends AppCompatActivity {
 
-    Button btColor;
-    LinearLayout llColor;
+    private static final java.lang.String TAG = "InsulinInjectAddActivity";
+    private Button btColor;
+    private Button btAdd;
+    private LinearLayout llColor;
     private int mMode;
     private Spinner mSpInsulins;
     private EditText mEtFromTime;
@@ -35,13 +40,18 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
     private EditText mEtDose;
     private EditText mEtComment;
     private Spinner mSpInjectType;
+    private InsulinInjection mInjection;
+    private TextView mTvLabelModeAdd;
+    private long mInjectionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.insulin_inject_add);
 
-        mMode = getIntent().getExtras().getInt(InsulinConstants.KEY_INTENT_EXTRA_INSULIN_EDIT_MODE);
+        mMode = getIntent().getExtras().getInt(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_MODE);
+
+        btAdd = (Button) findViewById(R.id.bt_add_update);
 
         btColor = (Button) findViewById(R.id.bt_color);
         llColor = (LinearLayout) findViewById(R.id.ll_color);
@@ -50,8 +60,7 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
         mEtDose = (EditText) findViewById(R.id.et_inject_dose);
         mEtComment = (EditText) findViewById(R.id.et_inject_comment);
         mSpInjectType = (Spinner) findViewById(R.id.sp_inject_type);
-
-        InsulinInjection injection = (InsulinInjection) getIntent().getSerializableExtra(InsulinConstants.KEY_INTENT_EXTRA_INJECTIONS);
+        mTvLabelModeAdd = (TextView) findViewById(R.id.tv_label_mode_add);
 
         SetDateTime.SetTime fromTime = new SetDateTime.SetTime(mEtFromTime, this);
         SetDateTime.SetDate fromDate = new SetDateTime.SetDate(mEtFromDate, this);
@@ -68,14 +77,14 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
         // заголовок
         mSpInsulins.setPrompt("Title");
         // выделяем элемент
-        mSpInsulins.setSelection(2);
+        //mSpInsulins.setSelection(2);
         // устанавливаем обработчик нажатия
         mSpInsulins.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 // показываем позиция нажатого элемента
-                Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
                 InsulinItem insulinItem = (InsulinItem) mSpInsulins.getSelectedItem();
                 llColor.setBackgroundColor( insulinItem.color );
             }
@@ -85,7 +94,52 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
             }
         });
 
+
+        if (mMode == InsulinConstants.MODE_INSULIN_EDIT_ITEM) {
+
+            mInjection = (InsulinInjection) getIntent().getExtras().getSerializable(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_ITEM);
+            mInjectionId = getIntent().getExtras().getLong(InsulinConstants.KEY_INTENT_EXTRA_ROW_ID);
+
+            mInjection = new Select().from(InsulinInjection.class).where("id = ?", mInjectionId).executeSingle();
+
+            //mEtInsulinName.setEnabled(false);
+            /*
+            mEtInsulinName.setFocusable(false);
+            mEtInsulinName.setBackgroundColor(mInsulinItem.color);
+            mEtInsulinName.setText(mInsulinItem.name);
+            */
+
+            Log.v(TAG, "!!! " + mInjection.getId() );
+            Log.v(TAG, "!!! " + mInjection.toString() );
+
+            llColor.setBackgroundColor(mInjection.color);
+
+            ArrayAdapter aadapter = ((ArrayAdapter)mSpInsulins.getAdapter());
+
+            //ArrayList a = new ArrayList();
+            //a.indexOf("2");
+
+            int index = aadapter.getPosition( mInjection.insulin );
+
+            //Toast.makeText(getBaseContext(), "mSPFirmList Position = " + index, Toast.LENGTH_SHORT).show();
+
+            if (index>=0) mSpInsulins.setSelection(index);
+
+            mEtDose.setText(mInjection.dose);
+            mEtFromTime.setText(mInjection.time);
+            mEtFromDate.setText(mInjection.date);
+            mEtComment.setText(mInjection.comment);
+
+            btAdd.setText( getResources().getString(R.string.button_insulin_update) );
+
+            mTvLabelModeAdd.setText( getResources().getString(R.string.label_mode_edit) );
+
+            mSpInjectType.setSelection( mInjection.plan );
+
+        }
+
     }
+
 
     private  int mStoredColor = 0xFF4488CC;
 
@@ -109,18 +163,25 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
 
         ColorDrawable viewColor = (ColorDrawable) llColor.getBackground();
         InsulinItem insulinItem = (InsulinItem) mSpInsulins.getSelectedItem();
-        InsulinInjection injectItem = new InsulinInjection();
-        injectItem.insulin = insulinItem;
-        injectItem.plan = mSpInjectType.getSelectedItemPosition();
-        injectItem.color = viewColor.getColor();
 
-        injectItem.dose = mEtDose.getText().toString();
-        injectItem.time = mEtFromTime.getText().toString();
-        injectItem.date = mEtFromDate.getText().toString();
-        injectItem.comment = mEtComment.getText().toString();
+        if(mMode == InsulinConstants.MODE_INSULIN_EDIT_ADD) {
+            mInjection = new InsulinInjection();
+        }
 
-        if( injectItem.dose.length()>0 && injectItem.time.length()>0 ) {
-            injectItem.save();
+        mInjection.insulin = insulinItem;
+        mInjection.plan = mSpInjectType.getSelectedItemPosition();
+        mInjection.color = viewColor.getColor();
+
+        mInjection.dose = mEtDose.getText().toString();
+        mInjection.time = mEtFromTime.getText().toString();
+        mInjection.date = mEtFromDate.getText().toString();
+        mInjection.comment = mEtComment.getText().toString();
+
+        Log.v(TAG, "!!! " + mInjection.getId() );
+        Log.v(TAG, "!!! " + mInjection.toString() );
+
+        if( mInjection.dose.length()>0 && mInjection.time.length()>0 ) {
+            mInjection.save();
         } else {
             Toast.makeText(getBaseContext(), "Not Enough data (dose, time ...) for store !", Toast.LENGTH_SHORT).show();
         }

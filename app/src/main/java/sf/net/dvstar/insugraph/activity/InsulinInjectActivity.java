@@ -25,9 +25,6 @@ import sf.net.dvstar.insugraph.adapters.InsulinInjectAdapter;
 import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.insulins.InsulinConstants;
 
-/**
- * Created by sdv on 15.10.15.
- */
 public class InsulinInjectActivity extends AppCompatActivity {
 
 
@@ -41,7 +38,7 @@ public class InsulinInjectActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //setListViewContent();
+        setListViewContent();
     }
 
     /**
@@ -49,29 +46,28 @@ public class InsulinInjectActivity extends AppCompatActivity {
      */
     private void setListViewContent() {
         mLvInjects = (ListView) findViewById(R.id.insulin_inject_list);
+        mLvInjects.setItemsCanFocus(false);
         mInsulinsInjections = getInsulinsInjections();
-
         //ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,mInsulinsInjections);
         InsulinInjectAdapter adapter = new InsulinInjectAdapter(this, mInsulinsInjections);
-
         mLvInjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getBaseContext(), "itemSelect: position = " + position + ", id = "
-                        + id + ", " + parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseContext(), "itemSelect: position = " + position + ", id = "
+//                        + id + ", " + parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
                 showAddInsulinsInjection(InsulinConstants.MODE_INSULIN_EDIT_ITEM, view, (InsulinInjection) parent.getAdapter().getItem(position));
             }
         });
         mLvInjects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
-                        + id+" "+parent.getSelectedItem(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
+//                        + id+" "+parent.getSelectedItem(), Toast.LENGTH_SHORT).show();
 
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(getBaseContext(), "itemSelect: nothing", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseContext(), "itemSelect: nothing", Toast.LENGTH_SHORT).show();
             }
         });
         mLvInjects.setAdapter(adapter);
@@ -105,10 +101,11 @@ public class InsulinInjectActivity extends AppCompatActivity {
 
         List<InsulinItem> insulins = new Select().from(InsulinItem.class).execute();
 
-        Log.v(TAG, "!!!!!!!!"+insulins.toString() );
+        Log.v(TAG, "!!!!!!!!"+ insulins.toString() );
 
         ret = new Select().from(InsulinInjection.class).execute();
 
+        Log.v(TAG, "!!!!!!!!"+ ret );
         /*
         ret.add(new InsulinInjection(new InsulinItem("actrapid", Color.YELLOW), "8", "8:00", "Morning", InsulinInjection.INJECTION_PLAN_REGULAR, Color.YELLOW));
         ret.add(new InsulinInjection(new InsulinItem("protafan", Color.GREEN), "16", "8:00", "Morning", InsulinInjection.INJECTION_PLAN_REGULAR, Color.GREEN));
@@ -130,8 +127,11 @@ public class InsulinInjectActivity extends AppCompatActivity {
         Intent intent = new Intent(this, InsulinInjectAddActivity.class);
         intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_MODE, mode);
 
-        if(item != null)
+        if(item != null) {
+            long rowId = item.getId();
+            intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_ROW_ID, rowId);
             intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_ITEM, item);
+        }
 
         this.startActivity(intent);
 

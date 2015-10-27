@@ -26,9 +26,7 @@ public class InsulinDescAdapter  extends ArrayAdapter<InsulinItem> {
         public TextView tv_firm;
         public TextView tv_type;
         public TextView tv_work;
-        public ListView lv_item;
     }
-
 
     public InsulinDescAdapter(Activity context, List<InsulinItem> insulins) {
         super(context, R.layout.insulin_desc_item, insulins);
@@ -47,7 +45,6 @@ public class InsulinDescAdapter  extends ArrayAdapter<InsulinItem> {
     }
 
     private View getCustomView(int position, View convertView, ViewGroup parent) {
-
         View rowView = convertView;
         // reuse views
         if (rowView == null) {

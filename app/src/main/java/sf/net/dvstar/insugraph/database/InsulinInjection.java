@@ -11,14 +11,17 @@ import java.io.Serializable;
 @Table(name = "InsulinInjection")
 public class InsulinInjection extends Model implements Serializable, InsulinCommonItem  {
 
-    @Column(name = "insulin")
+    @Column(name = "insulin", indexGroups = {"main"})
     public InsulinItem insulin;
 
-    @Column(name = "dose")
+    @Column(name = "dose", indexGroups = {"main"})
     public String dose;
 
-    @Column(name = "time")
+    @Column(name = "time", indexGroups = {"main"})
     public String time;
+
+    @Column(name = "plan", indexGroups = {"main"})
+    public int plan;
 
     @Column(name = "date")
     public String date;
@@ -29,12 +32,8 @@ public class InsulinInjection extends Model implements Serializable, InsulinComm
     @Column(name = "color")
     public int color;
 
-    @Column(name = "plan")
-    public int plan;
-
-    public static int INJECTION_PLAN_REGULAR = 1;
-    public static int INJECTION_PLAN_ADDITIONAL = 2;
-
+    public static int INJECTION_PLAN_REGULAR = 0;
+    public static int INJECTION_PLAN_ADDITIONAL = 1;
 
     public InsulinInjection() {
         super();
@@ -55,6 +54,18 @@ public class InsulinInjection extends Model implements Serializable, InsulinComm
         return "dose="+dose;
     }
 
+    @Override
+    public String toString() {
+        return "InsulinInjection ["+getId()+"]{" +
+                "insulin=" + insulin +
+                ", dose='" + dose + '\'' +
+                ", time='" + time + '\'' +
+                ", plan=" + plan +
+                ", date='" + date + '\'' +
+                ", comment='" + comment + '\'' +
+                ", color=" + color +
+                '}';
+    }
 /*
     public InsulinInjection(InsulinItem insulin, String dose, String time, String comment){
         this.insulin = insulin;

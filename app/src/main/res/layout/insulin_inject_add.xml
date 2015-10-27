@@ -141,7 +141,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/bt_insulin_add_update"
+                        android:id="@+id/bt_add_update"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -149,7 +149,7 @@
                         android:onClick="add_update" />
 
                     <Button
-                        android:id="@+id/bt_insulin_cancel"
+                        android:id="@+id/bt_cancel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

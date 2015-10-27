@@ -10,7 +10,8 @@
         <item>hour</item>
     </string-array>
 
-    <string name="insulin_inject_type_reg">Regular inject</string>
-    <string name="insulin_inject_type_add">Additional inject</string>
+    <string name="insulin_inject_type_reg">Regular</string>
+    <string name="insulin_inject_type_add">Additional</string>
+    <string name="insulin_inject_type_non">Not set</string>
 
 </resources>

@@ -11,6 +11,7 @@
     <string name="insulin_label_comment">Comment</string>
     <string name="injection_date_label">For date:</string>
     <string name="injection_date_text">dd.mm.yyyy</string>
+    <string name="planned_none">None</string>
     <string name="planned_regular">Regular</string>
     <string name="planned_additionals">Additional</string>
     <string name="action_initdb">Init DB</string>
@@ -25,6 +26,13 @@
     <string name="insulin_desc_label_min">min:</string>
     <string name="insulin_desc_label_max">max:</string>
     <string name="button_insulin_update">Update</string>
+
+    <string name="insulin_inject_insu">Insulin:</string>
+    <string name="insulin_inject_dose">Dose:</string>
+    <string name="insulin_inject_date">Date:</string>
+    <string name="insulin_inject_time">Time:</string>
+    <string name="insulin_inject_comm">Comment:</string>
+    <string name="insulin_inject_plan">Planned:</string>
 
 
     <string name="title_activity_insulin_desc">InsulinDescActivity</string>
