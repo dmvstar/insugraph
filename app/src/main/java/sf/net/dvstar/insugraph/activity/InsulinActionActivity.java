@@ -27,10 +27,10 @@ import sf.net.dvstar.insugraph.adapters.InsulinInjectAdapter;
 import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.insulins.InsulinConstants;
 
-public class InsulinInjectActivity extends AppCompatActivity {
+public class InsulinActionActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "InsulinInjectActivity";
+    private static final String TAG = "InsulinActionActivity";
     private ArrayList<InsulinInjection> mInsulinsInjections;
 
     private TextView currentDate;
@@ -41,7 +41,7 @@ public class InsulinInjectActivity extends AppCompatActivity {
     private FloatingActionButton fab12;
     private FloatingActionButton fab22;
     private FloatingActionButton fab32;
-
+    private FloatingActionMenu mFloatingActionMenu;
 
 
     @Override
@@ -85,7 +85,7 @@ public class InsulinInjectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insulin_inject);
+        setContentView(R.layout.activity_insulin_action);
 
         currentDate = (TextView) findViewById(R.id.tv_injection_date_text);
 
@@ -94,8 +94,8 @@ public class InsulinInjectActivity extends AppCompatActivity {
         currentDate.setText(sdf.format(today));
 
         /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab_menu_action = (FloatingActionButton) findViewById(R.id.fab_menu_action);
+        fab_menu_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAddInsulinsInjection(InsulinConstants.MODE_INSULIN_EDIT_ADD, view, null);
@@ -103,7 +103,7 @@ public class InsulinInjectActivity extends AppCompatActivity {
         });
         */
 
-        FloatingActionMenu menu = (FloatingActionMenu)findViewById(R.id.menu_actions_add);
+        mFloatingActionMenu = (FloatingActionMenu)findViewById(R.id.menu_actions_add);
 
         fab12 = (FloatingActionButton) findViewById(R.id.fab12);
         fab22 = (FloatingActionButton) findViewById(R.id.fab22);
@@ -167,6 +167,7 @@ public class InsulinInjectActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.fab12:
                     text = fab12.getLabelText();
+                    mFloatingActionMenu.close(false);
                     showAddInsulinsInjection(InsulinConstants.MODE_INSULIN_EDIT_ADD, v, null);
                     break;
                 case R.id.fab22:
@@ -177,7 +178,7 @@ public class InsulinInjectActivity extends AppCompatActivity {
                     break;
             }
 
-            Toast.makeText(InsulinInjectActivity.this, text, Toast.LENGTH_SHORT).show();
+            Toast.makeText(InsulinActionActivity.this, text, Toast.LENGTH_SHORT).show();
         }
     };
 

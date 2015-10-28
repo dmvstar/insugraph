@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -96,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //FloatingActionButton fab_menu_action = (FloatingActionButton) findViewById(R.id.fab_menu_action);
 
         // https://github.com/Clans/FloatingActionButton
         com.github.clans.fab.FloatingActionButton fab = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab);
@@ -162,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showInjectionsActivity() {
 
-        Intent intent = new Intent(this, InsulinInjectActivity.class);
+        Intent intent = new Intent(this, InsulinActionActivity.class);
         //intent.putExtra("key", value); //Optional parameters
         this.startActivity(intent);
 

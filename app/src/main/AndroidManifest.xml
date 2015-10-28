@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.InsulinInjectActivity" />
+        <activity android:name=".activity.InsulinActionActivity" />
         <activity android:name=".activity.InsulinInjectAddActivity" />
         <activity android:name=".activity.InsulinDescActivity" />
         <activity android:name=".activity.InsulinDescAddActivity" />

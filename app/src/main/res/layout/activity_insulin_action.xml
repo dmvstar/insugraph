@@ -5,7 +5,7 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context=".activity.InsulinInjectActivity">
+    tools:context=".activity.InsulinActionActivity">
 
     <!--android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
         android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
@@ -18,7 +18,7 @@
 
     <include layout="@layout/insulin_inject_list" />
 
-    <!--android.support.design.widget.FloatingActionButton android:id="@+id/fab"
+    <!--android.support.design.widget.FloatingActionButton android:id="@+id/fab_menu_action"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_input_add" /-->
@@ -33,14 +33,19 @@
         android:paddingLeft="10dp"
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true"
-        fab:menu_backgroundColor="#ccffffff"
+
+        fab:menu_labels_textColor="#000000"
+        fab:menu_labels_colorNormal="#c0c0c0"
 
         fab:menu_shadowColor="#444"
         fab:menu_colorNormal="#FFB805"
         fab:menu_colorPressed="#F2AB00"
         fab:menu_colorRipple="#D99200"
 
-        fab:menu_labels_position="right">
+        fab:menu_backgroundColor="@android:color/transparent"
+
+        fab:menu_labels_position="left">
+        <!--fab_menu_action:menu_backgroundColor="#ccffffff"-->
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab12"

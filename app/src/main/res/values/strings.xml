@@ -47,5 +47,7 @@
     <string name="menu_event_add_eat">Add eat</string>
     <string name="menu_event_add_action">Add action</string>
     <string name="menu_event_add_glucose">Add glucose</string>
+    <string name="insulin_glucose_glucose">Glucose</string>
+    <string name="insulin_glucose_value">Value:</string>
 
 </resources>
