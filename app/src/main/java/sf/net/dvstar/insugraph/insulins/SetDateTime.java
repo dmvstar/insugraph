@@ -30,7 +30,8 @@ public class SetDateTime {
 
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            this.editText.setText( dayOfMonth + "." + monthOfYear +"." +year);
+            //@TODO get localised format
+            this.editText.setText( String.format("%02d.%02d.%02d",dayOfMonth , monthOfYear, year)   );
         }
 
         @Override
@@ -54,8 +55,6 @@ public class SetDateTime {
                         e.printStackTrace();
                     }
                 }
-
-
                 new DatePickerDialog(mContext, this, year, month, day).show();
             }
         }
@@ -92,13 +91,13 @@ public class SetDateTime {
                     }
                 }
                 new TimePickerDialog(mContext, this, hour, minute, true).show();
-
             }
         }
 
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            this.editText.setText( hourOfDay + ":" + minute);
+            //@TODO get localised format
+            this.editText.setText( String.format("%02d:%02d",hourOfDay, minute)   );
         }
     }
 

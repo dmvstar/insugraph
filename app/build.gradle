@@ -33,4 +33,6 @@ dependencies {
     compile 'com.android.support:design:23.0.1'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.4'
+    compile 'com.github.clans:fab:1.6.1'
+//    compile 'com.getbase:floatingactionbutton:1.10.1'
 }

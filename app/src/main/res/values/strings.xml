@@ -43,5 +43,9 @@
     <string name="label_mode_add">Add</string>
     <string name="label_mode_edit">Edit</string>
     <string name="insulin_label">Insulins</string>
+    <string name="menu_event_add_inject">Add inject</string>
+    <string name="menu_event_add_eat">Add eat</string>
+    <string name="menu_event_add_action">Add action</string>
+    <string name="menu_event_add_glucose">Add glucose</string>
 
 </resources>

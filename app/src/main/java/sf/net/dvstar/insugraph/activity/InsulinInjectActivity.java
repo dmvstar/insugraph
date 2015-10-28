@@ -2,7 +2,7 @@ package sf.net.dvstar.insugraph.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+//import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +35,13 @@ public class InsulinInjectActivity extends AppCompatActivity {
 
     private TextView currentDate;
     private ListView mLvInjects;
+
+
+    private FloatingActionMenu menu;
+    private FloatingActionButton fab12;
+    private FloatingActionButton fab22;
+    private FloatingActionButton fab32;
+
 
 
     @Override
@@ -82,8 +91,9 @@ public class InsulinInjectActivity extends AppCompatActivity {
 
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        currentDate.setText( sdf.format(today));
+        currentDate.setText(sdf.format(today));
 
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +101,18 @@ public class InsulinInjectActivity extends AppCompatActivity {
                 showAddInsulinsInjection(InsulinConstants.MODE_INSULIN_EDIT_ADD, view, null);
             }
         });
+        */
+
+        FloatingActionMenu menu = (FloatingActionMenu)findViewById(R.id.menu_actions_add);
+
+        fab12 = (FloatingActionButton) findViewById(R.id.fab12);
+        fab22 = (FloatingActionButton) findViewById(R.id.fab22);
+        fab32 = (FloatingActionButton) findViewById(R.id.fab32);
+
+        fab12.setOnClickListener(clickListener);
+        fab22.setOnClickListener(clickListener);
+        fab32.setOnClickListener(clickListener);
+
 
         setListViewContent();
 
@@ -136,5 +158,28 @@ public class InsulinInjectActivity extends AppCompatActivity {
         this.startActivity(intent);
 
     }
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String text = "";
+
+            switch (v.getId()) {
+                case R.id.fab12:
+                    text = fab12.getLabelText();
+                    showAddInsulinsInjection(InsulinConstants.MODE_INSULIN_EDIT_ADD, v, null);
+                    break;
+                case R.id.fab22:
+                    text = fab22.getLabelText();
+                    break;
+                case R.id.fab32:
+                    text = fab32.getLabelText();
+                    break;
+            }
+
+            Toast.makeText(InsulinInjectActivity.this, text, Toast.LENGTH_SHORT).show();
+        }
+    };
+
 
 }
