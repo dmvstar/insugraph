@@ -13,7 +13,22 @@
     <color name="accent_pressed">#C2185B</color>
 
 
+    <color name="fabButtonNormal">#f8ece2</color>
+    <color name="fabButtonPressed">#f3dfcd</color>
+
+
     <color name="colorBackground">#ccd8e5</color>
     <color name="colorWindowBackground">#ccd8e5</color>
+
+    <color name="fabMenuLabelText">#000000</color>
+    <color name="fabMenuLabelNormal">#c0c0c0</color>
+    <color name="fabMenuLabelPressed">#787878</color>
+
+    <color name="fabMenuShadowColor">#444</color>
+    <color name="fabMenuColorNormal">#FFB805</color>
+    <color name="fabMenuColorPressed">#F2AB00</color>
+    <color name="fabMenuColorRipple">#D99200</color>
+
+
 
 </resources>

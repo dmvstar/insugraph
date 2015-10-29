@@ -106,7 +106,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/iv_insulin"
-        android:src="@drawable/insulin"
+        android:src="@drawable/ic_insulin"
         android:layout_gravity="center"
         android:layout_weight="4" />
 

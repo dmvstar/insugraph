@@ -34,13 +34,14 @@
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true"
 
-        fab:menu_labels_textColor="#000000"
-        fab:menu_labels_colorNormal="#c0c0c0"
+        fab:menu_labels_textColor="@color/fabMenuLabelText"
+        fab:menu_labels_colorNormal="@color/fabMenuLabelNormal"
+        fab:menu_labels_colorPressed="@color/fabMenuLabelPressed"
 
-        fab:menu_shadowColor="#444"
-        fab:menu_colorNormal="#FFB805"
-        fab:menu_colorPressed="#F2AB00"
-        fab:menu_colorRipple="#D99200"
+        fab:menu_shadowColor="@color/fabMenuShadowColor"
+        fab:menu_colorNormal="@color/fabMenuColorNormal"
+        fab:menu_colorPressed="@color/fabMenuColorPressed"
+        fab:menu_colorRipple="@color/fabMenuColorRipple"
 
         fab:menu_backgroundColor="@android:color/transparent"
 
@@ -51,7 +52,8 @@
             android:id="@+id/fab12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_edit"
+            android:src="@drawable/ic_inject"
+            fab:fab_colorNormal="@color/fabButtonNormal"
             fab:fab_size="mini"
             fab:fab_label="@string/menu_event_add_inject" />
 
@@ -59,7 +61,8 @@
             android:id="@+id/fab22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_edit"
+            android:src="@drawable/ic_toast"
+            fab:fab_colorNormal="@color/fabButtonNormal"
             fab:fab_size="mini"
             fab:fab_label="@string/menu_event_add_eat" />
 
@@ -67,7 +70,8 @@
             android:id="@+id/fab32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_edit"
+            android:src="@drawable/ic_drops"
+            fab:fab_colorNormal="@color/fabButtonNormal"
             fab:fab_size="mini"
             fab:fab_label="@string/menu_event_add_glucose" />
 
