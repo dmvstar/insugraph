@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/et_glucose_value"
             android:layout_weight="1" />
 
         <TextView
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="time"
                 android:ems="10"
-                android:id="@+id/editText3" />
+                android:id="@+id/et_glucose_time" />
 
         </LinearLayout>
 
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="date"
                 android:ems="10"
-                android:id="@+id/editText2" />
+                android:id="@+id/et_glucose_date" />
         </LinearLayout>
     </LinearLayout>
 
@@ -100,17 +100,30 @@
         android:layout_gravity="center_horizontal"
         android:textColor="@color/accent" />
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sp_glucose_when"
+        android:layout_gravity="center_horizontal"
+        android:entries="@array/dialog_when_list" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/glucose_add_label_comment"
+        android:id="@+id/textView29"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/accent" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText4" />
+        android:id="@+id/et_comment" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:orientation="horizontal">
 
         <Button

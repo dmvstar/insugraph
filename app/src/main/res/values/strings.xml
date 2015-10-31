@@ -61,5 +61,8 @@
     <string name="insulin_inject_label_type">Injection type</string>
     <string name="injection_total_label">Total dose:</string>
     <string name="tv_injection_total_value">0</string>
+    <string name="dialog_edit">Edit</string>
+    <string name="dialog_delete">Delete</string>
+    <string name="insulin_inject_unit">unit(s)</string>
 
 </resources>

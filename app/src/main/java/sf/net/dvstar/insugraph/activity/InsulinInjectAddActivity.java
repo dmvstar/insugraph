@@ -102,7 +102,7 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position==InsulinInjection.INJECTION_PLAN_REGULAR) {
+                if(position== InsulinInjection.INJECTION_PLAN_REGULAR) {
                     mEtFromDate.setEnabled(false);
                     mEtFromDate.setFocusable(false);
                     mEtFromDate.setText("");

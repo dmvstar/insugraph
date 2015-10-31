@@ -1,7 +1,5 @@
 package sf.net.dvstar.insugraph.database;
 
-import android.graphics.Color;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -10,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Table(name = "InsulinInjection")
-public class InsulinInjection extends Model implements Serializable, InsulinCommonItem  {
+public class InsulinInjection extends Model implements Serializable, ActionCommonItem {
 
     @Column(name = "insulin", indexGroups = {"main"})
     public InsulinItem insulin;
@@ -66,6 +64,11 @@ public class InsulinInjection extends Model implements Serializable, InsulinComm
                 ", comment='" + comment + '\'' +
                 ", color=" + color +
                 '}';
+    }
+
+    @Override
+    public int getActionType() {
+        return ACTION_TYPE_INJECT;
     }
 /*
     public InsulinInjection(InsulinItem insulin, String dose, String time, String comment){

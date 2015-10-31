@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 
 @Table(name = "InsulinType")
-public class InsulinType extends Model implements Serializable, InsulinCommonItem {
+public class InsulinType extends Model implements Serializable, ActionCommonItem {
 
     /*
     id	code	duration	mtype	stype	description
@@ -53,5 +53,10 @@ public class InsulinType extends Model implements Serializable, InsulinCommonIte
     @Override
     public String getListText() {
         return "["+code+"] "+description +" ("+durations.getListText()+")";
+    }
+
+    @Override
+    public int getActionType() {
+        return ACTION_TYPE_INSULIN;
     }
 }

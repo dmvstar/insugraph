@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by sdv on 04.10.15.
  */
 @Table(name = "InsulinDuration")
-public class InsulinDuration extends Model implements Serializable, InsulinCommonItem {
+public class InsulinDuration extends Model implements Serializable, ActionCommonItem {
 
     /*
     id	code	descriptions
@@ -44,5 +44,10 @@ public class InsulinDuration extends Model implements Serializable, InsulinCommo
     @Override
     public String getListText() {
         return "["+code+"] "+description ;
+    }
+
+    @Override
+    public int getActionType() {
+        return ACTION_TYPE_INSULIN;
     }
 }

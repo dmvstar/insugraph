@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by sdv on 04.10.15.
  */
 @Table(name = "InsulinFirm")
-public class InsulinFirm extends Model implements Serializable, InsulinCommonItem {
+public class InsulinFirm extends Model implements Serializable, ActionCommonItem {
 
     /*
     id	code	name
@@ -51,5 +51,10 @@ public class InsulinFirm extends Model implements Serializable, InsulinCommonIte
         if(this.code.equals(((InsulinFirm)m).code))
             return true;
         return false;
+    }
+
+    @Override
+    public int getActionType() {
+        return ACTION_TYPE_INSULIN;
     }
 }

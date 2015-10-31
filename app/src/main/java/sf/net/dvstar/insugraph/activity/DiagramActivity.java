@@ -20,9 +20,9 @@ import sf.net.dvstar.insugraph.insulins.InsuGraphContent;
 import sf.net.dvstar.insugraph.insulins.InsuGraphProvider;
 import sf.net.dvstar.insugraph.insulins.InsulinWork;
 
-public class MainActivity extends AppCompatActivity {
+public class DiagramActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "DiagramActivity";
     InsuGraphProvider vInsuGraphProvider = new InsuGraphProvider();
     private LineChart[] mCharts = new LineChart[4];
     private Typeface mTf;
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showActionsActivity();
+                //showActionsActivity();
             }
         });
 
@@ -119,62 +119,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_graph, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        if (id == R.id.action_injections) {
-            showActionsActivity();
-        }
-
-        if (id == R.id.action_insulins) {
-            showInsulinDescActivity();
-        }
-
-        if (id == R.id.action_reinitdb) {
-            clearDB();
-            initDB();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void clearDB() {
-        InsulinDatabaseInit iIsulinInitDatabase = new InsulinDatabaseInit();
-        iIsulinInitDatabase.isCreated();
-        iIsulinInitDatabase.dropTables();
-    }
-
-    private void initDB() {
-        InsulinDatabaseInit iIsulinInitDatabase = new InsulinDatabaseInit();
-        iIsulinInitDatabase.initCreate();
-    }
-
-    private void showActionsActivity() {
-
-        Intent intent = new Intent(this, DiaryActionActivity.class);
-        //intent.putExtra("key", value); //Optional parameters
-        this.startActivity(intent);
-
-    }
-
-    private void showInsulinDescActivity() {
-
-        Intent intent = new Intent(this, InsulinDescActivity.class);
-        //intent.putExtra("key", value); //Optional parameters
-        this.startActivity(intent);
-
+        return true;
     }
 
     private void setupChart(String title, LineChart chart, LineData data, int color) {

@@ -11,7 +11,7 @@ import com.activeandroid.Model;
 
 import java.util.List;
 
-import sf.net.dvstar.insugraph.database.InsulinCommonItem;
+import sf.net.dvstar.insugraph.database.ActionCommonItem;
 
 /**
  * Created by sdv on 22.10.15.
@@ -52,7 +52,7 @@ public class InsulinCommonAdapter extends ArrayAdapter<Model> {
 
         mText = (TextView) rowView.findViewById(android.R.id.text1);
 
-        InsulinCommonItem item = (InsulinCommonItem) mItems.get(position);
+        ActionCommonItem item = (ActionCommonItem) mItems.get(position);
 
         mText.setText(item.getListText());
 

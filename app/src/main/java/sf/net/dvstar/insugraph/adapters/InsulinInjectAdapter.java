@@ -11,7 +11,6 @@ import java.util.List;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
-import sf.net.dvstar.insugraph.database.InsulinOrigin;
 import sf.net.dvstar.insugraph.insulins.InsulinUtils;
 
 

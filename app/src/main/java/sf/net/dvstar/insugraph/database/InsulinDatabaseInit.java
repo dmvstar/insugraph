@@ -29,7 +29,6 @@ public class InsulinDatabaseInit {
         return ret;
     }
 
-
     public void initCreate(){
         if(!isCreated()) {
             InsulinDuration iInsulinDuration;
@@ -118,8 +117,9 @@ public class InsulinDatabaseInit {
         }
     }
 
-    public void dropTables(){
+    public void dropDatabase(){
         SQLiteDatabase db = ActiveAndroid.getDatabase();
+        /*
         List<String> tables = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table';", null);
         cursor.moveToFirst();
@@ -136,10 +136,9 @@ public class InsulinDatabaseInit {
             Log.v(TAG, "Drop table " + tableName);
             //db.execSQL("DROP TABLE " + tableName);
         }
-
+        */
         db.close();
         SQLiteDatabase.deleteDatabase( new File(db.getPath()) );
-
     }
 
 

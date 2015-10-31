@@ -1,7 +1,5 @@
 package sf.net.dvstar.insugraph.database;
 
-import android.graphics.Color;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -12,7 +10,7 @@ import java.io.Serializable;
  * Created by sdv on 18.10.15.
  */
 @Table(name = "InsulinItem")
-public class InsulinItem extends Model implements Serializable, InsulinCommonItem {
+public class InsulinItem extends Model implements Serializable, ActionCommonItem {
 
     /*
     name	    type	firm	origin	start_min	start_max	start_measure	work_min	work_max	work_measure	ends_min	ends_max	ends_measure
@@ -67,7 +65,7 @@ public class InsulinItem extends Model implements Serializable, InsulinCommonIte
         super();
     }
 
-    public InsulinItem(String name,int color){
+    public InsulinItem(String name, int color){
         super();
         this.name = name;
         this.color = color;
@@ -147,6 +145,9 @@ public class InsulinItem extends Model implements Serializable, InsulinCommonIte
         return false;
     }
 
-
+    @Override
+    public int getActionType() {
+        return ACTION_TYPE_INSULIN;
+    }
 
 }
