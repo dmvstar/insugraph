@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showInjectionsActivity();
+                showActionsActivity();
             }
         });
 
@@ -129,22 +129,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_injections) {
-            showInjectionsActivity();
+            showActionsActivity();
         }
 
         if (id == R.id.action_insulins) {
             showInsulinDescActivity();
         }
 
-        if (id == R.id.action_initdb) {
+        if (id == R.id.action_reinitdb) {
+            clearDB();
             initDB();
         }
-
-        if (id == R.id.action_cleardb) {
-            clearDB();
-        }
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -159,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         iIsulinInitDatabase.initCreate();
     }
 
-    private void showInjectionsActivity() {
+    private void showActionsActivity() {
 
         Intent intent = new Intent(this, InsulinActionActivity.class);
         //intent.putExtra("key", value); //Optional parameters

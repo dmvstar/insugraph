@@ -11,10 +11,7 @@
     <item android:id="@+id/action_injections" android:title="@string/action_injections"
         android:orderInCategory="100" app:showAsAction="never" />
 
-    <item android:id="@+id/action_initdb" android:title="@string/action_initdb"
-        android:orderInCategory="100" app:showAsAction="never" />
-
-    <item android:id="@+id/action_cleardb" android:title="@string/action_cleardb"
+    <item android:id="@+id/action_reinitdb" android:title="@string/action_reinitdb"
         android:orderInCategory="100" app:showAsAction="never" />
 
 </menu>

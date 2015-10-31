@@ -14,8 +14,8 @@
     <string name="planned_none">None</string>
     <string name="planned_regular">Regular</string>
     <string name="planned_additionals">Additional</string>
-    <string name="action_initdb">Init DB</string>
-    <string name="action_cleardb">Clear DB</string>
+
+    <string name="action_reinitdb">Reinit DB</string>
     <string name="insulin_desc_name">Insulin name:</string>
     <string name="insulin_desc_firm">Firm:</string>
     <string name="insulin_desc_type">Type:</string>
