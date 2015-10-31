@@ -7,6 +7,7 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Table(name = "InsulinInjection")
 public class InsulinInjection extends Model implements Serializable, InsulinCommonItem  {
@@ -18,13 +19,13 @@ public class InsulinInjection extends Model implements Serializable, InsulinComm
     public String dose;
 
     @Column(name = "time", indexGroups = {"main"})
-    public String time;
+    public Date time;
 
     @Column(name = "plan", indexGroups = {"main"})
     public int plan;
 
     @Column(name = "date")
-    public String date;
+    public Date date;
 
     @Column(name = "comment")
     public String comment;
@@ -39,7 +40,7 @@ public class InsulinInjection extends Model implements Serializable, InsulinComm
         super();
     }
 
-    public InsulinInjection(InsulinItem insulin, String dose, String time, String comment, int plan, int color){
+    public InsulinInjection(InsulinItem insulin, String dose, Date time, String comment, int plan, int color){
         super();
         this.insulin = insulin;
         this.dose = dose;

@@ -1,5 +1,6 @@
 package sf.net.dvstar.insugraph.activity;
 
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,12 +26,14 @@ import sf.net.dvstar.insugraph.adapters.InsulinDescAdapter;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
 import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.insulins.InsulinConstants;
+import sf.net.dvstar.insugraph.insulins.InsulinUtils;
 import sf.net.dvstar.insugraph.insulins.SetDateTime;
 
 
 public class InsulinInjectAddActivity extends AppCompatActivity {
 
     private static final java.lang.String TAG = "InsulinInjectAddActivity";
+    private Context mContext;
     private Button btColor;
     private Button btAdd;
     private LinearLayout llColor;
@@ -49,7 +52,7 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diary_inject_add);
-
+        mContext = this;
         mMode = getIntent().getExtras().getInt(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_MODE);
 
         btAdd = (Button) findViewById(R.id.bt_add_update);
@@ -95,6 +98,26 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
             }
         });
 
+        mSpInjectType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position==InsulinInjection.INJECTION_PLAN_REGULAR) {
+                    mEtFromDate.setEnabled(false);
+                    mEtFromDate.setFocusable(false);
+                    mEtFromDate.setText("");
+                } else {
+                    mEtFromDate.setEnabled(true);
+                    mEtFromDate.setFocusableInTouchMode(true);
+                    mEtFromDate.setFocusable(true);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         if (mMode == InsulinConstants.MODE_INSULIN_EDIT_ITEM) {
 
@@ -127,8 +150,8 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
             if (index>=0) mSpInsulins.setSelection(index);
 
             mEtDose.setText(mInjection.dose);
-            mEtFromTime.setText(mInjection.time);
-            mEtFromDate.setText(mInjection.date);
+            mEtFromTime.setText( InsulinUtils.getTimeText(mInjection.time) );
+            mEtFromDate.setText( InsulinUtils.getDateText(mInjection.date) );
             mEtComment.setText(mInjection.comment);
 
             btAdd.setText( getResources().getString(R.string.button_insulin_update) );
@@ -174,14 +197,14 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
         mInjection.color = viewColor.getColor();
 
         mInjection.dose = mEtDose.getText().toString();
-        mInjection.time = mEtFromTime.getText().toString();
-        mInjection.date = mEtFromDate.getText().toString();
+        mInjection.time = InsulinUtils.parseTimeText(mEtFromTime.getText().toString() );
+        mInjection.date = InsulinUtils.parseDateText(mEtFromDate.getText().toString());
         mInjection.comment = mEtComment.getText().toString();
 
         Log.v(TAG, "!!! " + mInjection.getId() );
         Log.v(TAG, "!!! " + mInjection.toString() );
 
-        if( mInjection.dose.length()>0 && mInjection.time.length()>0 ) {
+        if( mInjection.dose.length()>0 && mInjection.time != null ) {
             mInjection.save();
         } else {
             Toast.makeText(getBaseContext(), "Not Enough data (dose, time ...) for store !", Toast.LENGTH_SHORT).show();

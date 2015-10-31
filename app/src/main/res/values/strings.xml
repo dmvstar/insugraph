@@ -57,5 +57,9 @@
     <string name="common_label_time">Time</string>
     <string name="common_label_date">Date</string>
     <string name="diary_action_label">Actions list</string>
+    <string name="action_graph">Diagram</string>
+    <string name="insulin_inject_label_type">Injection type</string>
+    <string name="injection_total_label">Total dose:</string>
+    <string name="tv_injection_total_value">0</string>
 
 </resources>

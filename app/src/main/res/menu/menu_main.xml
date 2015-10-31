@@ -11,6 +11,9 @@
     <item android:id="@+id/action_injections" android:title="@string/action_injections"
         android:orderInCategory="100" app:showAsAction="never" />
 
+    <item android:id="@+id/action_graph" android:title="@string/action_graph"
+        android:orderInCategory="100" app:showAsAction="never" />
+
     <item android:id="@+id/action_reinitdb" android:title="@string/action_reinitdb"
         android:orderInCategory="100" app:showAsAction="never" />
 

@@ -28,7 +28,7 @@
     <!--fab_menu_action:menu_backgroundColor="#ccffffff"-->
 
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fab12"
+        android:id="@+id/fab_inject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_edit"
@@ -36,7 +36,7 @@
         fab:fab_label="@string/menu_event_add_inject" />
 
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fab22"
+        android:id="@+id/fab_eating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_edit"
@@ -44,7 +44,7 @@
         fab:fab_label="@string/menu_event_add_eating" />
 
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fab32"
+        android:id="@+id/fab_glucose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_edit"

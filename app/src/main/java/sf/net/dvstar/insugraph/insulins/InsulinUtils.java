@@ -1,10 +1,12 @@
 package sf.net.dvstar.insugraph.insulins;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
-/**
- * Created by dstarzhynskyi on 10.10.2015.
- */
+
 public class InsulinUtils {
 
 
@@ -33,10 +35,56 @@ public class InsulinUtils {
     }
 
 
+    public static String mDateFormatString = "%02d.%02d.%02d";
+    public static String mDateFormat = "dd.MM.yyyy";
+    public static String mTimeFormat = "HH:mm";
+
+    public static SimpleDateFormat mSimpleDateFormatDate = new SimpleDateFormat(mDateFormat);
+    public static SimpleDateFormat mSimpleTimeFormatDate = new SimpleDateFormat(mTimeFormat);
+
+    public static String getDateText(Date date) {
+        String ret = "";
+        if(date !=null)
+            ret = mSimpleDateFormatDate.format(date);
+        return ret;
+    }
+
+    public static String getTimeText(Date date) {
+        String ret = "";
+        if(date !=null)
+            ret = mSimpleTimeFormatDate.format(date);
+        return ret;
+    }
 
 
+    public static String getDateText(int year, int monthOfYear, int dayOfMonth) {
+        return String.format(mDateFormatString, dayOfMonth , monthOfYear, year);
+    }
 
 
+    public static Date parseTimeText(String time) {
+        Date ret = null;//Calendar.getInstance().getTime();
+
+        try {
+            ret = mSimpleTimeFormatDate.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return ret;
+    }
+
+    public static Date parseDateText(String date) {
+        Date ret = null;//Calendar.getInstance().getTime();
+
+        try {
+            ret = mSimpleDateFormatDate.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return ret;
+    }
 }
 
 

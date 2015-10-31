@@ -12,6 +12,7 @@ import java.util.List;
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
 import sf.net.dvstar.insugraph.database.InsulinOrigin;
+import sf.net.dvstar.insugraph.insulins.InsulinUtils;
 
 
 public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
@@ -72,7 +73,7 @@ public class InsulinInjectAdapter extends ArrayAdapter<InsulinInjection> {
 
         holder.tv_insulin.setText(item.insulin.name);
         holder.tv_dose.setText(item.dose);
-        holder.tv_time.setText(item.time);
+        holder.tv_time.setText(InsulinUtils.getTimeText( item.time ) );
         holder.tv_comment.setText(item.comment);
         holder.tv_planned.setText(getPlannedDescription(item.plan));
         rowView.setBackgroundColor(item.color);
