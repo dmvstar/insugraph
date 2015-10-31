@@ -2,7 +2,7 @@ package sf.net.dvstar.insugraph.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-//import android.support.design.widget.FloatingActionButton;
+
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,10 +27,10 @@ import sf.net.dvstar.insugraph.adapters.InsulinInjectAdapter;
 import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.insulins.InsulinConstants;
 
-public class InsulinActionActivity extends AppCompatActivity {
+public class DiaryActionActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "InsulinActionActivity";
+    private static final String TAG = "DiaryActionActivity";
     private ArrayList<InsulinInjection> mInsulinsInjections;
 
     private TextView currentDate;
@@ -85,7 +85,7 @@ public class InsulinActionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insulin_action);
+        setContentView(R.layout.activity_diary_action);
 
         currentDate = (TextView) findViewById(R.id.tv_injection_date_text);
 
@@ -123,11 +123,11 @@ public class InsulinActionActivity extends AppCompatActivity {
 
         List<InsulinItem> insulins = new Select().from(InsulinItem.class).execute();
 
-        Log.v(TAG, "!!!!!!!!"+ insulins.toString() );
+        Log.v(TAG, "!!!!!!!!" + insulins.toString());
 
         ret = new Select().from(InsulinInjection.class).execute();
 
-        Log.v(TAG, "!!!!!!!!"+ ret );
+        Log.v(TAG, "!!!!!!!!" + ret);
         /*
         ret.add(new InsulinInjection(new InsulinItem("actrapid", Color.YELLOW), "8", "8:00", "Morning", InsulinInjection.INJECTION_PLAN_REGULAR, Color.YELLOW));
         ret.add(new InsulinInjection(new InsulinItem("protafan", Color.GREEN), "16", "8:00", "Morning", InsulinInjection.INJECTION_PLAN_REGULAR, Color.GREEN));
@@ -140,9 +140,9 @@ public class InsulinActionActivity extends AppCompatActivity {
 
     /**
      * Show add or edit activity
-     * @param mode
-     * @param view
-     * @param item
+     * @param mode work mode add or edit
+     * @param view parent View
+     * @param item data value
      */
     private void showAddInsulinsInjection(int mode, View view, InsulinInjection item) {
 
@@ -159,6 +159,13 @@ public class InsulinActionActivity extends AppCompatActivity {
 
     }
 
+    private void showAddGlucoseReading(int mode, View view) {
+
+        Intent intent = new Intent(this, DiaryGlucoseAddActivity.class);
+        intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_MODE, mode);
+        this.startActivity(intent);
+    }
+
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -172,13 +179,16 @@ public class InsulinActionActivity extends AppCompatActivity {
                     break;
                 case R.id.fab22:
                     text = fab22.getLabelText();
+                    mFloatingActionMenu.close(false);
                     break;
                 case R.id.fab32:
                     text = fab32.getLabelText();
+                    mFloatingActionMenu.close(false);
+                    showAddGlucoseReading(InsulinConstants.MODE_INSULIN_EDIT_ADD, v);
                     break;
             }
 
-            Toast.makeText(InsulinActionActivity.this, text, Toast.LENGTH_SHORT).show();
+            Toast.makeText(DiaryActionActivity.this, text, Toast.LENGTH_SHORT).show();
         }
     };
 

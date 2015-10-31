@@ -2,12 +2,12 @@
     <string name="app_name">insugraph</string>
     <string name="action_settings">Settings</string>
     <string name="action_insulin">Insulins</string>
-    <string name="button_insulin_add">Add</string>
-    <string name="button_insulin_cancel">Cancel</string>
+    <string name="button_add">Add</string>
+    <string name="button_cancel">Cancel</string>
     <string name="button_insulin_color">Select color</string>
     <string name="insulin_label_insulin">Insulin</string>
     <string name="insulin_label_dose">Dose injection</string>
-    <string name="insulin_label_time">Time/Date injection</string>
+
     <string name="insulin_label_comment">Comment</string>
     <string name="injection_date_label">For date:</string>
     <string name="injection_date_text">dd.mm.yyyy</string>
@@ -44,10 +44,18 @@
     <string name="label_mode_edit">Edit</string>
     <string name="insulin_label">Insulins</string>
     <string name="menu_event_add_inject">Add inject</string>
-    <string name="menu_event_add_eat">Add eat</string>
+    <string name="menu_event_add_eating">Add eating</string>
     <string name="menu_event_add_action">Add action</string>
     <string name="menu_event_add_glucose">Add glucose</string>
-    <string name="insulin_glucose_glucose">Glucose</string>
-    <string name="insulin_glucose_value">Value:</string>
+    <string name="glucose_label_title">Glucose</string>
+    <string name="glucose_label_value">Value:</string>
+    <string name="glucose_add_label_concentration">Concentration</string>
+    <string name="glucose_add_title">Add glucose reading result</string>
+    <string name="glucose_add_label_comment">Comment</string>
+    <string name="glucose_add_label_measure">mmol/L</string>
+
+    <string name="common_label_time">Time</string>
+    <string name="common_label_date">Date</string>
+    <string name="diary_action_label">Actions list</string>
 
 </resources>

@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="@string/insulin_glucose_glucose"
+                android:text="@string/glucose_label_title"
                 android:textStyle="bold" />
 
             <TextView
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/insulin_glucose_value"
+                android:text="@string/glucose_label_value"
                 android:textStyle="bold" />
 
             <TextView

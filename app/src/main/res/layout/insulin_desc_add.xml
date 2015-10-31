@@ -44,6 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/insulin_desc_name"
+                android:textColor="@color/accent"
                 android:textStyle="bold" />
 
             <EditText
@@ -57,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/insulin_desc_firm"
+                android:textColor="@color/accent"
                 android:textStyle="bold" />
 
             <Spinner
@@ -70,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/insulin_desc_type"
+                android:textColor="@color/accent"
                 android:textStyle="bold" />
 
             <Spinner
@@ -84,6 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/insulin_desc_origin"
+                android:textColor="@color/accent"
                 android:textStyle="bold" />
 
             <Spinner
@@ -98,6 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/insulin_desc_work"
+                android:textColor="@color/accent"
                 android:textStyle="bold" />
 
 
@@ -303,7 +308,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="add_update"
-                        android:text="@string/button_insulin_add" />
+                        android:text="@string/button_add" />
 
                     <Button
                         android:id="@+id/bt_insulin_cancel"
@@ -311,7 +316,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="cancel"
-                        android:text="@string/button_insulin_cancel" />
+                        android:text="@string/button_cancel" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>

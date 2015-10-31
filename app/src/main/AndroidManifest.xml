@@ -20,10 +20,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.InsulinActionActivity" />
+        <activity android:name=".activity.DiaryActionActivity" />
         <activity android:name=".activity.InsulinInjectAddActivity" />
         <activity android:name=".activity.InsulinDescActivity" />
         <activity android:name=".activity.InsulinDescAddActivity" />
+        <activity android:name=".activity.DiaryGlucoseAddActivity" />
 
         <meta-data
             android:name="AA_DB_NAME"

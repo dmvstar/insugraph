@@ -48,7 +48,7 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.insulin_inject_add);
+        setContentView(R.layout.diary_inject_add);
 
         mMode = getIntent().getExtras().getInt(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_MODE);
 

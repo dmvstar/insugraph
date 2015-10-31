@@ -6,17 +6,13 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-
-import java.util.ArrayList;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.database.InsulinDatabaseInit;
@@ -27,9 +23,16 @@ import sf.net.dvstar.insugraph.insulins.InsulinWork;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    InsuGraphProvider vInsuGraphProvider = new InsuGraphProvider();
     private LineChart[] mCharts = new LineChart[4];
     private Typeface mTf;
-
+    private int[] mColors = new int[]{
+            Color.rgb(137, 230, 81),
+            Color.rgb(240, 240, 30),
+            Color.rgb(89, 199, 250),
+            Color.rgb(250, 104, 104
+            )
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 */
         //setContentView(R.layout.activity_colored_lines);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_graph);
 
         mCharts[0] = (LineChart) findViewById(R.id.chart1);
         mCharts[1] = (LineChart) findViewById(R.id.chart2);
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < mCharts.length; i++) {
             // add some transparency to the color with "& 0x90FFFFFF"
 
-            switch(i) {
+            switch (i) {
 
                 case 0:
                 case 1: {
@@ -64,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
                     //data = getLineDataInsulin(insulins[i]);
                     data.setValueTypeface(mTf);
                     setupChart(insulinGraphContent.getInsulinName(), mCharts[i], data, mColors[i % mColors.length]);
-                } break;
+                }
+                break;
 
                 case 2: {
                     data = vInsuGraphProvider.getLineDataCombineInsulin();
                     data.setValueTypeface(mTf);
                     setupChart(vInsuGraphProvider.getLineDataCombineInsulinNames(), mCharts[i], data, mColors[i % mColors.length]);
-                } break;
+                }
+                break;
 
                 case 3: {
                     /*
@@ -82,9 +87,11 @@ public class MainActivity extends AppCompatActivity {
                     data.setValueTypeface(mTf);
                     setupChart("Summary" + i, mCharts[i], data, mColors[i % mColors.length]);
 
-                } break;
+                }
+                break;
 
-                default: break;
+                default:
+                    break;
 
             }
 
@@ -156,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showActionsActivity() {
 
-        Intent intent = new Intent(this, InsulinActionActivity.class);
+        Intent intent = new Intent(this, DiaryActionActivity.class);
         //intent.putExtra("key", value); //Optional parameters
         this.startActivity(intent);
 
@@ -169,15 +176,6 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(intent);
 
     }
-
-
-    private int[] mColors = new int[] {
-            Color.rgb(137, 230, 81),
-            Color.rgb(240, 240, 30),
-            Color.rgb(89, 199, 250),
-            Color.rgb(250, 104, 104
-            )
-    };
 
     private void setupChart(String title, LineChart chart, LineData data, int color) {
 
@@ -225,12 +223,6 @@ public class MainActivity extends AppCompatActivity {
         chart.animateX(2500);
     }
 
-    protected String[] mMonths = new String[] {
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"
-    };
-
-    InsuGraphProvider vInsuGraphProvider = new InsuGraphProvider();
-
     private void prepareDataInsulin() {
 
         InsulinWork insulinWork;
@@ -238,22 +230,22 @@ public class MainActivity extends AppCompatActivity {
         insulinWork = new InsulinWork(
                 "actrapid",
                 new InsulinWork.InsulinTime[]{
-                        new InsulinWork.InsulinTime(20,"m"),
+                        new InsulinWork.InsulinTime(20, "m"),
                         new InsulinWork.InsulinTime(1, "h"),
                         new InsulinWork.InsulinTime(6, "h")
                 }
         );
-        vInsuGraphProvider.addInsulin(insulinWork,8,0);
+        vInsuGraphProvider.addInsulin(insulinWork, 8, 0);
 
         insulinWork = new InsulinWork(
                 "protafan",
                 new InsulinWork.InsulinTime[]{
                         new InsulinWork.InsulinTime(1, "h"),
                         new InsulinWork.InsulinTime(4, "h"),
-                        new InsulinWork.InsulinTime(18,"h")
+                        new InsulinWork.InsulinTime(18, "h")
                 }
         );
-        vInsuGraphProvider.addInsulin(insulinWork,16,0);
+        vInsuGraphProvider.addInsulin(insulinWork, 16, 0);
 
         vInsuGraphProvider.normalizeXAxisValues();
 
@@ -261,51 +253,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //----------------------------------------------------------------------------------------------
-
-    /**
-     * get random data for graph
-     * @param count
-     * @param range
-     * @return
-     */
-    private LineData getData(int count, float range) {
-
-        ArrayList<String> xVals = new ArrayList<String>();
-        for (int i = 0; i < count; i++) {
-            xVals.add(mMonths[i % 12]);
-        }
-
-        ArrayList<Entry> yVals = new ArrayList<Entry>();
-
-        for (int i = 0; i < count; i++) {
-            float val = (float) (Math.random() * range) + 3;
-            yVals.add(new Entry(val, i));
-        }
-
-        // create a dataset and give it a type
-        LineDataSet set1 = new LineDataSet(yVals, "DataSet 1");
-        // set1.setFillAlpha(110);
-        // set1.setFillColor(Color.RED);
-
-        set1.setLineWidth(1.75f);
-        set1.setCircleSize(3f);
-        set1.setColor(Color.WHITE);
-        set1.setCircleColor(Color.WHITE);
-        set1.setHighLightColor(Color.WHITE);
-        set1.setDrawValues(false);
-        set1.setDrawFilled(true);
-
-        set1.setDrawCubic(true);
-
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-        dataSets.add(set1); // add the datasets
-
-        // create a data object with the datasets
-        LineData data = new LineData(xVals, dataSets);
-
-        return data;
-    }
     //----------------------------------------------------------------------------------------------
 
 }

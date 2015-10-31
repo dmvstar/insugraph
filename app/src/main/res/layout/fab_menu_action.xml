@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_edit"
         fab:fab_size="mini"
-        fab:fab_label="@string/menu_event_add_eat" />
+        fab:fab_label="@string/menu_event_add_eating" />
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fab32"
