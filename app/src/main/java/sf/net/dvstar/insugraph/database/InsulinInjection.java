@@ -7,6 +7,8 @@ import com.activeandroid.annotation.Table;
 import java.io.Serializable;
 import java.util.Date;
 
+import sf.net.dvstar.insugraph.insulins.InsulinUtils;
+
 @Table(name = "InsulinInjection")
 public class InsulinInjection extends Model implements Serializable, ActionCommonItem {
 
@@ -64,6 +66,17 @@ public class InsulinInjection extends Model implements Serializable, ActionCommo
                 ", comment='" + comment + '\'' +
                 ", color=" + color +
                 '}';
+    }
+
+    @Override
+    public Date getCompareTime() {
+        Date ret;
+        if(plan==INJECTION_PLAN_REGULAR){
+            ret = InsulinUtils.getDateTimeFrom(time, null);
+        } else {
+            ret = InsulinUtils.getDateTimeFrom(time, date);
+        }
+        return ret;
     }
 
     @Override

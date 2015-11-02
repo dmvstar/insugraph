@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by sdv on 18.10.15.
  */
 @Table(name = "InsulinOrigin")
-public class InsulinOrigin extends Model implements Serializable, ActionCommonItem {
+public class InsulinOrigin extends Model implements Serializable, CommonItem {
     /*
     id	code	name	name_ru
     1	HBIOS	human biosynthetic	человеческий биосинтетический
@@ -50,8 +50,10 @@ public class InsulinOrigin extends Model implements Serializable, ActionCommonIt
         return "["+code+"] "+name;
     }
 
+    /*
     @Override
     public int getActionType() {
         return ACTION_TYPE_INSULIN;
     }
+    */
 }

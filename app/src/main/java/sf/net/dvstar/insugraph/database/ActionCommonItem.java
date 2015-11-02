@@ -1,14 +1,13 @@
 package sf.net.dvstar.insugraph.database;
 
-/**
- * Created by sdv on 24.10.15.
- */
-public interface ActionCommonItem {
+import java.util.Date;
+
+public interface ActionCommonItem extends CommonItem {
 
     int ACTION_TYPE_INJECT = 1;
     int ACTION_TYPE_GLUCOSE = 2;
     int ACTION_TYPE_INSULIN = 3;
 
-    String getListText();
+    Date   getCompareTime();
     int getActionType();
 }

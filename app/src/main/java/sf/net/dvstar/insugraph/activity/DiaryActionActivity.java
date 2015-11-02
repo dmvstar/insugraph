@@ -26,15 +26,20 @@ import com.github.clans.fab.FloatingActionMenu;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import sf.net.dvstar.insugraph.R;
+import sf.net.dvstar.insugraph.database.ActionCommonItem;
+import sf.net.dvstar.insugraph.database.GlucoseReading;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
 import sf.net.dvstar.insugraph.database.InsulinItem;
 import sf.net.dvstar.insugraph.database.InsulinDatabaseInit;
-import sf.net.dvstar.insugraph.adapters.InsulinInjectAdapter;
+import sf.net.dvstar.insugraph.adapters.DiaryActionstAdapter;
 import sf.net.dvstar.insugraph.insulins.InsulinConstants;
 import sf.net.dvstar.insugraph.insulins.InsulinUtils;
 
@@ -43,7 +48,9 @@ public class DiaryActionActivity extends AppCompatActivity {
 
 
     private static final String TAG = "DiaryActionActivity";
-    private ArrayList<InsulinInjection> mInsulinsInjections;
+
+    private ArrayList<ActionCommonItem> mDiaryActions;
+
 
     private TextView mDiaryActionsDate;
     private ListView mLvDiaryActions;
@@ -55,6 +62,7 @@ public class DiaryActionActivity extends AppCompatActivity {
     private FloatingActionButton fab22;
     private FloatingActionButton fab32;
     private FloatingActionMenu mFloatingActionMenu;
+    private DiaryActionsComparator mDiaryActionsComparator;
 
 
     @Override
@@ -87,7 +95,7 @@ public class DiaryActionActivity extends AppCompatActivity {
         fab_menu_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAddInsulinsInjection(InsulinConstants.MODE_INSULIN_EDIT_ADD, view, null);
+                showAddInsulinsInjection(InsulinConstants.MODE_ACTIONS_EDIT_ADD, view, null);
             }
         });
         */
@@ -101,7 +109,6 @@ public class DiaryActionActivity extends AppCompatActivity {
         fab12.setOnClickListener(clickListener);
         fab22.setOnClickListener(clickListener);
         fab32.setOnClickListener(clickListener);
-
 
         setListViewContent();
 
@@ -175,6 +182,7 @@ public class DiaryActionActivity extends AppCompatActivity {
 
     Calendar myCalendar = Calendar.getInstance();
 
+
     class ActionsOnDateSetListener implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
         @Override
@@ -190,23 +198,44 @@ public class DiaryActionActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Set content for actions
      */
     private void setListViewContent() {
         mLvDiaryActions = (ListView) findViewById(R.id.lv_diary_action_list);
         mLvDiaryActions.setItemsCanFocus(false);
-        mInsulinsInjections = getInsulinsInjections();
+
+        ArrayList<InsulinInjection> aInsulinsInjections;
+        ArrayList<GlucoseReading> aGlucoseReading;
+
+        aInsulinsInjections = getInsulinsInjections();
+        aGlucoseReading     = getGlucodeReading();
+
+        mDiaryActions       = new ArrayList<>();
+        mDiaryActionsComparator = new DiaryActionsComparator();
+
+        for (ListIterator<InsulinInjection> it = aInsulinsInjections.listIterator(); it.hasNext(); ) {
+            mDiaryActions.add(it.next());
+        }
+        for (ListIterator<GlucoseReading> it = aGlucoseReading.listIterator(); it.hasNext(); ) {
+            mDiaryActions.add(it.next());
+        }
+
+        Log.v(TAG, "--------1 "+mDiaryActions);
+        Collections.sort(mDiaryActions, mDiaryActionsComparator);
+        Log.v(TAG, "--------2 "+mDiaryActions);
+
+
         //ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,mInsulinsInjections);
-        InsulinInjectAdapter adapter = new InsulinInjectAdapter(this, mInsulinsInjections);
+        DiaryActionstAdapter adapter = new DiaryActionstAdapter(this, mDiaryActions);
 
         mLvDiaryActions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 //                Toast.makeText(getBaseContext(), "itemSelect: position = " + position + ", id = "
 //                        + id + ", " + parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
-                showAddInsulinsInjection(InsulinConstants.MODE_INSULIN_EDIT_ITEM, view, (InsulinInjection) parent.getAdapter().getItem(position));
+                if(mDiaryActions.get(position).getActionType()==ActionCommonItem.ACTION_TYPE_INJECT)
+                    showAddInsulinsInjection(InsulinConstants.MODE_ACTIONS_EDIT_ITEM, view, (InsulinInjection) mDiaryActions.get(position));
             }
         });
 
@@ -241,7 +270,7 @@ public class DiaryActionActivity extends AppCompatActivity {
 
                                 if (which == 0) {
                                     // EDIT
-                                    showAddInsulinsInjection(InsulinConstants.MODE_INSULIN_EDIT_ITEM, view, (InsulinInjection) parent.getAdapter().getItem(position));
+                                    showAddInsulinsInjection(InsulinConstants.MODE_ACTIONS_EDIT_ITEM, view, (InsulinInjection) parent.getAdapter().getItem(position));
 
 //                                    TextView idTextView = (TextView) mRecyclerView.getChildAt(position).findViewById(R.id.item_history_id);
 //                                    final int idToEdit = Integer.parseInt(idTextView.getText().toString());
@@ -297,11 +326,24 @@ public class DiaryActionActivity extends AppCompatActivity {
 
     private void calculateTotalInsulinDose() {
         int totalDose = 0;
-        for (Iterator<InsulinInjection> iter = mInsulinsInjections.iterator(); iter.hasNext(); ) {
-            InsulinInjection item = iter.next();
-            totalDose += Integer.parseInt(item.dose);
+        for (Iterator<ActionCommonItem> iter = mDiaryActions.iterator(); iter.hasNext(); ) {
+            ActionCommonItem item = iter.next();
+            if(item instanceof InsulinInjection) {
+                totalDose += Integer.parseInt( ((InsulinInjection)item).dose);
+            }
         }
         mTotalInsulunDose.setText("" + totalDose + " " + getResources().getString(R.string.insulin_inject_unit));
+    }
+
+
+    public ArrayList<GlucoseReading> getGlucodeReading() {
+        List<GlucoseReading> ret;
+        ret = new Select()
+                .from(GlucoseReading.class)
+                .orderBy("created")
+                .execute();
+        Log.v(TAG, "++++++++" + ret.toString());
+        return (ArrayList<GlucoseReading>) ret;
     }
 
     private ArrayList<InsulinInjection> getInsulinsInjections() {
@@ -361,7 +403,7 @@ public class DiaryActionActivity extends AppCompatActivity {
                 case R.id.fab_inject:
                     text = fab12.getLabelText();
                     mFloatingActionMenu.close(false);
-                    showAddInsulinsInjection(InsulinConstants.MODE_INSULIN_EDIT_ADD, v, null);
+                    showAddInsulinsInjection(InsulinConstants.MODE_ACTIONS_EDIT_ADD, v, null);
                     break;
                 case R.id.fab_eating:
                     text = fab22.getLabelText();
@@ -370,7 +412,7 @@ public class DiaryActionActivity extends AppCompatActivity {
                 case R.id.fab_glucose:
                     text = fab32.getLabelText();
                     mFloatingActionMenu.close(false);
-                    showAddGlucoseReading(InsulinConstants.MODE_INSULIN_EDIT_ADD, v);
+                    showAddGlucoseReading(InsulinConstants.MODE_ACTIONS_EDIT_ADD, v);
                     break;
             }
 
@@ -379,4 +421,16 @@ public class DiaryActionActivity extends AppCompatActivity {
     };
 
 
+    private class DiaryActionsComparator implements Comparator<ActionCommonItem> {
+        @Override
+        public int compare(ActionCommonItem lhs, ActionCommonItem rhs) {
+            int ret = 0 ;
+            // < 0 lhs < rhs
+            // > 0 lhs > rhs
+            Date lds=lhs.getCompareTime();
+            Date rds=rhs.getCompareTime();
+            if(lds.getTime()<rds.getTime()) ret = -1; else ret = 1;
+            return ret;
+        }
+    }
 }

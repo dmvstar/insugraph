@@ -1,5 +1,7 @@
 package sf.net.dvstar.insugraph.insulins;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -38,9 +40,11 @@ public class InsulinUtils {
     public static String mDateFormatString = "%02d.%02d.%02d";
     public static String mDateFormat = "dd.MM.yyyy";
     public static String mTimeFormat = "HH:mm";
+    public static String mDateTimeFormat = "HH:mm dd.MM.yyyy";
 
     public static SimpleDateFormat mSimpleDateFormatDate = new SimpleDateFormat(mDateFormat);
     public static SimpleDateFormat mSimpleTimeFormatDate = new SimpleDateFormat(mTimeFormat);
+    public static SimpleDateFormat mSimpleDateTimeFormatDate = new SimpleDateFormat(mDateTimeFormat);
 
     public static String getDateText(Date date) {
         String ret = "";
@@ -53,6 +57,13 @@ public class InsulinUtils {
         String ret = "";
         if(date !=null)
             ret = mSimpleTimeFormatDate.format(date);
+        return ret;
+    }
+
+    public static String getDateTimeText(Date date) {
+        String ret = "";
+        if(date !=null)
+            ret = mSimpleDateTimeFormatDate.format(date);
         return ret;
     }
 
@@ -82,6 +93,69 @@ public class InsulinUtils {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        return ret;
+    }
+
+    public static Date parseDateTimeText(String time, String date) {
+        Date ret = null;
+
+        if(time.length()!=0 && date.length() !=0 ) {
+
+            Calendar calendar = Calendar.getInstance();
+            try {
+                Date tempDate = mSimpleDateFormatDate.parse(date);
+                Calendar calendarDate = Calendar.getInstance();
+                calendarDate.setTime(tempDate);
+
+                Date tempTime = mSimpleTimeFormatDate.parse(time);
+                Calendar calendarTime = Calendar.getInstance();
+                calendarTime.setTime(tempTime);
+
+                calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
+                calendar.set(Calendar.HOUR, calendarTime.get(Calendar.HOUR));
+                calendar.set(Calendar.DAY_OF_MONTH, calendarDate.get(Calendar.DAY_OF_MONTH));
+                calendar.set(Calendar.MONTH, calendarDate.get(Calendar.MONTH));
+                calendar.set(Calendar.YEAR, calendarDate.get(Calendar.YEAR));
+
+                ret = calendar.getTime();
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return ret;
+    }
+
+    public static Date getDateTimeFrom(Date time, Date date) {
+        Date iTime, iDate;
+        Calendar calendar = Calendar.getInstance();
+
+        if(date==null){
+            iTime = time;
+            iDate = new Date();
+        } else {
+            iTime = time;
+            iDate = date;
+        }
+
+        Calendar calendarDate = Calendar.getInstance();
+        calendarDate.setTime(iDate);
+
+        Calendar calendarTime = Calendar.getInstance();
+        calendarTime.setTime(iTime);
+
+        calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
+        calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
+        //calendar.set(Calendar.AM_PM, calendarTime.get(Calendar.AM_PM) );
+
+        calendar.set(Calendar.DAY_OF_MONTH, calendarDate.get(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.MONTH, calendarDate.get(Calendar.MONTH));
+        calendar.set(Calendar.YEAR, calendarDate.get(Calendar.YEAR));
+
+        Date ret = calendar.getTime();
+        Log.v("!!!!!!!!!! calendar=", "" + ret);
 
         return ret;
     }

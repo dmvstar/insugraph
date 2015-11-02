@@ -119,7 +119,7 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
             }
         });
 
-        if (mMode == InsulinConstants.MODE_INSULIN_EDIT_ITEM) {
+        if (mMode == InsulinConstants.MODE_ACTIONS_EDIT_ITEM) {
 
             mInjection = (InsulinInjection) getIntent().getExtras().getSerializable(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_ITEM);
             mInjectionId = getIntent().getExtras().getLong(InsulinConstants.KEY_INTENT_EXTRA_ROW_ID);
@@ -188,7 +188,7 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
         ColorDrawable viewColor = (ColorDrawable) llColor.getBackground();
         InsulinItem insulinItem = (InsulinItem) mSpInsulins.getSelectedItem();
 
-        if(mMode == InsulinConstants.MODE_INSULIN_EDIT_ADD) {
+        if(mMode == InsulinConstants.MODE_ACTIONS_EDIT_ADD) {
             mInjection = new InsulinInjection();
         }
 

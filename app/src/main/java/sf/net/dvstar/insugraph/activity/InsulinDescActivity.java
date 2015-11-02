@@ -56,7 +56,7 @@ public class InsulinDescActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 */
-                showAddInsulinsDesc(InsulinConstants.MODE_INSULIN_EDIT_ADD, view, null);
+                showAddInsulinsDesc(InsulinConstants.MODE_ACTIONS_EDIT_ADD, view, null);
             }
         });
     }
@@ -70,7 +70,7 @@ public class InsulinDescActivity extends AppCompatActivity {
                                     int position, long id) {
 //                Toast.makeText(getBaseContext(),"itemSelect: position = " + position + ", id = "
 //                        + id+", "+parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
-                showAddInsulinsDesc(InsulinConstants.MODE_INSULIN_EDIT_ITEM, view, (InsulinItem) parent.getAdapter().getItem(position));
+                showAddInsulinsDesc(InsulinConstants.MODE_ACTIONS_EDIT_ITEM, view, (InsulinItem) parent.getAdapter().getItem(position));
             }
         });
         mLvInsulins.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

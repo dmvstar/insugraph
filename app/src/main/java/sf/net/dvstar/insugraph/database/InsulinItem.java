@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by sdv on 18.10.15.
  */
 @Table(name = "InsulinItem")
-public class InsulinItem extends Model implements Serializable, ActionCommonItem {
+public class InsulinItem extends Model implements Serializable, CommonItem {
 
     /*
     name	    type	firm	origin	start_min	start_max	start_measure	work_min	work_max	work_measure	ends_min	ends_max	ends_measure
@@ -145,9 +145,11 @@ public class InsulinItem extends Model implements Serializable, ActionCommonItem
         return false;
     }
 
+    /*
     @Override
     public int getActionType() {
         return ACTION_TYPE_INSULIN;
     }
+    */
 
 }

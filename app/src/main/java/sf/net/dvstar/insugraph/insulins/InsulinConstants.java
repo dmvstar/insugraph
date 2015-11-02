@@ -33,8 +33,8 @@ public interface InsulinConstants {
     String KEY_INTENT_EXTRA_INJECT_EDIT_ITEM = "inject_item";
     String  KEY_INTENT_EXTRA_ROW_ID = "row_id";
 
-    int MODE_INSULIN_EDIT_ITEM = 1;
-    int MODE_INSULIN_EDIT_ADD = 2;
+    int MODE_ACTIONS_EDIT_ITEM = 1;
+    int MODE_ACTIONS_EDIT_ADD = 2;
 
     int COLOR_NOVORAPID = Color.parseColor("#FF9900");
     int COLOR_LEVEMIR = Color.parseColor("#00AF8E");

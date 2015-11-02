@@ -119,7 +119,7 @@ public class InsulinDescAddActivity extends AppCompatActivity {
         adapterInsulinOriginListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSPInsulinOrigin.setAdapter(adapterInsulinOriginListAdapter);
 
-        if (mMode == InsulinConstants.MODE_INSULIN_EDIT_ITEM) {
+        if (mMode == InsulinConstants.MODE_ACTIONS_EDIT_ITEM) {
             mInsulinItem = (InsulinItem) getIntent().getExtras().getSerializable(InsulinConstants.KEY_INTENT_EXTRA_INSULIN_EDIT_ITEM);
             //mEtInsulinName.setEnabled(false);
             mEtInsulinName.setFocusable(false);
