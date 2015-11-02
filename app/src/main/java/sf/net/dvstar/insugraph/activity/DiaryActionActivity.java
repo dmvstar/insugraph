@@ -187,7 +187,7 @@ public class DiaryActionActivity extends AppCompatActivity {
 
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mDiaryActionsDate.setText(InsulinUtils.getDateText(year, monthOfYear, dayOfMonth));
+            mDiaryActionsDate.setText(InsulinUtils.getDateText(year, monthOfYear+1, dayOfMonth));
         }
 
         @Override
@@ -236,6 +236,8 @@ public class DiaryActionActivity extends AppCompatActivity {
 //                        + id + ", " + parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
                 if(mDiaryActions.get(position).getActionType()==ActionCommonItem.ACTION_TYPE_INJECT)
                     showAddInsulinsInjection(InsulinConstants.MODE_ACTIONS_EDIT_ITEM, view, (InsulinInjection) mDiaryActions.get(position));
+                if(mDiaryActions.get(position).getActionType()==ActionCommonItem.ACTION_TYPE_GLUCOSE)
+                    showAddGlucoseReading(InsulinConstants.MODE_ACTIONS_EDIT_ITEM, view, (GlucoseReading) mDiaryActions.get(position));
             }
         });
 
@@ -387,10 +389,16 @@ public class DiaryActionActivity extends AppCompatActivity {
 
     }
 
-    private void showAddGlucoseReading(int mode, View view) {
+    private void showAddGlucoseReading(int mode, View view, GlucoseReading item) {
 
         Intent intent = new Intent(this, DiaryGlucoseAddActivity.class);
         intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_MODE, mode);
+        if (item != null) {
+            long rowId = item.getId();
+            intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_ROW_ID, rowId);
+        }
+
+
         this.startActivity(intent);
     }
 
@@ -412,7 +420,7 @@ public class DiaryActionActivity extends AppCompatActivity {
                 case R.id.fab_glucose:
                     text = fab32.getLabelText();
                     mFloatingActionMenu.close(false);
-                    showAddGlucoseReading(InsulinConstants.MODE_ACTIONS_EDIT_ADD, v);
+                    showAddGlucoseReading(InsulinConstants.MODE_ACTIONS_EDIT_ADD, v, null);
                     break;
             }
 

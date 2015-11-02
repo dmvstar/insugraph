@@ -31,7 +31,7 @@ public class SetDateTime {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             //@TODO get localised format
-            this.editText.setText(String.format("%02d.%02d.%02d", dayOfMonth, monthOfYear, year));
+            this.editText.setText(String.format("%02d.%02d.%02d", dayOfMonth, monthOfYear+1, year));
         }
 
         @Override

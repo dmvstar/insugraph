@@ -113,7 +113,7 @@ public class InsulinUtils {
                 calendarTime.setTime(tempTime);
 
                 calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
-                calendar.set(Calendar.HOUR, calendarTime.get(Calendar.HOUR));
+                calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
                 calendar.set(Calendar.DAY_OF_MONTH, calendarDate.get(Calendar.DAY_OF_MONTH));
                 calendar.set(Calendar.MONTH, calendarDate.get(Calendar.MONTH));
                 calendar.set(Calendar.YEAR, calendarDate.get(Calendar.YEAR));

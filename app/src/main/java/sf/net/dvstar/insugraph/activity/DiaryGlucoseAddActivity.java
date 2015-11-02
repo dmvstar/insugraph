@@ -1,10 +1,13 @@
 package sf.net.dvstar.insugraph.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.activeandroid.query.Select;
 
 import java.util.Date;
 
@@ -22,11 +25,17 @@ public class DiaryGlucoseAddActivity extends AppCompatActivity {
     private Spinner mSpGlucoseWhen;
     private EditText mEtGlucoseComment;
     private int mMode;
+    private Context mContext;
+    private GlucoseReading mGlucoseReading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diary_glucose_add);
+
+        mContext = this;
+        mMode = getIntent().getExtras().getInt(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_MODE);
+
         mEtGlucoseValue = (EditText) findViewById(R.id.et_glucose_value);
         mEtGlucoseDate = (EditText) findViewById(R.id.et_glucose_date);
         mEtGlucoseTime = (EditText) findViewById(R.id.et_glucose_time);
@@ -37,16 +46,25 @@ public class DiaryGlucoseAddActivity extends AppCompatActivity {
         SetDateTime.SetTime fromTime = new SetDateTime.SetTime(mEtGlucoseTime, this);
         SetDateTime.SetDate fromDate = new SetDateTime.SetDate(mEtGlucoseDate, this);
 
+        if (mMode == InsulinConstants.MODE_ACTIONS_EDIT_ITEM) {
+            long iId = getIntent().getExtras().getLong(InsulinConstants.KEY_INTENT_EXTRA_ROW_ID);
+            mGlucoseReading = new Select().from(GlucoseReading.class).where("id = ?", iId).executeSingle();
+
+            mEtGlucoseValue.setText("" + mGlucoseReading.value);
+            mEtGlucoseTime.setText(InsulinUtils.getTimeText(mGlucoseReading.created));
+            mEtGlucoseDate.setText(InsulinUtils.getDateText(mGlucoseReading.created));
+            mEtGlucoseComment.setText(mGlucoseReading.comment);
+        }
     }
 
-    public void cancel(View view){
+    public void cancel(View view) {
         finish();
     }
 
-    public void add_update(View view){
+    public void add_update(View view) {
 
-        if(mMode == InsulinConstants.MODE_ACTIONS_EDIT_ADD) {
-
+        if (mMode == InsulinConstants.MODE_ACTIONS_EDIT_ADD) {
+            mGlucoseReading = new GlucoseReading();
         }
 
         String value = mEtGlucoseValue.getText().toString();
@@ -57,11 +75,13 @@ public class DiaryGlucoseAddActivity extends AppCompatActivity {
         String note = mSpGlucoseWhen.getSelectedItem().toString();
         Date created = InsulinUtils.parseDateTimeText(time, date);
 
-        if(created != null && fvalue > 0.0) {
-            GlucoseReading lGlucoseReading = new GlucoseReading(
-                    fvalue, created, note, comm
-            );
-            lGlucoseReading.save();
+        mGlucoseReading.value = fvalue;
+        mGlucoseReading.created = created;
+        mGlucoseReading.notes = note;
+        mGlucoseReading.comment = comm;
+
+        if (created != null && fvalue > 0.0) {
+            mGlucoseReading.save();
         }
 
         finish();
