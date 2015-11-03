@@ -86,23 +86,28 @@ public class DiaryActionstAdapter extends ArrayAdapter<ActionCommonItem> {
 
         }
 
-        // fill data
+        // fill data **
         if(key == ActionCommonItem.ACTION_TYPE_INJECT) {
             ViewHolderInject holder = (ViewHolderInject) rowView.getTag(R.id.ACTION_TYPE_INJECT);
             InsulinInjection item = (InsulinInjection) action;
-            holder.tv_insulin.setText(item.insulin.name);
-            holder.tv_dose.setText(item.dose);
-            holder.tv_time.setText(InsulinUtils.getTimeText(item.time));
-            holder.tv_comment.setText(item.comment);//+" "+InsulinUtils.getDateTimeFrom(item.time, null).toString()
-            holder.tv_planned.setText(getPlannedDescription(item.plan));
-            rowView.setBackgroundColor(item.color);
+            if(holder != null) {
+                holder.tv_insulin.setText(item.insulin.name);
+                holder.tv_dose.setText(item.dose);
+                holder.tv_time.setText(InsulinUtils.getTimeText(item.time));
+                holder.tv_comment.setText(item.comment);//+" "+InsulinUtils.getDateTimeFrom(item.time, null).toString()
+                holder.tv_planned.setText(getPlannedDescription(item.plan));
+                rowView.setBackgroundColor(item.color);
+
+            }
         }
         if(key == ActionCommonItem.ACTION_TYPE_GLUCOSE) {
             ViewHolderGlucose holder = (ViewHolderGlucose) rowView.getTag(R.id.ACTION_TYPE_GLUCOSE);
             GlucoseReading item = (GlucoseReading) action;
-            holder.tv_value.setText(""+item.value);
-            holder.tv_time.setText(InsulinUtils.getDateTimeText(item.created));
-            holder.tv_comment.setText(item.comment);
+            if(holder != null) {
+                holder.tv_value.setText("" + item.value);
+                holder.tv_time.setText(InsulinUtils.getDateTimeText(item.created));
+                holder.tv_comment.setText(item.comment);
+            }
         }
 
 
