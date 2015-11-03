@@ -114,6 +114,7 @@ public class InsulinUtils {
 
                 calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
                 calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
+
                 calendar.set(Calendar.DAY_OF_MONTH, calendarDate.get(Calendar.DAY_OF_MONTH));
                 calendar.set(Calendar.MONTH, calendarDate.get(Calendar.MONTH));
                 calendar.set(Calendar.YEAR, calendarDate.get(Calendar.YEAR));
@@ -125,6 +126,19 @@ public class InsulinUtils {
             }
         }
 
+        return ret;
+    }
+
+    public static Date getDateTimeFrom(int year, int monthOfYear, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth );
+        calendar.set(Calendar.MONTH, monthOfYear);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+
+        Date ret = calendar.getTime();
         return ret;
     }
 
@@ -144,10 +158,16 @@ public class InsulinUtils {
         calendarDate.setTime(iDate);
 
         Calendar calendarTime = Calendar.getInstance();
-        calendarTime.setTime(iTime);
+        if(iTime!=null) calendarTime.setTime(iTime);
 
-        calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
-        calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
+        if(iTime!=null) {
+            calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
+            calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
+        } else {
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+        }
+
         //calendar.set(Calendar.AM_PM, calendarTime.get(Calendar.AM_PM) );
 
         calendar.set(Calendar.DAY_OF_MONTH, calendarDate.get(Calendar.DAY_OF_MONTH));

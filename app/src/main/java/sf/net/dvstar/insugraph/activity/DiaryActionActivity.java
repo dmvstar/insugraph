@@ -63,6 +63,7 @@ public class DiaryActionActivity extends AppCompatActivity {
     private FloatingActionButton fab32;
     private FloatingActionMenu mFloatingActionMenu;
     private DiaryActionsComparator mDiaryActionsComparator;
+    private Date mDiaryActionsDateDate;
 
 
     @Override
@@ -88,6 +89,7 @@ public class DiaryActionActivity extends AppCompatActivity {
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         mDiaryActionsDate.setText(sdf.format(today));
+        mDiaryActionsDateDate = InsulinUtils.getDateTimeFrom(null, today);
         mDiaryActionsDate.setOnClickListener(new ActionsOnDateSetListener());
 
         /*
@@ -188,6 +190,7 @@ public class DiaryActionActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             mDiaryActionsDate.setText(InsulinUtils.getDateText(year, monthOfYear+1, dayOfMonth));
+            mDiaryActionsDateDate = InsulinUtils.getDateTimeFrom(year, monthOfYear+1, dayOfMonth);
         }
 
         @Override
@@ -337,14 +340,14 @@ public class DiaryActionActivity extends AppCompatActivity {
         mTotalInsulunDose.setText("" + totalDose + " " + getResources().getString(R.string.insulin_inject_unit));
     }
 
-
     public ArrayList<GlucoseReading> getGlucodeReading() {
         List<GlucoseReading> ret;
         ret = new Select()
                 .from(GlucoseReading.class)
+                .where("created >= ?", mDiaryActionsDateDate.getTime())
                 .orderBy("created")
                 .execute();
-        Log.v(TAG, "++++++++" + ret.toString());
+        Log.v(TAG, "++++++++["+mDiaryActionsDateDate+"]" + ret.toString());
         return (ArrayList<GlucoseReading>) ret;
     }
 
@@ -359,6 +362,8 @@ public class DiaryActionActivity extends AppCompatActivity {
 
         ret = new Select()
                 .from(InsulinInjection.class)
+                //.where("plan = ?", InsulinInjection.INJECTION_PLAN_REGULAR)
+                //.or("date >= ?", mDiaryActionsDateDate.getTime())
                 .orderBy("time")
                 .execute();
 
