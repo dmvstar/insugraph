@@ -137,6 +137,8 @@ public class InsulinUtils {
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
         Date ret = calendar.getTime();
         return ret;
@@ -166,6 +168,8 @@ public class InsulinUtils {
         } else {
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
         }
 
         //calendar.set(Calendar.AM_PM, calendarTime.get(Calendar.AM_PM) );

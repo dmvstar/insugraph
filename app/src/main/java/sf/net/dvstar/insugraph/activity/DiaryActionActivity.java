@@ -64,6 +64,8 @@ public class DiaryActionActivity extends AppCompatActivity {
     private FloatingActionMenu mFloatingActionMenu;
     private DiaryActionsComparator mDiaryActionsComparator;
     private Date mDiaryActionsDateDate;
+    private Calendar mCalendarActionsDate;
+
 
 
     @Override
@@ -82,6 +84,8 @@ public class DiaryActionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mContext = this;
+
+        mCalendarActionsDate = Calendar.getInstance();
 
         mDiaryActionsDate = (TextView) findViewById(R.id.tv_diary_actions_date);
         mTotalInsulunDose = (TextView) findViewById(R.id.tv_injection_total_value);
@@ -182,22 +186,24 @@ public class DiaryActionActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
-    Calendar myCalendar = Calendar.getInstance();
-
-
     class ActionsOnDateSetListener implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mDiaryActionsDate.setText(InsulinUtils.getDateText(year, monthOfYear+1, dayOfMonth));
-            mDiaryActionsDateDate = InsulinUtils.getDateTimeFrom(year, monthOfYear+1, dayOfMonth);
+            String test = InsulinUtils.getDateText(year, monthOfYear + 1, dayOfMonth);
+            if(!mDiaryActionsDate.getText().toString().equals(test)) {
+                mDiaryActionsDate.setText(test);
+                mDiaryActionsDateDate = InsulinUtils.getDateTimeFrom(year, monthOfYear, dayOfMonth);
+                mCalendarActionsDate.set(year, monthOfYear, dayOfMonth);
+                setListViewContent();
+            }
         }
 
         @Override
         public void onClick(View v) {
-            new DatePickerDialog(mContext, this, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            new DatePickerDialog(mContext, this, mCalendarActionsDate
+                    .get(Calendar.YEAR), mCalendarActionsDate.get(Calendar.MONTH),
+                    mCalendarActionsDate.get(Calendar.DAY_OF_MONTH)).show();
         }
     }
 
@@ -218,16 +224,24 @@ public class DiaryActionActivity extends AppCompatActivity {
         mDiaryActionsComparator = new DiaryActionsComparator();
 
         for (ListIterator<InsulinInjection> it = aInsulinsInjections.listIterator(); it.hasNext(); ) {
-            mDiaryActions.add(it.next());
+            InsulinInjection item = it.next();
+            mDiaryActions.add(item);
+            //Log.v(TAG, "--------1 " + item);
         }
+
         for (ListIterator<GlucoseReading> it = aGlucoseReading.listIterator(); it.hasNext(); ) {
-            mDiaryActions.add(it.next());
+            GlucoseReading item = it.next();
+            mDiaryActions.add(item);
+            //Log.v(TAG, "--------2 " + item);
         }
 
-        Log.v(TAG, "--------1 "+mDiaryActions);
         Collections.sort(mDiaryActions, mDiaryActionsComparator);
-        Log.v(TAG, "--------2 "+mDiaryActions);
+        //Log.v(TAG, "--------2 "+mDiaryActions);
 
+        for (ListIterator<ActionCommonItem> it = mDiaryActions.listIterator(); it.hasNext(); ) {
+            ActionCommonItem item = it.next();
+            Log.v(TAG, "--------4 " + item);
+        }
 
         //ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,mInsulinsInjections);
         DiaryActionstAdapter adapter = new DiaryActionstAdapter(this, mDiaryActions);
@@ -347,30 +361,32 @@ public class DiaryActionActivity extends AppCompatActivity {
                 .where("created >= ?", mDiaryActionsDateDate.getTime())
                 .orderBy("created")
                 .execute();
-        Log.v(TAG, "++++++++["+mDiaryActionsDateDate+"]" + ret.toString());
+        Log.v(TAG, "++++++++[" + mDiaryActionsDateDate + "][" + ret.size() + "]" + ret.toString());
         return (ArrayList<GlucoseReading>) ret;
     }
 
     private ArrayList<InsulinInjection> getInsulinsInjections() {
         List<InsulinInjection> ret;// = new ArrayList<>();
+        ret = new Select()
+                .from(InsulinInjection.class)
+                .where("plan = ?", InsulinInjection.INJECTION_PLAN_REGULAR)
+                .or("date >= ?", mDiaryActionsDateDate.getTime())
+                .orderBy("time")
+                .execute();
 
+        Log.v(TAG, "!!!!!!!![" + mDiaryActionsDateDate + "][" + ret.size() + "]" + ret.toString());
+        return (ArrayList<InsulinInjection>) ret;
+    }
+
+    private ArrayList<InsulinItem> getInsulinItems() {
         List<InsulinItem> insulins = new Select()
                 .from(InsulinItem.class)
                 .execute();
 
         Log.v(TAG, "!!!!!!!!" + insulins.toString());
-
-        ret = new Select()
-                .from(InsulinInjection.class)
-                //.where("plan = ?", InsulinInjection.INJECTION_PLAN_REGULAR)
-                //.or("date >= ?", mDiaryActionsDateDate.getTime())
-                .orderBy("time")
-                .execute();
-
-        Log.v(TAG, "!!!!!!!!" + ret);
-
-        return (ArrayList<InsulinInjection>) ret;
+        return (ArrayList<InsulinItem>) insulins;
     }
+
 
     /**
      * Show add or edit activity
