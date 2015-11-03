@@ -35,6 +35,7 @@ import java.util.ListIterator;
 
 import sf.net.dvstar.insugraph.R;
 import sf.net.dvstar.insugraph.database.ActionCommonItem;
+import sf.net.dvstar.insugraph.database.CommonItem;
 import sf.net.dvstar.insugraph.database.GlucoseReading;
 import sf.net.dvstar.insugraph.database.InsulinInjection;
 import sf.net.dvstar.insugraph.database.InsulinItem;
@@ -289,45 +290,10 @@ public class DiaryActionActivity extends AppCompatActivity {
 
                                 if (which == 0) {
                                     // EDIT
-                                    showAddInsulinsInjection(InsulinConstants.MODE_ACTIONS_EDIT_ITEM, view, (InsulinInjection) parent.getAdapter().getItem(position));
-
-//                                    TextView idTextView = (TextView) mRecyclerView.getChildAt(position).findViewById(R.id.item_history_id);
-//                                    final int idToEdit = Integer.parseInt(idTextView.getText().toString());
-//                                    ((MainActivity) getActivity()).showEditDialog(idToEdit);
+                                    showAddAction(InsulinConstants.MODE_ACTIONS_EDIT_ITEM, view, (CommonItem) parent.getAdapter().getItem(position));
                                 } else {
                                     // DELETE
-                                    /*
-                                    TextView idTextView = (TextView) mRecyclerView.getChildAt(position).findViewById(R.id.item_history_id);
-                                    final int idToDelete = Integer.parseInt(idTextView.getText().toString());
-                                    final CardView item = (CardView) mRecyclerView.getChildAt(position).findViewById(R.id.item_history);
-                                    item.animate().alpha(0.0f).setDuration(2000);
-                                    Snackbar.make(((MainActivity) getActivity()).getFabView(), R.string.fragment_history_snackbar_text, Snackbar.LENGTH_SHORT).setCallback(new Snackbar.Callback() {
-                                        @Override
-                                        public void onDismissed(Snackbar snackbar, int event) {
-                                            switch (event) {
-                                                case Snackbar.Callback.DISMISS_EVENT_ACTION:
-                                                    // Do nothing, see Undo onClickListener
-                                                    break;
-                                                case Snackbar.Callback.DISMISS_EVENT_TIMEOUT:
-                                                    presenter.onDeleteClicked(idToDelete);
-                                                    break;
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onShown(Snackbar snackbar) {
-                                            // Do nothing
-                                        }
-                                    }).setAction("UNDO", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            item.clearAnimation();
-                                            item.setAlpha(1.0f);
-                                            mAdapter.notifyDataSetChanged();
-                                        }
-                                    }).setActionTextColor(getResources().getColor(R.color.glucosio_accent)).show();
-                                }
-                                */
+                                    showDelAction(InsulinConstants.MODE_ACTIONS_EDIT_ITEM, view, (CommonItem) parent.getAdapter().getItem(position));
                                 }
                             }
                         });
@@ -387,6 +353,14 @@ public class DiaryActionActivity extends AppCompatActivity {
         return (ArrayList<InsulinItem>) insulins;
     }
 
+    private void showAddAction(int mode, View view, CommonItem item){
+        if(item instanceof InsulinInjection){
+            showAddInsulinsInjection(mode, view, (InsulinInjection) item);
+        }
+        if(item instanceof GlucoseReading){
+            showAddGlucoseReading(mode, view, (GlucoseReading) item);
+        }
+    }
 
     /**
      * Show add or edit activity
@@ -419,9 +393,28 @@ public class DiaryActionActivity extends AppCompatActivity {
             intent.putExtra(InsulinConstants.KEY_INTENT_EXTRA_ROW_ID, rowId);
         }
 
-
         this.startActivity(intent);
     }
+
+
+    private void showDelAction(int mode, View view, CommonItem item) {
+        if(item instanceof InsulinInjection){
+            showDelInsulinsInjection(mode, view, (InsulinInjection) item);
+        }
+        if(item instanceof GlucoseReading){
+            showDelGlucoseReading(mode, view, (GlucoseReading) item);
+        }
+        setListViewContent();
+    }
+
+    private void showDelGlucoseReading(int mode, View view, GlucoseReading item) {
+        item.delete();
+    }
+
+    private void showDelInsulinsInjection(int mode, View view, InsulinInjection item) {
+        item.delete();
+    }
+
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override

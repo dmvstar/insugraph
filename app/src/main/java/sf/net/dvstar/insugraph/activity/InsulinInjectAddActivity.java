@@ -34,8 +34,8 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
 
     private static final java.lang.String TAG = "InsulinInjectAddActivity";
     private Context mContext;
-    private Button btColor;
-    private Button btAdd;
+    private Button mBtColor;
+    private Button mBtAdd;
     private LinearLayout llColor;
     private int mMode;
     private Spinner mSpInsulins;
@@ -55,9 +55,9 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
         mContext = this;
         mMode = getIntent().getExtras().getInt(InsulinConstants.KEY_INTENT_EXTRA_INJECT_EDIT_MODE);
 
-        btAdd = (Button) findViewById(R.id.bt_add_update);
+        mBtAdd = (Button) findViewById(R.id.bt_add_update);
 
-        btColor = (Button) findViewById(R.id.bt_color);
+        mBtColor = (Button) findViewById(R.id.bt_color);
         llColor = (LinearLayout) findViewById(R.id.ll_color);
         mEtFromTime = (EditText) findViewById(R.id.et_inject_time);
         mEtFromDate = (EditText) findViewById(R.id.et_inject_date);
@@ -154,7 +154,7 @@ public class InsulinInjectAddActivity extends AppCompatActivity {
             mEtFromDate.setText( InsulinUtils.getDateText(mInjection.date) );
             mEtComment.setText(mInjection.comment);
 
-            btAdd.setText( getResources().getString(R.string.button_insulin_update) );
+            mBtAdd.setText( getResources().getString(R.string.button_insulin_update) );
 
             mTvLabelModeAdd.setText( getResources().getString(R.string.label_mode_edit) );
 
